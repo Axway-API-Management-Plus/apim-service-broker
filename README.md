@@ -4,18 +4,18 @@
 Axway Service Broker for Cloud Foundry
 This component is used to create and bind services in Axway API Management Solution for Applications hosted in Cloud Foundry 
 
-![alt text][Screenshot1] 
+![alt text][Screenshot1]
 
-[Screenshot1]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot1.png  "Screenshot1" 
+[Screenshot1]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot1.png  "Screenshot1"
 
 
 The Axway Service Broker is developed in API Gateway/Manager using native functionalities provided by those products.
 
 This version of the Axway Service Broker implements the following APIs:
 
-![alt text][Screenshot2] 
+![alt text][Screenshot2]
 
-[Screenshot2]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot2.png  "Screenshot2" 
+[Screenshot2]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot2.png  "Screenshot2"
 
 
 In the previous diagram:
