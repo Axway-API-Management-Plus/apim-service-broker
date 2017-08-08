@@ -1,5 +1,14 @@
 # Policy documentation
 
+## Overview
+
+The following REST API are set in API Gateway. Each API is based on a "master" Policy of the same name
+
+![alt text][Screenshot0]
+
+[Screenshot0]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Documentation/PolicyDocumentation00.png "Screenshot0"
+
+
 ## Focus on Catalog API
 **Policy configuration**
 
