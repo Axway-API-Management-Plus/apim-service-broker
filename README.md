@@ -70,7 +70,7 @@ The “CloudFoundryServiceBroker” Policy Studio Project must be copied locally
 
    
 ## Additional documentation on API Gateway policies
-Detailed documentation on ServiceBroker Policies is available here [Documentation.md](https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Documentation/Documentation.md)  
+Detailed documentation on ServiceBroker Policies is available here [Documentation.md](https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Documentation/PolicyDocumentation.md)  
 
 ## Bug and Caveats
 To be implemented: 
