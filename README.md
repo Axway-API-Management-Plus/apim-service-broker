@@ -6,7 +6,7 @@ This component is used to create and bind services in Axway API Management Solut
 
 ![alt text][Screenshot1]
 
-[Screenshot1]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot1.png  "Screenshot1"
+[Screenshot1]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot01.png "Screenshot1"
 
 
 The Axway Service Broker is developed in API Gateway/Manager using native functionalities provided by those products.
@@ -15,7 +15,7 @@ This version of the Axway Service Broker implements the following APIs:
 
 ![alt text][Screenshot2]
 
-[Screenshot2]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot2.png  "Screenshot2"
+[Screenshot2]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Readme/Screenshot02.png "Screenshot2"
 
 
 In the previous diagram:
