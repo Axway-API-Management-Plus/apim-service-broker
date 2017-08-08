@@ -61,6 +61,10 @@ accordingly to your environment
 4. Copy locally files ServiceList.json and OrganizationList.json file and update the datamap "ServiceListFromOrganizationList" with new paths
 
 5. Deploy Policy Studio project on the target API Gateway
+
+6. Define API in API Manager 
+- Create the Back-End API with "import API from Topology" option. 
+- Create the Front-End API using the previously created Back-End API
 ```
 
 ## Tests
