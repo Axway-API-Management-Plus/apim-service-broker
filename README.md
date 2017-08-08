@@ -41,7 +41,7 @@ API Gateway/API Manager and Policy Studio must be installed
 
 **Axway Service Broker sample installation**
 ```
-1.	API Manager APIs upload in API Manager
+1. API Manager APIs upload in API Manager
 - The swagger file name is api-manager-V_1_3-swagger.json
 - It is located in the directory apigateway/samples/swagger
 - Connect to API Manager using an account with an “API Admin” profile
@@ -49,10 +49,10 @@ API Gateway/API Manager and Policy Studio must be installed
 - Rename the API “APIManagerAPI” for example to get a more striking name
 - Create the Front-End API with the “New API from Back End API” option
 
-2.	Policy Studio project to be imported in Policy Studio
+2. Policy Studio project to be imported in Policy Studio
 The “CloudFoundryServiceBroker” Policy Studio Project must be copied locally and imported into Policy Studio using the function “Open Project”.
 
-3.	Policy Studio project to be updated in Policy Studio
+3. Policy Studio project to be updated in Policy Studio
 - Update Server Settings accordingly to your environment
 - Update Certificates
 - Update Environment settings
