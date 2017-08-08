@@ -29,6 +29,7 @@ All organizations available in API Manager are displayed:
 
 ## For provisioning
 The shell script “cf_create-service.sh” can be used to simulate the Cloud Controller
+
 **Setup:**
 The following variables must be set:
 ```
@@ -53,6 +54,7 @@ export AdminEmail=orgaadmin@demo.axway.com
 
 ## For binding
 The shell script “cf_bind-service.sh” can be used to simulate the Cloud Controller
+
 **Setup:**
 The following variables must be set:
 ```
@@ -77,6 +79,7 @@ export SwaggerURL=http://petstore.swagger.io/v2/swagger.json
 
 ## For unbinding
 The shell script “cf_unbind-service.sh” can be used to simulate the Cloud Controller
+
 **Setup:**
 The following variables must be set:
 ```
@@ -99,6 +102,7 @@ export baseURLSBAPI=https://api-env.demo.axway.com:8065
 
 ## For deprovisioning
 The shell script “cf_delete-service.sh” can be used to simulate the Cloud Controller
+
 **Setup:**
 The following variables must be set:
 ```
