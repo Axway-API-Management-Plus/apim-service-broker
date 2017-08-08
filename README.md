@@ -1,8 +1,11 @@
 # UnderConstruction
 
 # Description
-Axway Service Broker for Cloud Foundry
-This component is used to create and bind services in Axway API Management Solution for Applications hosted in Cloud Foundry 
+- Sample for Axway Service Broker for Cloud Foundry
+- The goal of this sample is to quickly build a proof of concept to create and bind services in Axway API Management Solution for Applications hosted in Cloud Foundry. 
+- It is not a production ready solution. 
+- This sample can be customized by the customer to fit their needs regarding Cloud Foundry integration and enhanced to reach production readiness.
+
 
 ![alt text][Screenshot1]
 
@@ -61,9 +64,9 @@ The “CloudFoundryServiceBroker” Policy Studio Project must be copied locally
 ```
 
 ## Tests
-Scripts stored in the directory CloudController can be used to simulate Cloud Controller calls
-There is one script per ServiceBroker API
-Refer to [Tests.md](https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/CloudController/Tests.md) for more information  
+- Scripts stored in the directory CloudController can be used to simulate Cloud Controller calls
+- There is one script per ServiceBroker API
+- Refer to [Tests.md](https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/CloudController/Tests.md) for more information  
 
    
 ## Additional documentation on API Gateway policies
