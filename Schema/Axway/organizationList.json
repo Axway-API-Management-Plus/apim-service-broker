@@ -1,0 +1,80 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Organization List",
+	"type": "array",
+	"items": {
+		"title": "Organization",
+		"description": "API Manager Organization",
+		"type": "object",
+		"properties": {
+			"id": {
+				"description": "The unique identifier for the organization",
+				"type": ["string", "null"]
+			},
+			"name": {
+				"description": "The name of the organization",
+				"type": ["string", "null"]
+			},
+			"description": {
+				"description": "The description of the organization",
+				"type": ["string", "null"]
+			},
+			"email": {
+				"description": "The contact email address associated with the organization",
+				"type": ["string", "null"]
+			},
+			"image": {
+				"description": "URI of the image to be used for this organization",
+				"type": ["string", "null"]
+			},
+			"restricted": {
+				"description": "Indicates that the organization is restricted",
+				"type": ["boolean", "null"]
+			},
+			"virtualHost": {
+				"description": "The virtual host associated with the organization",
+				"type": ["boolean", "null"]
+			},
+			"phone": {
+				"description": "Contact phone number of the organization",
+				"type": ["boolean", "null"]
+			},
+			"virtualHost": {
+				"description": "The virtual host associated with the organization",
+				"type": ["string", "null"]
+			},
+			"enabled": {
+				"description": "Flag to indicate if this organization is enabled or not",
+				"type": ["boolean", "null"]
+			},
+			"development": {
+				"description": "Flag to indicate if this organization is enabled or not for API development",
+				"type": ["boolean", "null"]
+			},
+			"dn": {
+				"type": ["string", "null"]
+			},
+			"createdOn": {
+				"description": "Epoch/Unix time stamp when the organization was created",
+				"type": ["integer", "null"]
+			},
+			"startTrialDate": {
+				"description": "Epoch/Unix time stamp when the trial starts",
+				"type": ["integer", "null"]
+			},
+			"endTrialDate": {
+				"description": "Epoch/Unix time stamp when the trial expires",
+				"type": ["integer", "null"]
+			},
+			"trialDuration": {
+				"description": "Length of the trial in days",
+				"type": ["integer", "null"]
+			},
+			"isTrial": {
+				"description": "Indicates if this Org is a trial or not",
+				"type": ["boolean", "null"]
+			}
+		},
+		"required": ["id", "name"]
+	}
+} 
