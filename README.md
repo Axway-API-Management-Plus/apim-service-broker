@@ -22,7 +22,7 @@ This version of the Axway Service Broker implements the following APIs:
 
 In the previous diagram:
 - API Manager-1 and API Gateway represent the Axway Service Broker
-- API-Manager-2 represent the Service Back-End
+- API-Manager-2 represents the Service Back-End
 
 The 5 Axway Service Broker APIs are exposed by API Manager-1 (/Catalog (Get), /Provisioning (Put and Delete), Binding (Put and Delete)). 
 These 5 APIs virtualize 5 APIs provided by API Gateway which orchestrate APIs calls to manage API Manager-2 objects.
