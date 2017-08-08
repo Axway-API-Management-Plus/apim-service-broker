@@ -9,6 +9,7 @@ Tests can be performed using:
 The shell script “cf_marketplace.sh” can be used to simulate the Cloud Controller
 
 **Setup:**
+
 The following variables must be set:
 ```
 export APIManagerAPIUserLogin=angel
@@ -31,6 +32,7 @@ All organizations available in API Manager are displayed:
 The shell script “cf_create-service.sh” can be used to simulate the Cloud Controller
 
 **Setup:**
+
 The following variables must be set:
 ```
 export APIManagerAPIUserLogin=angel
@@ -56,6 +58,7 @@ export AdminEmail=orgaadmin@demo.axway.com
 The shell script “cf_bind-service.sh” can be used to simulate the Cloud Controller
 
 **Setup:**
+
 The following variables must be set:
 ```
 export APIManagerAPIUserLogin=angel
@@ -81,6 +84,7 @@ export SwaggerURL=http://petstore.swagger.io/v2/swagger.json
 The shell script “cf_unbind-service.sh” can be used to simulate the Cloud Controller
 
 **Setup:**
+
 The following variables must be set:
 ```
 export APIManagerAPIUserLogin=angel
@@ -104,6 +108,7 @@ export baseURLSBAPI=https://api-env.demo.axway.com:8065
 The shell script “cf_delete-service.sh” can be used to simulate the Cloud Controller
 
 **Setup:**
+
 The following variables must be set:
 ```
 export APIManagerAPIUserLogin=angel
