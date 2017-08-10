@@ -85,4 +85,17 @@ No specific step in this policy
 No specific step in this policy
 
 
+## Focus on Error management
+**Policy configuration**
  
+![alt text][Screenshot8]
+
+[Screenshot8]: https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Documentation/PolicyDocumentation08.png "Screenshot8"
+
+
+To return the right information to the Cloud Foundry Cloud Controller, a specific error label management is set.
+At each step, a specific error label is defined. This error label is built with:
+•	The name of the step
+•	Information provided by the API Called to perform the step
+•	Additional context information 
+
