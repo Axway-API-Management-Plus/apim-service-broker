@@ -71,7 +71,7 @@ accordingly to your environment
 - Scripts stored in the Tests directory can be used to simulate Cloud Controller calls
 - There is one script per ServiceBroker API
 - Refer to [Tests.md](https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Tests/Tests.md) for more information  
-
+- The [swagger file](https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Swagger/ServiceBrokerAPISwagger.json) can also be used to define test cases 
    
 ## Additional documentation on API Gateway policies
 Detailed documentation on ServiceBroker Policies is available here [Policy Documentation](https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample/blob/master/Documentation/PolicyDocumentation.md)  
