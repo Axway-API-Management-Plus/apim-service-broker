@@ -1,0 +1,212 @@
+{
+  "swagger" : "2.0",
+  "host" : "api-env.demo.axway.com:8065",
+  "basePath" : "/v2",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/service_instances/{instance_id}/service_bindings/{service_id}" : {
+      "put" : {
+        "description" : "## Input parameters\nParameters passed during the API Call:\n- The name of the organization (instance_id)\n- The name of the webservice (service_id)\n\nMessage body:\n```\n{\n  \"service_id\": \"string\",\n  \"plan_id\": \"string\",\n  \"bind_resource\": {\n    \"app_guid\": \"string\"\n  },\n  \"parameters\": {\n    \"SwaggerURL\": \"string\"\n  }\n}\n```\nWith:\n- service_id: The ID of the service (from the catalog) // not used\n- plan_id: The ID of the plan (from the catalog) for which the service instance has been requested // not used\n- app_guid: GUID of an application associated with the binding to be created. // Not used\n- SwaggerURL: URL of the swagger definition of the Web Service\n \n\n## Performed actions\nSeveral objects are created in API Manager for the binding:\n- A Back-End API:\n    - The name of the Back-End = BIC_«Web service name»\n    - The Back-End API definition is built via an import of the swagger definition pointed by the URL passed as a parameter of the call\n- A Front-End API:\n    -  The name of the Front-End API = FE_ «Back-End API name»\n- An application:\n    - The name of the application = «Front-End API name»_App\n\n\n## Return message\n- Message format\n```\n{}\n```\n\n## Curl sample to test the API\n```\ncurl -X PUT \\\n  ${APIManagerAPIUserLogin}:${APIManagerAPIUserPwd} ${baseURLSBAPI}/v2/service_instances/ORGA01/service_bindings/WS1 \\\n  -H 'content-type: application/json' \\\n  -d '{\n  \"service_id\": \"id1\",\n  \"plan_id\": \"id2\",\n  \"bind_resource\": {\n    \"app_guid\": \"id3\"\n  },\n  \"parameters\": {\n    \"SwaggerURL\": \"http://petstore.swagger.io/v2/swagger.json\"\n  }\n}'\n```\nWith:\n  - ${APIManagerAPIUserLogin}: the loging of a user granted to access the API\n  - ${APIManagerAPIUserPwd}: the password of the user\n  - ${baseURLSBAPI}: the base URL to access the API (ex:https://api-env.demo.axway.com:8065)\n",
+        "operationId" : "Binding",
+        "summary" : "Implement an API in API Manager to secure the Service provided by a back-End",
+        "parameters" : [ {
+          "description" : "Name of the Web Service to be bind",
+          "required" : true,
+          "in" : "path",
+          "name" : "service_id",
+          "type" : "string"
+        }, {
+          "description" : "Organization name in API Manager",
+          "required" : true,
+          "in" : "path",
+          "name" : "instance_id",
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "201" : {
+            "description" : "Created - Binding has been created"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity - Should be returned if the broker requires that app_guid be included in the request body"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          },
+          "413" : {
+            "description" : "Request Entity Too Large"
+          },
+          "204" : {
+            "description" : "No Content"
+          },
+          "403" : {
+            "description" : "Action forbidden"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "409" : {
+            "description" : "Requested binding already exists"
+          }
+        }
+      },
+      "delete" : {
+        "description" : "## Input parameters\nParameters passed during the API Call:\n- The name of the organization (instance_id)\n- The name of the webservice (service_id)\n\n## Performed actions\nThe following objects are removed from API Manager:\n- The Front-End API (with the name FE_ «Back-End API name»)\n- The Back-End API (with the name BIC_«Web service name»)\n- The application (with the name «Front-End API name»_App)\n\n## Return message\n- Message format\n```\n{}\n```\n\n## Curl sample to test the API\n```\ncurl -X DELETE \\\n   ${APIManagerAPIUserLogin}:${APIManagerAPIUserPwd} ${baseURLSBAPI}/v2/service_instances/ORGA01/service_bindings/WS1\n```\nWith:\n  - ${APIManagerAPIUserLogin}: the loging of a user granted to access the API\n  - ${APIManagerAPIUserPwd}: the password of the user\n  - ${baseURLSBAPI}: the base URL to access the API (ex:https://api-env.demo.axway.com:8065)\n \n\n",
+        "operationId" : "Unbinding",
+        "summary" : "Removal of the API and linked objects that were used to secure the Web Service",
+        "parameters" : [ {
+          "description" : "Organization name in API Manager",
+          "required" : true,
+          "in" : "path",
+          "name" : "instance_id",
+          "type" : "string"
+        }, {
+          "description" : "Name of the Web Service to be unbind",
+          "required" : true,
+          "in" : "path",
+          "name" : "service_id",
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Binding was deleted"
+          },
+          "410" : {
+            "description" : "Gone - The binding does not exist"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          },
+          "204" : {
+            "description" : "No Content"
+          },
+          "403" : {
+            "description" : "Action forbidden"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/catalog" : {
+      "get" : {
+        "description" : "## Input parameters\nNo parameter\n\n## Performed actions\nList all organizations available in API Manager\n\n## Return message\n- Message format\n```\n[\n  {\n    \"name\": \"string\",\n    \"id\": \"string\",\n    \"description\": \"string\"\n  }\n]\n```\n\n- Message sample\n```\n[\n  {\n    \"name\": \"FastCars\",\n    \"id\": \"4e2490b2-b495-4599-b26e-03b26b9aa25b\",\n    \"description\": \"Car Manufacturer\"\n  },\n  {\n    \"name\": \"API Development\",\n    \"id\": \"14df2c8b-c28c-4062-ba8b-31449524a611\",\n    \"description\": \"API Development team\"\n  },\n  {\n    \"name\": \"HealthMob\",\n    \"id\": \"fb452ab9-dba6-4bfe-84e7-40effafd6804\",\n    \"description\": \"Partner developing the Patient Care mobile app\"\n  }\n]```\n\n## Curl sample to test the API\n```\ncurl -i -u ${APIManagerAPIUserLogin}:${APIManagerAPIUserPwd} ${baseURLSBAPI}/v2/catalog\n```\nwith:\n  - ${APIManagerAPIUserLogin}: the loging of a user granted to access the API\n  - ${APIManagerAPIUserPwd}: the password of the user\n  - ${baseURLSBAPI}: the base URL to access the API (ex:https://api-env.demo.axway.com:8065)\n\n\n",
+        "operationId" : "Catalog",
+        "summary" : "List all organizations available in API Manager",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/service_instances/{instance_id}" : {
+      "put" : {
+        "description" : "## Input parameters\nParameters passed during the API Call:\n- The name of the organization (instance_id)\n- The name and the email of the administrator (part of the body)\n\nMessage body:\n```\n{\n  \"service_id\": \"string\",\n  \"plan_id\": \"string\",\n  \"organization_guid\": \"string\",\n  \"space_guid\": \"string\",\n  \"parameters\": {\n    \"AdminName\": \"string\",\n    \"AdminEmail\": \"string\"\n  }\n}\n```\nWith:\n- service_id: The ID of the service (from the catalog) // not used\n- plan_id: The ID of the plan (from the catalog) for which the service instance has been requested // not used\n- organization_guid: The platform GUID for the organization under which the service is to be provisioned // not used\n- space_guid: The identifier for the project space within the platform organization // not used\n- name: name of the organization administrator. Is used as a login in API Manager\n- AdminEmail: organization administrator email. This email is used to reset the organization administrator password for his first connection to API Manager\n  }\n}\n\n\n## Performed actions\nSeveral objects are created in API Manager for the provisioning:\n- An organization (the name of the organization is passed as a parameter of the call)\n- An organization administrator (name and email are passed in the request body)\n\nAn email is then sent to the administrator using his email to reset his password\n\n## Return message\n- Message format\n```\n{\n \"dashboard_url\": \"string\"\n}\n```\n\n- Message sample\n```\n{\n \"dashboard_url\": \"https://api-env.demo.axway.com:8075/\"\n}\n```\n## Curl sample to test the API\n```\ncurl -X PUT \\\n  '${APIManagerAPIUserLogin}:${APIManagerAPIUserPwd} ${baseURLSBAPI}/v2/service_instances/ORGA02?accepts_incomplete=false' \\\n  -H 'content-type: application/json' \\\n  -d '{\n  \"service_id\": \"id1\",\n  \"plan_id\": \"id2\",\n  \"organization_guid\": \"id3\",\n  \"space_guid\": \"id3\",\n  \"parameters\": {\n    \"AdminName\": \"username\",\n    \"AdminEmail\": \"username@companyname.com\"\n  }\n}'\n```\nWith:\n  - ${APIManagerAPIUserLogin}: the loging of a user granted to access the API\n  - ${APIManagerAPIUserPwd}: the password of the user\n  - ${baseURLSBAPI}: the base URL to access the API (ex:https://api-env.demo.axway.com:8065)\n ",
+        "operationId" : "Provisioning",
+        "summary" : "Organization and Administrator provisioning in API Manager",
+        "parameters" : [ {
+          "description" : "Organization name to be created in API Manager",
+          "required" : true,
+          "in" : "path",
+          "name" : "instance_id",
+          "type" : "string"
+        }, {
+          "description" : "A value of true indicates that the marketplace and its clients support asynchronous broker operations",
+          "required" : true,
+          "in" : "query",
+          "name" : "accepts_incomplete",
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "201" : {
+            "description" : "The service instance was provisioned as a result of this request"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "422" : {
+            "description" : "The broker only supports asynchronous provisioning for the requested plan and the request did not include ?accepts_incomplete=true."
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "413" : {
+            "description" : "Request Entity Too Large"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "User not found during the organization administrator password initialization"
+          },
+          "409" : {
+            "description" : "A service instance with the same id already exists but with different attributes."
+          }
+        }
+      },
+      "delete" : {
+        "description" : "## Input parameters\nParameters passed during the API Call:\n- The name of the organization (instance_id)\n\n## Performed actions\nThe organization is removed from API Manager\nThe linked Administrator is automatically deleted from API Manager\n\n## Return message\n- Message format\n```\n{}\n```\n\n## Curl sample to test the API\n```\ncurl -X DELETE \\\n  ${APIManagerAPIUserLogin}:${APIManagerAPIUserPwd} ${baseURLSBAPI}/v2/service_instances/ORGA01\n```\nWith:\n  - ${APIManagerAPIUserLogin}: the loging of a user granted to access the API\n  - ${APIManagerAPIUserPwd}: the password of the user\n  - ${baseURLSBAPI}: the base URL to access the API (ex:https://api-env.demo.axway.com:8065)\n \n\n",
+        "operationId" : "Deprovisioning",
+        "summary" : "Removal of the organization and Administrator in API Manager",
+        "parameters" : [ {
+          "description" : "Organization name to be deleted in API Manager",
+          "required" : true,
+          "in" : "path",
+          "name" : "instance_id",
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Service instance was deleted."
+          },
+          "422" : {
+            "description" : "Unprocessable Entity - The broker only supports asynchronous deprovisioning for the requested plan and the request did not include ?accepts_incomplete=true"
+          },
+          "202" : {
+            "description" : "Accepted - Service instance deletion is in progress"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          },
+          "401" : {
+            "description" : "Done - The service instance does not exist"
+          },
+          "204" : {
+            "description" : "No Content"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    }
+  },
+  "info" : {
+    "title" : "ServiceBrokerAPI",
+    "description" : "",
+    "version" : "1.0"
+  },
+  "x-axway" : {
+    "corsEnabled" : true,
+    "basePaths" : [ "" ],
+    "serviceType" : "rest",
+    "deprecated" : false,
+    "tags" : { }
+  }
+}
