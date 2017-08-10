@@ -1,5 +1,3 @@
-# UnderConstruction
-
 # Description
 - Sample for Axway Service Broker for Cloud Foundry
 - The goal of this sample is to quickly build a proof of concept to create and bind services in Axway API Management Solution for Applications hosted in Cloud Foundry. 
