@@ -49,7 +49,7 @@ export AdminEmail=orgaadmin@demo.axway.com
 
 **Result:**
 ```
-- An organization <OrganizationName> created in API Manager
+- An organization <OrganizationName> is created in API Manager
 - An organization Administrator <AdminName> is created in API Manager
 - An email is sent to Organization Administrator to update his password (at the address <AdminEmail>)
 ```
@@ -94,7 +94,7 @@ export baseURLSBAPI=https://api-env.demo.axway.com:8065
 
 **Usage:** 
 ```
-> cf_bind-service.sh <OrganizationName> <WebServiceName>
+> cf_unbind-service.sh <OrganizationName> <WebServiceName>
 ```
 
 **Result:**
