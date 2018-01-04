@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-VersionComment: Imported Connector configuration
-ChangedBy: admin
-
