@@ -1,0 +1,84 @@
+{
+	"id": "0023afd2-abe7-4e7a-b4e3-ed7b77fd25f4",
+	"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+	"apiId": "7c8725f6-d558-4835-941c-66eba02b97f0",
+	"name": "pcftest",
+	"version": "1.0.0",
+	"vhost": null,
+	"path": "/v2",
+	"descriptionType": "original",
+	"descriptionManual": null,
+	"descriptionMarkdown": null,
+	"descriptionUrl": null,
+	"summary": "",
+	"retired": false,
+	"expired": false,
+	"image": null,
+	"retirementDate": 0,
+	"deprecated": false,
+	"state": "unpublished",
+	"createdOn": 1514199711587,
+	"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+	"corsProfiles": [
+		{
+			"name": "_default",
+			"isDefault": true,
+			"origins": [
+				"*"
+			],
+			"allowedHeaders": [],
+			"exposedHeaders": [
+				"X-CorrelationID"
+			],
+			"supportCredentials": false,
+			"maxAgeSeconds": 0
+		}
+	],
+	"securityProfiles": [
+		{
+			"name": "_default",
+			"isDefault": true,
+			"devices": []
+		}
+	],
+	"authenticationProfiles": [
+		{
+			"name": "_default",
+			"isDefault": true,
+			"parameters": {
+				
+			},
+			"type": "none"
+		}
+	],
+	"inboundProfiles": {
+		"_default": {
+			"securityProfile": "_default",
+			"corsProfile": "_default",
+			"monitorAPI": true,
+			"monitorSubject": "authentication.subject.id"
+		}
+	},
+	"outboundProfiles": {
+		"_default": {
+			"authenticationProfile": "_default",
+			"routeType": "proxy",
+			"requestPolicy": null,
+			"responsePolicy": null,
+			"routePolicy": null,
+			"apiId": null,
+			"apiMethodId": null,
+			"parameters": []
+		}
+	},
+	"serviceProfiles": {
+		"_default": {
+			"apiId": "7c8725f6-d558-4835-941c-66eba02b97f0",
+			"basePath": "http://petstore.swagger.io"
+		}
+	},
+	"caCerts": [],
+	"tags": {
+		
+	}
+}

@@ -1,0 +1,2176 @@
+[
+	
+	
+	{
+		"id": "78a38296-bded-44a9-9329-f2cd0a92e962",
+		"organizationId": "53437f82-8db5-4f61-9f9b-0b34db8be847",
+		"apiId": "322a2df9-a970-4917-bc60-227c92bed397",
+		"name": "FHIR Device",
+		"version": "DSTU 2",
+		"vhost": null,
+		"path": "/78a38296-bded-44a9-9329-f2cd0a92e962",
+		"descriptionType": "manual",
+		"descriptionManual": "This resource identifies an instance of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device. Medical devices includes durable (reusable) medical equipment, implantable devices, as well as disposable equipment used for diagnostic, treatment, and research for healthcare and public health. Non-medical devices may include items such as a machine, cellphone, computer, application, etc. For more information: https://www.hl7.org/fhir/device.html",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/78a38296-bded-44a9-9329-f2cd0a92e962/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1490305054070,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "322a2df9-a970-4917-bc60-227c92bed397",
+				"basePath": "http://fhir3.healthintersections.com.au/open"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_FHIR"
+			],
+			"Category": [
+				"Identification",
+				" Devices"
+			],
+			"Standard": [
+				"FHIR"
+			]
+		}
+	},
+	{
+		"id": "f9393827-7890-4b5c-8112-bd14d20e43d8",
+		"organizationId": "53437f82-8db5-4f61-9f9b-0b34db8be847",
+		"apiId": "42afadba-c858-4249-aedb-a46da504b5e2",
+		"name": "FHIR Patient",
+		"version": "DSTU 2",
+		"vhost": null,
+		"path": "/patient",
+		"descriptionType": "manual",
+		"descriptionManual": "Demographics and other administrative information about an individual or animal receiving care or other health-related services. For more information: https://www.hl7.org/fhir/patient.html",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/f9393827-7890-4b5c-8112-bd14d20e43d8/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1490305053389,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "OAuth",
+						"type": "oauth",
+						"order": 1,
+						"properties": {
+							"tokenStore": "<key type='OAuth2StoresGroup'><id field='name' value='OAuth2 Stores'/><key type='AccessTokenStoreGroup'><id field='name' value='Access Token Stores'/><key type='AccessTokenPersist'><id field='name' value='OAuth Access Token Store'/></key></key></key>",
+							"accessTokenLocation": "HEADER",
+							"authorizationHeaderPrefix": "Bearer",
+							"accessTokenLocationQueryString": "",
+							"scopesMustMatch": "Any",
+							"scopes": "resource.WRITE, resource.READ",
+							"removeCredentialsOnSuccess": "true",
+							"implicitGrantEnabled": "true",
+							"implicitGrantLoginEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+							"implicitGrantLoginTokenName": "access_token",
+							"authCodeGrantTypeEnabled": "true",
+							"authCodeGrantTypeRequestEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+							"authCodeGrantTypeRequestClientIdName": "client_id",
+							"authCodeGrantTypeRequestSecretName": "client_secret",
+							"authCodeGrantTypeTokenEndpointUrl": "http://localhost:8089/api/oauth/token",
+							"authCodeGrantTypeTokenEndpointTokenName": "access_code"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "42afadba-c858-4249-aedb-a46da504b5e2",
+				"basePath": "http://fhir3.healthintersections.com.au"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_FHIR"
+			],
+			"Category": [
+				"Identification",
+				" Individuals"
+			],
+			"Standard": [
+				"FHIR"
+			]
+		}
+	},
+	{
+		"id": "7eb85b1b-aa1e-4b7f-a780-98b3b363f99d",
+		"organizationId": "53437f82-8db5-4f61-9f9b-0b34db8be847",
+		"apiId": "997aff85-0faf-4df8-9ef9-70718d624f2e",
+		"name": "FHIR Observation",
+		"version": "DSTU 2",
+		"vhost": null,
+		"path": "/observation",
+		"descriptionType": "manual",
+		"descriptionManual": "Measurements and simple assertions made about a patient, device or other subject. For more information: https://www.hl7.org/fhir/observation.html",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/7eb85b1b-aa1e-4b7f-a780-98b3b363f99d/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1490305053165,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "997aff85-0faf-4df8-9ef9-70718d624f2e",
+				"basePath": "http://fhir3.healthintersections.com.au"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_FHIR"
+			],
+			"Category": [
+				"Clinical",
+				" Diagnostics"
+			],
+			"Standard": [
+				"FHIR"
+			]
+		}
+	},
+	{
+		"id": "6334abf0-6f44-498d-9932-6e459121f307",
+		"organizationId": "14df2c8b-c28c-4062-ba8b-31449524a611",
+		"apiId": "6d75fcb8-6ee1-40dc-87b3-47a26b539ade",
+		"name": "My API",
+		"version": "1.0",
+		"vhost": null,
+		"path": "/api",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": null,
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "unpublished",
+		"createdOn": 1507717050678,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "6d75fcb8-6ee1-40dc-87b3-47a26b539ade",
+				"basePath": "http://basepath.org"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			
+		}
+	},
+	{
+		"id": "195d2549-c2ec-40dc-8d44-cc960d3e883f",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "57e8662d-2bc9-4d08-9077-b969476cfb49",
+		"name": "EMR-System-Admissions",
+		"version": "3.7",
+		"vhost": null,
+		"path": "/api/erm/admission",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Processing electronic health transactions for managing admissions",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/195d2549-c2ec-40dc-8d44-cc960d3e883f/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1483375811420,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "OAuth",
+						"type": "oauth",
+						"order": 1,
+						"properties": {
+							"tokenStore": "<key type='OAuth2StoresGroup'><id field='name' value='OAuth2 Stores'/><key type='AccessTokenStoreGroup'><id field='name' value='Access Token Stores'/><key type='AccessTokenPersist'><id field='name' value='OAuth Access Token Store'/></key></key></key>",
+							"accessTokenLocation": "HEADER",
+							"authorizationHeaderPrefix": "Bearer",
+							"accessTokenLocationQueryString": "",
+							"scopesMustMatch": "Any",
+							"scopes": "patient.*, registration.submit",
+							"removeCredentialsOnSuccess": "true",
+							"implicitGrantEnabled": "true",
+							"implicitGrantLoginEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+							"implicitGrantLoginTokenName": "access_token",
+							"authCodeGrantTypeEnabled": "true",
+							"authCodeGrantTypeRequestEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+							"authCodeGrantTypeRequestClientIdName": "client_id",
+							"authCodeGrantTypeRequestSecretName": "client_secret",
+							"authCodeGrantTypeTokenEndpointUrl": "http://localhost:8089/api/oauth/token",
+							"authCodeGrantTypeTokenEndpointTokenName": "access_code"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "57e8662d-2bc9-4d08-9077-b969476cfb49",
+				"basePath": "http://emr-system:8081"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			],
+			"Category": [
+				"EMR"
+			]
+		}
+	},
+	{
+		"id": "fb46f47a-59bd-417e-9b4c-dd06e605047b",
+		"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+		"apiId": "6eab9fac-584c-403e-bdfe-d7f068453039",
+		"name": "B2Bi",
+		"version": "1.1.0",
+		"vhost": null,
+		"path": "/api/v1",
+		"descriptionType": "manual",
+		"descriptionManual": "This B2Bi API enables configuration of communities, partners and exchanges. This enables partner on-boarding and community management.\n",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "This B2Bi API enables configuration of communities, partners and exchanges. This enables partner on-boarding and community management.",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/fb46f47a-59bd-417e-9b4c-dd06e605047b/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "unpublished",
+		"createdOn": 1492121458071,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "6eab9fac-584c-403e-bdfe-d7f068453039",
+				"basePath": "http://test"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Type": [
+				"Axway"
+			]
+		}
+	},
+	{
+		"id": "08803a69-0121-49a5-a4b2-7e68564bc119",
+		"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+		"apiId": "89b8b66c-f27f-4caf-8093-68925442368a",
+		"name": "pcftest2",
+		"version": "1.0",
+		"vhost": null,
+		"path": "/4be7e206-0d6c-4ae4-9880-8c28f1c9bf48",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": null,
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "unpublished",
+		"createdOn": 1508933866058,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "89b8b66c-f27f-4caf-8093-68925442368a",
+				"basePath": "http://greeting-app-tournois-postresurrection.cfapps.pie-25.cfplatformeng.com"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			
+		}
+	},
+	{
+		"id": "6c05b1c6-4011-4504-b1e5-e420883db19f",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "1a43bb6a-d8f8-4dd7-908c-ef2562c8a6be",
+		"name": "EMR-DiagnosticInfo",
+		"version": "3.7",
+		"vhost": null,
+		"path": "/api/emr/diagnostic",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Processes submitted patient diagnostics data",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/6c05b1c6-4011-4504-b1e5-e420883db19f/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590180832,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "1a43bb6a-d8f8-4dd7-908c-ef2562c8a6be",
+				"basePath": "http://emr-system:8081"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			],
+			"Category": [
+				"Diagnostic"
+			]
+		}
+	},
+	{
+		"id": "04a97d23-119a-4b4d-a871-264ec25410e8",
+		"organizationId": "53437f82-8db5-4f61-9f9b-0b34db8be847",
+		"apiId": "d13b4c2a-150b-47c2-b108-36a6197e8e00",
+		"name": "FHIR CarePlan",
+		"version": "DSTU 2",
+		"vhost": null,
+		"path": "/careplan",
+		"descriptionType": "manual",
+		"descriptionManual": "Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions. For more information: https://www.hl7.org/fhir/careplan.html",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/04a97d23-119a-4b4d-a871-264ec25410e8/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1490305053528,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "d13b4c2a-150b-47c2-b108-36a6197e8e00",
+				"basePath": "http://fhir3.healthintersections.com.au/open"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_FHIR"
+			],
+			"Category": [
+				"Clinical",
+				" Care Provision"
+			],
+			"Standard": [
+				"FHIR"
+			]
+		}
+	},
+	{
+		"id": "ed0f693d-0c7d-4ee4-b33d-5f3e042bd07d",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "986f186e-d9af-4421-8416-cb11b5922d66",
+		"name": "HL7-Message-Maker",
+		"version": "2.1",
+		"vhost": null,
+		"path": "/api/hl7/message",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Manage message standards for transfer of clinical and administrative data between software applications used by various healthcare providers",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/ed0f693d-0c7d-4ee4-b33d-5f3e042bd07d/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590318302,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "986f186e-d9af-4421-8416-cb11b5922d66",
+				"basePath": "http://hl7-system:8082"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			]
+		}
+	},
+	{
+		"id": "5a711858-ab28-406e-92da-5a1d96f58668",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "06d8e94a-3e4f-45c5-b4a8-ccb27266e0af",
+		"name": "Security-HIPAA-Control",
+		"version": "1.0",
+		"vhost": null,
+		"path": "/api/hipaa/control",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Provides secure electronic access to health data and to remain inÂ complianceÂ with privacy regulations set by HHS (encryption, multi factor authentication, â¦)",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/5a711858-ab28-406e-92da-5a1d96f58668/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590318288,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "06d8e94a-3e4f-45c5-b4a8-ccb27266e0af",
+				"basePath": "http://sec.hipaa:8086"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			],
+			"Category": [
+				"Security",
+				" Control"
+			]
+		}
+	},
+	{
+		"id": "d5fac380-9bb6-42ca-be73-f5bf22736e5f",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "d10e045c-28a7-4a0d-b4af-3bb4b940e90d",
+		"name": "EMR-System-Surgery",
+		"version": "3.7",
+		"vhost": null,
+		"path": "/api/emr/surgery",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Processing electronic healthcare transactions for retrieving surgery availabilities",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/d5fac380-9bb6-42ca-be73-f5bf22736e5f/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590180733,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "d10e045c-28a7-4a0d-b4af-3bb4b940e90d",
+				"basePath": "http://emr-system:8081"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			],
+			"Category": [
+				"Surgery"
+			]
+		}
+	},
+	{
+		"id": "af4688d0-442b-42c1-bf59-d8d564512e82",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "ae832a74-7220-4d87-8fbf-8add167a6122",
+		"name": "EMR-HealthCatalog",
+		"version": "3.7",
+		"vhost": null,
+		"path": "/api/emr/catalog",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Processes health data for patient symptom recommendation",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/af4688d0-442b-42c1-bf59-d8d564512e82/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590180798,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "ae832a74-7220-4d87-8fbf-8add167a6122",
+				"basePath": "http://emr-system:8081"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			],
+			"Category": [
+				"Catalog"
+			]
+		}
+	},
+	{
+		"id": "ad0774d3-512c-4cda-abbd-2e830c14c09c",
+		"organizationId": "53437f82-8db5-4f61-9f9b-0b34db8be847",
+		"apiId": "9b669525-7730-4a0a-885b-615c0c6aaa37",
+		"name": "FHIR Condition",
+		"version": "DSTU 2",
+		"vhost": null,
+		"path": "/condition",
+		"descriptionType": "manual",
+		"descriptionManual": "Use to record detailed information about conditions, problems or diagnoses recognized by a clinician. There are many uses including: recording a diagnosis during an encounter; populating a problem list or a summary statement, such as a discharge summary. For more information: https://www.hl7.org/fhir/condition.html",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/ad0774d3-512c-4cda-abbd-2e830c14c09c/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1490305053638,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "9b669525-7730-4a0a-885b-615c0c6aaa37",
+				"basePath": "http://fhir3.healthintersections.com.au"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_FHIR"
+			],
+			"Category": [
+				"Clinical",
+				" General"
+			],
+			"Standard": [
+				"FHIR"
+			]
+		}
+	},
+	{
+		"id": "da0220cb-b804-4619-8875-383f90e4700d",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "28958580-e184-44f9-bb9f-d144ea75b1b5",
+		"name": "EMR-System-Physicians",
+		"version": "3.7",
+		"vhost": null,
+		"path": "/api/emr/physicians",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Processing electronic health transactions for retrieving physicians availability",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/da0220cb-b804-4619-8875-383f90e4700d/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590180881,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "28958580-e184-44f9-bb9f-d144ea75b1b5",
+				"basePath": "http://emr-system:8081"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			],
+			"Category": [
+				"Physician"
+			]
+		}
+	},
+	{
+		"id": "56cad5a9-9cd0-4642-b911-911d23fb33c9",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "54f273bb-d795-4194-8acc-ec417516a6ce",
+		"name": "HL7-Element-DB",
+		"version": "2.1",
+		"vhost": null,
+		"path": "/api/hl7/db",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Datasource access to HL7 messages",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/56cad5a9-9cd0-4642-b911-911d23fb33c9/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590180751,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "54f273bb-d795-4194-8acc-ec417516a6ce",
+				"basePath": "http://hl7-system:8082"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Category": [
+				"Demo_Amplify_PlexusHealth"
+			]
+		}
+	},
+	{
+		"id": "221cdf76-1681-4957-a9bc-f81979b03e12",
+		"organizationId": "53437f82-8db5-4f61-9f9b-0b34db8be847",
+		"apiId": "7ac23c03-a79b-476d-a3a3-b2f73216cda8",
+		"name": "FHIR Procedure",
+		"version": "DSTU 2",
+		"vhost": null,
+		"path": "/procedure",
+		"descriptionType": "manual",
+		"descriptionManual": "An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy. For more information: https://www.hl7.org/fhir/procedure.html",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/221cdf76-1681-4957-a9bc-f81979b03e12/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1490305054378,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "7ac23c03-a79b-476d-a3a3-b2f73216cda8",
+				"basePath": "http://fhir3.healthintersections.com.au/open"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_FHIR"
+			],
+			"Category": [
+				"Clinical",
+				" General"
+			],
+			"Standard": [
+				"FHIR"
+			]
+		}
+	},
+	{
+		"id": "93fa2392-fa1f-4b61-8752-b1fe61db6b68",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "98189880-8c4b-4a0d-8ae5-dcf1a9b81e17",
+		"name": "INS-InsuranceCheck",
+		"version": "1.3",
+		"vhost": null,
+		"path": "/api/ins/check",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Validate patient insurance",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/93fa2392-fa1f-4b61-8752-b1fe61db6b68/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590318319,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "98189880-8c4b-4a0d-8ae5-dcf1a9b81e17",
+				"basePath": "http://ins-insurance:8083"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			]
+		}
+	},
+	{
+		"id": "120d7e60-8ced-483e-a87c-1afe5f383888",
+		"organizationId": "cefb8d78-25f3-4750-bdad-d7352e7d9268",
+		"apiId": "2d6c2e4e-e678-456b-8a8b-4ea837d407cc",
+		"name": "Security-PatientAuth-Service",
+		"version": "2.2",
+		"vhost": null,
+		"path": "/api/sec/auth/patient",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Security service providing patient authentication",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/120d7e60-8ced-483e-a87c-1afe5f383888/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1480590318334,
+		"createdBy": "9ea65a9c-2a92-463d-8589-b71c7bebfbd8",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "Pass Through",
+						"type": "passThrough",
+						"order": 1,
+						"properties": {
+							"subjectIdFieldName": "Pass Through",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "2d6c2e4e-e678-456b-8a8b-4ea837d407cc",
+				"basePath": "http://patient-auth-service:8086"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_Amplify_PlexusHealth"
+			],
+			"Category": [
+				"Auth",
+				" Security"
+			]
+		}
+	},
+	{
+		"id": "fbea5307-a997-4f2c-a631-b983013d58f7",
+		"organizationId": "53437f82-8db5-4f61-9f9b-0b34db8be847",
+		"apiId": "631d52a2-bdac-4153-b5b0-e14a143b57cf",
+		"name": "FHIR Location",
+		"version": "DSTU 2",
+		"vhost": null,
+		"path": "/location",
+		"descriptionType": "manual",
+		"descriptionManual": "Details and position information for a physical place where services are provided and resources and participants may be stored, found, contained or accommodated. For more information: https://www.hl7.org/fhir/location.html",
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": null,
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/fbea5307-a997-4f2c-a631-b983013d58f7/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1490305053107,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "631d52a2-bdac-4153-b5b0-e14a143b57cf",
+				"basePath": "http://fhir3.healthintersections.com.au/open"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			"Industry": [
+				"Healthcare"
+			],
+			"Type": [
+				"Demo_FHIR"
+			],
+			"Category": [
+				"Identification",
+				" Entities"
+			],
+			"Standard": [
+				"FHIR"
+			]
+		}
+	},
+	{
+		"id": "ae107e3c-30e4-414e-a69c-1a6d9f1eaed5",
+		"organizationId": "14df2c8b-c28c-4062-ba8b-31449524a611",
+		"apiId": "cc31bcb3-326b-4005-b6ac-b6d065bfdfa9",
+		"name": "Stockquote",
+		"version": "1.0",
+		"vhost": null,
+		"path": "/stockquote",
+		"descriptionType": "original",
+		"descriptionManual": null,
+		"descriptionMarkdown": null,
+		"descriptionUrl": null,
+		"summary": "Get stock quote",
+		"retired": false,
+		"expired": false,
+		"image": "/api/portal/v1.3/discovery/swagger/apis/ae107e3c-30e4-414e-a69c-1a6d9f1eaed5/image",
+		"retirementDate": 0,
+		"deprecated": false,
+		"state": "published",
+		"createdOn": 1492121619567,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"corsProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"origins": [
+					"*"
+				],
+				"allowedHeaders": [],
+				"exposedHeaders": [
+					"X-CorrelationID"
+				],
+				"supportCredentials": false,
+				"maxAgeSeconds": 0
+			}
+		],
+		"securityProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"devices": [
+					{
+						"name": "API Key",
+						"type": "apiKey",
+						"order": 1,
+						"properties": {
+							"apiKeyFieldName": "KeyId",
+							"takeFrom": "HEADER",
+							"removeCredentialsOnSuccess": "true"
+						}
+					}
+				]
+			}
+		],
+		"authenticationProfiles": [
+			{
+				"name": "_default",
+				"isDefault": true,
+				"parameters": {
+					
+				},
+				"type": "none"
+			}
+		],
+		"inboundProfiles": {
+			"_default": {
+				"securityProfile": "_default",
+				"corsProfile": "_default",
+				"monitorAPI": true,
+				"monitorSubject": "authentication.subject.id"
+			}
+		},
+		"outboundProfiles": {
+			"_default": {
+				"authenticationProfile": "_default",
+				"routeType": "proxy",
+				"requestPolicy": null,
+				"responsePolicy": null,
+				"routePolicy": null,
+				"apiId": null,
+				"apiMethodId": null,
+				"parameters": []
+			}
+		},
+		"serviceProfiles": {
+			"_default": {
+				"apiId": "cc31bcb3-326b-4005-b6ac-b6d065bfdfa9",
+				"basePath": "http://api-env:5080/mockup"
+			}
+		},
+		"caCerts": [],
+		"tags": {
+			
+		}
+	}
+	
+]

@@ -1,0 +1,20 @@
+[
+	{
+		"id": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+		"name": "Axway",
+		"description": null,
+		"email": null,
+		"image": null,
+		"restricted": false,
+		"virtualHost": null,
+		"phone": null,
+		"enabled": true,
+		"development": true,
+		"dn": "o=Axway,ou=organizations,ou=APIPortal",
+		"createdOn": 1492121413879,
+		"startTrialDate": null,
+		"endTrialDate": null,
+		"trialDuration": null,
+		"isTrial": null
+	}
+]
