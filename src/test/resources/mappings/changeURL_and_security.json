@@ -1,0 +1,13 @@
+{
+    "request": {
+        "method": "PUT",
+        "urlPathPattern": "/api/portal/v1.3/proxies/[0-9a-z-]+"
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "changeURL_and_security_response.json",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

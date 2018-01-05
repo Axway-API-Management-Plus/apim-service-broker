@@ -1,0 +1,47 @@
+{
+	"services": [
+		{
+			"id": "ED01F448-40C7-4A9D-93D0-51E7D4E93CA1",
+			"name": "Axway-APIM",
+			"description": "Axway service broker implementation",
+			"bindable": true,
+			"plan_updateable": false,
+			"plans": [
+				{
+					"id": "1A6C15A6-1DE1-4870-A4F2-EA0A905F4A0F",
+					"name": "APIM",
+					"description": "This is a default Axway plan.  All services are created equally.",
+					"metadata": {
+						"displayName": "Axway APIM Route Service"
+					},
+					"free": true
+				}
+			],
+			"tags": [
+				"Axway",
+				"api",
+				"api management",
+				"api platform",
+				"api gateway",
+				"Axway Amplify"
+			],
+			"metadata": {
+				"longDescription": "Axway Amplify APIM Service Broker",
+				"documentationUrl": "https://github.com/Axway-API-Management-Plus",
+				"providerDisplayName": "Axway",
+				"displayName": "Axway Amplify APIM",
+				"imageUrl": "https://cdn.axway.com/globalnav/axway-logo-top.svg",
+				"supportUrl": "https://github.com/Axway-API-Management-Plus"
+			},
+			"requires": [
+				"route_forwarding"
+			],
+			"dashboard_client": {
+				"id": "id",
+				"secret": "secret",
+				"redirect_uri": "https://axway.com"
+			}
+		}
+	]
+}
+   

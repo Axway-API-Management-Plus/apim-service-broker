@@ -1,0 +1,13 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/api/portal/v1.3/organizations/?field=name&op=eq&value=Axway"
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "organization_response.json",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

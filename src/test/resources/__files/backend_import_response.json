@@ -1,0 +1,159 @@
+{
+	"id": "7c8725f6-d558-4835-941c-66eba02b97f0",
+	"name": "pcftest",
+	"summary": "",
+	"description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+	"version": "1.0.0",
+	"basePath": "http://petstore.swagger.io",
+	"resourcePath": "/v2",
+	"models": {
+		"Order": {
+			"properties": {
+				"id": {
+					"format": "int64",
+					"type": "integer"
+				},
+				"petId": {
+					"format": "int64",
+					"type": "integer"
+				},
+				"quantity": {
+					"format": "int32",
+					"type": "integer"
+				},
+				"shipDate": {
+					"format": "date-time",
+					"type": "string"
+				},
+				"status": {
+					"description": "Order Status",
+					"type": "string"
+				},
+				"complete": {
+					"default": false,
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"Category": {
+			"properties": {
+				"id": {
+					"format": "int64",
+					"type": "integer"
+				},
+				"name": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"User": {
+			"properties": {
+				"id": {
+					"format": "int64",
+					"type": "integer"
+				},
+				"username": {
+					"type": "string"
+				},
+				"firstName": {
+					"type": "string"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				},
+				"phone": {
+					"type": "string"
+				},
+				"userStatus": {
+					"description": "User Status",
+					"format": "int32",
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"Tag": {
+			"properties": {
+				"id": {
+					"format": "int64",
+					"type": "integer"
+				},
+				"name": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Pet": {
+			"required": [
+				"name",
+				"photoUrls"
+			],
+			"properties": {
+				"id": {
+					"format": "int64",
+					"type": "integer"
+				},
+				"category": {
+					"$ref": "Category"
+				},
+				"name": {
+					"example": "doggie",
+					"type": "string"
+				},
+				"photoUrls": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"tags": {
+					"items": {
+						"$ref": "Tag"
+					},
+					"type": "array"
+				},
+				"status": {
+					"description": "pet status in the store",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"ApiResponse": {
+			"properties": {
+				"code": {
+					"format": "int32",
+					"type": "integer"
+				},
+				"type": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"consumes": [],
+	"produces": [],
+	"integral": true,
+	"createdOn": 1514199711151,
+	"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+	"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+	"serviceType": "rest",
+	"hasOriginalDefinition": true,
+	"importUrl": null,
+	"properties": {
+		
+	}
+}

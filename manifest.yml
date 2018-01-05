@@ -1,0 +1,6 @@
+---
+applications:
+- name: axway-apim-service-broker
+  memory: 1G
+  random-route: true
+  path: target/axway-apim-service-broker-1.0.0.jar

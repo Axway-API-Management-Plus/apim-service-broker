@@ -1,0 +1,13 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/api/portal/v1.3/apirepo/importFromUrl"
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "backend_import_response.json",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}
