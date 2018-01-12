@@ -1,6 +1,6 @@
 {
 	"orgName": "Axway",
-	"backendName": "pcftest2",
-	"swaggerURI": "/v2/api-docs"
+	"apiName": "boschAPI",
+	"swaggerURI": "http://greeting-app-dimensionless-premastery.cfapps.pie-25.cfplatformeng.com/v2/api-docs"
 	
 }
