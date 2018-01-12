@@ -21,7 +21,7 @@ This artefact was successfully tested for the following versions:
 
 	Check out the code from github
 	```bash
-	$git clone https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample.git
+	$git clone https://github.com/axway-apim-service-broker.git
 	```
 	Build the project (output from `cf push` command provides fully qualified URL as output)
 	```bash
@@ -84,13 +84,13 @@ This artefact was successfully tested for the following versions:
 	$cf set-env axway-apim-service-broker axway_apimanager_url https://phx-107.demo.axway.com:8075
 	$cf set-env axway-apim-service-broker axway_apimanager_username apiadmin
 	$cf set-env axway-apim-service-broker axway_apimanager_password changeme
-	$cf set-env aaxway-apim-service-broker axway_apimanager_traffic_url https://phx-107.demo.axway.com:8065 // In High Availability scenario the URL will be a Load Balancer URL
+	$cf set-env axway-apim-service-broker axway_apimanager_traffic_url https://phx-107.demo.axway.com:8065 // In High Availability scenario the URL will be a Load Balancer URL
 	```
 									
 - Refresh Service Broker Instance to read the new environment variable
 	
 	```bash
-    $cf restage axway-service-broker
+    $cf restage axway-apim-service-broker
     ```
     
 
@@ -118,7 +118,7 @@ $cf push
     ```json
 	{
 		"orgName": "Axway",
-		"backendName": "pcftest2",
+		"apiName": "pcftest2",
 		"swaggerURI": "/v2/api-docs" 
 		
 	}
@@ -131,7 +131,7 @@ $cf push
 	$cf bind-route-service cfapps.pie-25.cfplatformeng.com  AxwayAPIM --hostname greeting-app-tournois-postresurrection -c param.json
 	```
 	
-	The route binding command invokes Axway Serivce broker. The Service broker creates Backend, Front End and apply API Key as security. 
+	The route binding command invokes Axway Service broker. The Service broker creates Backend, Front End and apply API Key as security. 
 	
 - Test the Pivotal Application
 

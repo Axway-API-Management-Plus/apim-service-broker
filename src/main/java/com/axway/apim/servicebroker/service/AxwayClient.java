@@ -84,7 +84,7 @@ public class AxwayClient {
 		}
 		
 		if(!swaggerURI.startsWith("http")){
-			swaggerURI = appRouteURL + swaggerURI;
+			swaggerURI = "https://"+ appRouteURL + swaggerURI;
 		}
 
 
