@@ -1,12 +1,12 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
+.project
 !src/main/resources/apiproject/.project
 
 ### STS ###
 .apt_generated
 .classpath
 .factorypath
-.project
 .settings
 .springBeans
 
