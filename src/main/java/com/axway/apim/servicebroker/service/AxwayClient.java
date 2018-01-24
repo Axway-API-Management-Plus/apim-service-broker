@@ -39,7 +39,7 @@ public class AxwayClient {
 	@Value("${axway_apimanager_url:https://phx-107.demo.axway.com:8075}")
 	private String url;
 
-	@Value("${axway_apimanger_username:apiadmin}")
+	@Value("${axway_apimanager_username:apiadmin}")
 	private String username;
 
 	@Value("${axway_apimanager_password:Space*52}")
