@@ -21,7 +21,7 @@ This artefact was successfully tested for the following versions:
 
 	Check out the code from github
 	```bash
-	$git clone https://github.com/axway-apim-service-broker.git
+	$git clone https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample.git
 	```
 	Build the project (output from `cf push` command provides fully qualified URL as output)
 	```bash
