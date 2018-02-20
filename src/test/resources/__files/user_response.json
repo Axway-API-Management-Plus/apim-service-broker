@@ -1,0 +1,18 @@
+[{
+	"id": "6fa50f9e-aeea-477f-b4de-6ffc12054a36",
+	"organizationId": "019c8db6-637b-4979-bc8f-7a9d8cd940f0",
+	"name": "anna@axway.com",
+	"description": null,
+	"loginName": "anna@axway.com",
+	"email": "anna@axway.com",
+	"phone": null,
+	"mobile": null,
+	"role": "oadmin",
+	"image": null,
+	"enabled": true,
+	"createdOn": 1518735746646,
+	"state": "approved",
+	"type": "internal",
+	"authAttrs": null,
+	"dn": "cn=anna@axway.com,o=BIC.axway-dev.31e52a98-5e3b-423c-8d8d-01fad7d83ccb,ou=organizations,ou=APIPortal"
+}]

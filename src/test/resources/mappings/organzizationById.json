@@ -1,11 +1,11 @@
 {
     "request": {
         "method": "GET",
-        "url": "/api/portal/v1.3/proxies"
+        "url": "/api/portal/v1.3/organizations/019c8db6-637b-4979-bc8f-7a9d8cd940f0"
     },
     "response": {
         "status": 200,
-        "bodyFileName": "list_frontend_response.json",
+        "bodyFileName": "organizationById_response.json",
         "headers": {
             "Content-Type": "application/json"
         }

@@ -1,22 +1,33 @@
 package com.axway.apim.servicebroker.config;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.servicebroker.model.Catalog;
 import org.springframework.cloud.servicebroker.model.DashboardClient;
 import org.springframework.cloud.servicebroker.model.Plan;
 import org.springframework.cloud.servicebroker.model.ServiceDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ResourceLoader;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class CatalogConfig {	
 	
+	@Autowired
+	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private ObjectMapper mapper;
 	
 	//private static String BROKER_ID="ED01F448-40C7-4A9D-93D0-51E7D4E93CA1";
 
@@ -42,23 +53,39 @@ public class CatalogConfig {
 		return sdMetadata;
 	}
 
-	private Map<String, Object> getPlanMetadata() {
-		Map<String, Object> planMetadata = new HashMap<>();
-		planMetadata.put("displayName", "Axway APIM Route Service");
-		return planMetadata;
-	}
+//	private Map<String, Object> getPlanMetadata() {
+//		Map<String, Object> planMetadata = new HashMap<>();
+//		planMetadata.put("displayName", "Axway APIM Route Service");
+//		return planMetadata;
+//	}
 
 	private List<String> getTags() {
 		return Arrays.asList("Axway", "api", "api management", "api platform", "api gateway", "Axway Amplify"); // tags
 	}
 
 	private List<Plan> getPlans() {
-		List<Plan> plans = new ArrayList<>();
-		Plan plan = new Plan(getEnvOrDefault("PLAN_ID", "1A6C15A6-1DE1-4870-A4F2-EA0A905F4A0F"), // env
-				"APIM", "This is a default Axway plan.  All services are created equally.", getPlanMetadata(),
-				true);
-		plans.add(plan);
-		return plans;
+//		List<Plan> plans = new ArrayList<>();
+//		Plan plan = new Plan(getEnvOrDefault("PLAN_ID", "1A6C15A6-1DE1-4870-A4F2-EA0A905F4A0F"), // env
+//				"APIM", "This is a default Axway plan.  All services are created equally.", getPlanMetadata(),
+//				true);
+//		plans.add(plan);
+		InputStream inputStream = null;
+		try {
+			inputStream = resourceLoader.getResource("classpath:plan.json").getInputStream();
+			TypeReference<List<Plan>> type = new TypeReference<List<Plan>>() {};
+			List<Plan> plans = mapper.readValue(inputStream, type);
+			return plans;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(inputStream != null)
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					
+				}
+		}	
+		return null;
 	}
 
 	private DashboardClient getDashboardClient() {

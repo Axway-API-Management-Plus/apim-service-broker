@@ -1,5 +1,12 @@
 package com.axway.apim.servicebroker.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+import org.springframework.cloud.servicebroker.exception.ServiceInstanceDoesNotExistException;
+import org.springframework.cloud.servicebroker.model.CloudFoundryContext;
+import org.springframework.cloud.servicebroker.model.Context;
 import org.springframework.cloud.servicebroker.model.CreateServiceInstanceRequest;
 import org.springframework.cloud.servicebroker.model.CreateServiceInstanceResponse;
 import org.springframework.cloud.servicebroker.model.DeleteServiceInstanceRequest;
@@ -11,21 +18,105 @@ import org.springframework.cloud.servicebroker.model.UpdateServiceInstanceRespon
 import org.springframework.cloud.servicebroker.service.ServiceInstanceService;
 import org.springframework.stereotype.Service;
 
-
+import com.axway.apim.servicebroker.exception.AxwayException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class AxwayServiceInstanceService implements ServiceInstanceService {
 
 
+	@Autowired
+	private String url;
+	
+	@Autowired
+	private AxwayServiceBroker axwayServiceBroker;;
+
+	@Autowired
+	private CFClient cfClient;
+
+	@Autowired
+	private ObjectMapper mapper;
+
+	private static final Logger logger = LoggerFactory.getLogger(AxwayServiceInstanceService.class.getName());
+
 	@Override
-	public CreateServiceInstanceResponse createServiceInstance(CreateServiceInstanceRequest createServiceInstanceRequest) {
+	public CreateServiceInstanceResponse createServiceInstance(
+			CreateServiceInstanceRequest createServiceInstanceRequest) {
+		log(createServiceInstanceRequest);
+
+		String userName = null;
+
+		Context userContext = createServiceInstanceRequest.getOriginatingIdentity();
+		logger.info("User Identity: {}: ", userContext);
+		if (userContext != null) {
+			String userGuid = (String) userContext.getProperty("user_id");
+			userName = cfClient.getUserName(userGuid);
+			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+		}
 		
-		return new CreateServiceInstanceResponse();
+		//userName = "test2@localhost.com";
+
+		String serviceInstanceId = createServiceInstanceRequest.getServiceInstanceId();
+		logger.info("Service Instance Id: {}",serviceInstanceId);
+		CloudFoundryContext context = (CloudFoundryContext) createServiceInstanceRequest.getContext();
+		
+		String spaceGuid = context.getSpaceGuid();
+		
+		logger.info("Space Guid: {}: ", spaceGuid);
+		
+		String spaceName = cfClient.getSpaceName(spaceGuid);
+
+		logger.info(" Space Name: {} ", spaceName);
+		try {
+			boolean status = axwayServiceBroker.createOrgAndUser(spaceName, userName, serviceInstanceId);
+			
+			CreateServiceInstanceResponse createServiceInstanceResponse = new CreateServiceInstanceResponse();
+			if(status){
+				createServiceInstanceResponse.withDashboardUrl(url);
+				
+			}else{
+				createServiceInstanceResponse.withInstanceExisted(true);
+			}
+			return createServiceInstanceResponse;
+			
+			
+		} catch (AxwayException e) {
+			throw new ServiceBrokerException(e.getMessage());
+		}
+
 	}
 
 	@Override
-	public DeleteServiceInstanceResponse deleteServiceInstance(DeleteServiceInstanceRequest arg0) {
-		return new DeleteServiceInstanceResponse();
+	public DeleteServiceInstanceResponse deleteServiceInstance(
+			DeleteServiceInstanceRequest deleteServiceInstanceRequest) {
+
+		log(deleteServiceInstanceRequest);
+
+		String userName = null;
+
+		Context userContext = deleteServiceInstanceRequest.getOriginatingIdentity();
+		if (userContext != null) {
+			String userGuid = (String) userContext.getProperty("user_id");
+			userName = cfClient.getUserName(userGuid);
+			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+		}
+		//userName = "test2@localhost.com";
+
+		logger.info("DeleteServiceInstanceResponse: User identity {} ", deleteServiceInstanceRequest.getOriginatingIdentity());
+		String serviceInstanceId = deleteServiceInstanceRequest.getServiceInstanceId();
+
+		try {
+			boolean status = axwayServiceBroker.deleteOrgAppAndUser(userName, serviceInstanceId);
+			
+			if(!status){
+				throw new ServiceInstanceDoesNotExistException(serviceInstanceId);
+			}
+			DeleteServiceInstanceResponse deleteServiceInstanceResponse = new DeleteServiceInstanceResponse();
+			return deleteServiceInstanceResponse;
+		} catch (AxwayException e) {
+			throw new ServiceBrokerException(e.getMessage());
+		}
 	}
 
 	@Override
@@ -36,9 +127,19 @@ public class AxwayServiceInstanceService implements ServiceInstanceService {
 
 	@Override
 	public UpdateServiceInstanceResponse updateServiceInstance(UpdateServiceInstanceRequest arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		UpdateServiceInstanceResponse updateServiceInstanceResponse = new UpdateServiceInstanceResponse();
+		return updateServiceInstanceResponse;
 	}
 
+	public void log(Object test) {
+
+		try {
+			String request = mapper.writeValueAsString(test);
+			logger.info("Request {}", request);
+
+		} catch (JsonProcessingException e) {
+			logger.error("Error processing JSON");
+		}
+	}
 
 }

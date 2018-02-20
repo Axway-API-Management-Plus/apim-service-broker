@@ -11,8 +11,8 @@ This artefact was successfully tested for the following versions:
 
 - Axway AMPLIFY API Management 7.5.3
 - JDK 1.8.0_xxx
-- Apache Maven 3.3.9
-- Pivotal Cloud Foundry Elastic Runtime  version 1.12 
+- Apache Maven 3.3.9 or above 
+- Pivotal Cloud Foundry Elastic Runtime  version 1.12 or above
 - CF Cli version 6.32.0+0191c33d9.2017-09-26 or above
 
 ## Axway Service Broker  Installation
@@ -21,11 +21,19 @@ This artefact was successfully tested for the following versions:
 
 	Check out the code from github
 	```bash
-	$git clone https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample.git
+	$git clone https://github.com/axway-apim-service-broker.git
 	```
 	Build the project (output from `cf push` command provides fully qualified URL as output)
 	```bash
 	$mvn clean install
+	```
+	
+	or you can use the following command if you want to skip testing step:
+	```bash
+	$mvn clean install -Dmaven.test.skip=true
+	```
+	Now, you can push your app to PCF:
+	```bash
 	$cf push 
 	
 	Showing health and status for app axway-apim-service-broker in org axwaydev / space dev as admin...
@@ -70,28 +78,45 @@ This artefact was successfully tested for the following versions:
 	p.redis                       cache-small               Redis service to provide on-demand dedicated instances configured as a cache.
 	```
 	
-- Create Cloud Foundry Service to Bind and Unbind Routes
- 
-	```bash
-    $cf create-service Axway-APIM APIM AxwayAPIM
-	Creating service instance AxwayAPIM in org axwaydev / space dev as admin...
-	OK
-	```
-
 - Add environment variables to Service Broker
 
 	```bash
-	$cf set-env axway-apim-service-broker axway_apimanager_url https://phx-107.demo.axway.com:8075
+	$cf set-env axway-apim-service-broker axway_apimanager_url https://myAPIM.server.com:8075
 	$cf set-env axway-apim-service-broker axway_apimanager_username apiadmin
 	$cf set-env axway-apim-service-broker axway_apimanager_password changeme
-	$cf set-env axway-apim-service-broker axway_apimanager_traffic_url https://phx-107.demo.axway.com:8065 // In High Availability scenario the URL will be a Load Balancer URL
+	$cf set-env axway-apim-service-broker axway_apimanager_traffic_url https://myAPIM.server.com:8065 // In High Availability scenario the URL will be a Load Balancer URL
+	
+	$cf set-env axway-apim-service-broker cf_uaa_username admin@axway.com
+	$cf set-env axway-apim-service-broker cf_uaa_password changme
+	$cf set-env axway-apim-service-broker cf_uaa_access_token_url https://login.sys.pie-25.cfplatformeng.com/oauth/token
+	$cf set-env axway-apim-service-broker cf_cloud_controller_url https://api.sys.pie-25.cfplatformeng.com
+	
+	$cf set-env axway-apim-service-broker TRUST_CERTS login.sys.pie-25.cfplatformeng.com,api.sys.pie-25.cfplatformeng.com  //If your instance of PCF uses self-signed certs, you may need to use this environment variable to prevent some security errors
 	```
-									
+
 - Refresh Service Broker Instance to read the new environment variable
 	
 	```bash
     $cf restage axway-apim-service-broker
-    ```
+    ```						
+    
+- Create Cloud Foundry Service to Bind and Unbind Routes
+ 
+	```bash
+    $cf create-service Axway-APIM APIM-Free AxwayAPIM
+	Creating service instance AxwayAPIM in org axwaydev / space dev as admin...
+	OK
+	```
+Create service command does the following
+
+1. Fetch space name from Cloud controller and use it as organization name
+2. Create a new organization
+3. Fetch Cloud foundry login  email id by calling Cloud Controller. 
+4. Create a new User
+5. Reset password for the newly created user which triggers an email.   
+
+
+
     
 
 ## Axway Service Broker update
@@ -106,24 +131,26 @@ $cf push
 1. Upload the following project in Axway Policy Studio
   * The Policy Studio Project (src/main/resources/apiproject) must be checked-out locally and imported into Policy Studio using the option `Open Project`.
 
-2. Deploy Policy Studio project on the target API Gateway
+2. Deploy this project to your instance of Axway API Gateway. You may also export the `Forward Request to API Manger Traffic Port` policy from the project and import it in your API Gateway configuration. In addition, you will need to configure Gateway Listeners similar to how it is done in the provided project: port 8065 is mapped to the `PCF` listener, port 7070 is mapped to the `API Manager Traffic` listener.
 
 
 
 ## Test Service Broker
 
-- Publish a application on Pivotal Cloud Foundry runtime
+- Publish a target PCF application on Pivotal Cloud Foundry runtime
 - Add custom attribute in a json file (param.json)
 	
     ```json
 	{
-		"orgName": "Axway",
-		"apiName": "pcftest2",
-		"swaggerURI": "/v2/api-docs" 
-		
+		"apiName": "pcftest",
+		"type":": "swagger", 
+		"URI": "/v2/api-docs" 
 	}
+	
 	```
-	The SwaggerURI value will be context name  or Fully qualified Swagger URL (http://greeting-app2-unwrinkleable-carriole.cfapps.pie-25.cfplatformeng.com/v2/api-docs). If context name is provided as input, the service broker reads the host name from Cloud Foundry Application.
+	`apiName` is optional. If `apiName` is not specified, Service broker fetch the API Name and from swagger or WSDL.
+	Possible values of type paramters are `wsdl` and `swagger` 
+	The URI value will be context name  or Fully qualified Swagger / WSDL URL (http://greeting-app2-unwrinkleable-carriole.cfapps.pie-25.cfplatformeng.com/v2/api-docs). If context name is provided as input, the service broker reads the host name from Cloud Foundry Application.
 	
 - Run  Route binding command
 
@@ -131,26 +158,39 @@ $cf push
 	$cf bind-route-service cfapps.pie-25.cfplatformeng.com  AxwayAPIM --hostname greeting-app-tournois-postresurrection -c param.json
 	```
 	
-	The route binding command invokes Axway Service broker. The Service broker creates Backend, Front End and apply API Key as security. 
+	The route binding command invokes Axway Service broker. The Service broker creates Backend, Front-End API using Pass-Through as inbound security. 
 	
 - Test the Pivotal Application
 
+    Try to access your apps endpoint. To verify that the request goes through API Gateway, open Axway API Gateway Manager and look at the traffic tab. You should see two entries:
+    - One that comes from GoRouter (PCF)
+    - The second one comes as a riderect from API Gateway itself
+
 - Un-bind Application from Axway Service broker
 
-	```bash
-	$cf unbind-route-service cfapps.pie-25.cfplatformeng.com  AxwayAPIM --hostname greeting-app-tournois-postresurrection 
-	```
-	
-	The route unbinding command invokes Axway Service broker and Service broker Does the following. 
-		1. If API is in Published state, it will throw an error. 
-		2. If API is in un-published state, delete frontend, backend API. 
-		
- 
+```bash
+$cf unbind-route-service cfapps.pie-25.cfplatformeng.com  AxwayAPIM --hostname greeting-app-tournois-postresurrection 
+```
+
+The route unbinding command invokes Axway Service Broker and Service Broker does the following:
+1. If API is in Published state, it will throw an error.
+2. If API is in un-published state, delete frontend, backend API.
+
 
 ## Axway Service Broker  uninstallation
 	
 ```bash
 $cf delete-service AxwayAPIM
+```
+
+The delete service command does the following:
+1. If the service has binded application or routes, it throws an error.  
+2. Delete Frontend and Backend APIs
+3. Delete applications
+4. Delete User
+5. Delete Organization 
+
+```bash
 $cf delete-service-broker axway-apim-service-broker
 ```
 

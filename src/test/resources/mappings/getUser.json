@@ -1,11 +1,11 @@
 {
     "request": {
         "method": "GET",
-        "url": "/api/portal/v1.3/proxies"
+        "url": "/api/portal/v1.3/users?field=loginName&op=eq&value=anna@axway.com"
     },
     "response": {
         "status": 200,
-        "bodyFileName": "list_frontend_response.json",
+        "bodyFileName": "user_response.json",
         "headers": {
             "Content-Type": "application/json"
         }

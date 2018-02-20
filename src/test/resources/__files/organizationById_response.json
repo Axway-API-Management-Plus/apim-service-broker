@@ -1,6 +1,5 @@
-[
-	{
-		"id": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+{
+		"id": "019c8db6-637b-4979-bc8f-7a9d8cd940f0",
 		"name": "Axway",
 		"description": null,
 		"email": null,
@@ -18,4 +17,3 @@
 		"service_instance_id":"ED01F448-40C7-4A9D-93D0-51E7D4E93CA1",
 		"isTrial": null
 	}
-]

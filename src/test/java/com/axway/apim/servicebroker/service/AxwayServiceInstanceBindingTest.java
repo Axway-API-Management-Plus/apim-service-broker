@@ -1,8 +1,6 @@
-package com.axway.apim.servicebroker;
+package com.axway.apim.servicebroker.service;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Matchers.isNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
 import java.util.HashMap;
@@ -18,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.axway.apim.servicebroker.service.AxwayClient;
+import com.axway.apim.servicebroker.BaseClass;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AxwayServiceInstanceBindingTest extends BaseClass {
@@ -27,7 +25,9 @@ public class AxwayServiceInstanceBindingTest extends BaseClass {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private AxwayClient axwayClient;
+	private AxwayServiceBroker axwayServiceBroker;
+	@MockBean
+	private CFClient cfClient;
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -68,7 +68,8 @@ public class AxwayServiceInstanceBindingTest extends BaseClass {
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete("/v2/service_instances/{instance_id}/service_bindings/{binding_id}", instance_id, binding_id)
 				.param("service_id", service_id).param("plan_id", plan_id).header("X-Broker-API-Version", "2.13")
-				.with(httpBasic(username, password))).andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+				.header("X-Broker-API-Originating-Identity", "cloudfoundry eyANCiAgInVzZXJfaWQiOiAiNjgzZWE3NDgtMzA5Mi00ZmY0LWI2NTYtMzljYWNjNGQ1MzYwIiwNCiAgInVzZXJfbmFtZSI6ICJqb2VAZXhhbXBsZS5jb20iDQp9")
+				.with(httpBasic(username, password))).andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 
 }
