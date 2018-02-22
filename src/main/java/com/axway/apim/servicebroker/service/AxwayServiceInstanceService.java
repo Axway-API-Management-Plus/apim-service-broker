@@ -19,6 +19,7 @@ import org.springframework.cloud.servicebroker.service.ServiceInstanceService;
 import org.springframework.stereotype.Service;
 
 import com.axway.apim.servicebroker.exception.AxwayException;
+import com.axway.apim.servicebroker.util.Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -53,9 +54,9 @@ public class AxwayServiceInstanceService implements ServiceInstanceService {
 			String userGuid = (String) userContext.getProperty("user_id");
 			userName = cfClient.getUserName(userGuid);
 			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+			Util.isValidEmail(userName);
 		}
 		
-		//userName = "test2@localhost.com";
 
 		String serviceInstanceId = createServiceInstanceRequest.getServiceInstanceId();
 		logger.info("Service Instance Id: {}",serviceInstanceId);
@@ -100,8 +101,8 @@ public class AxwayServiceInstanceService implements ServiceInstanceService {
 			String userGuid = (String) userContext.getProperty("user_id");
 			userName = cfClient.getUserName(userGuid);
 			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+			Util.isValidEmail(userName);
 		}
-		//userName = "test2@localhost.com";
 
 		logger.info("DeleteServiceInstanceResponse: User identity {} ", deleteServiceInstanceRequest.getOriginatingIdentity());
 		String serviceInstanceId = deleteServiceInstanceRequest.getServiceInstanceId();

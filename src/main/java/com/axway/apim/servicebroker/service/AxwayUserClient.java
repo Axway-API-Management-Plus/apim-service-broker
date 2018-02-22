@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.axway.apim.servicebroker.exception.AxwayException;
 import com.axway.apim.servicebroker.model.APIUser;
+import com.axway.apim.servicebroker.util.Util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -59,7 +60,8 @@ public class AxwayUserClient implements Constants {
 	public String createUser(String organizationId, String email) throws AxwayException {
 		APIUser apiUser = new APIUser();
 		apiUser.setLoginName(email);
-		apiUser.setName(email);
+		String name = Util.getNameFromEmail(email);
+		apiUser.setName(name);
 		apiUser.setEmail(email);
 		apiUser.setOrganizationId(organizationId);
 		JsonNode jsonNode = mapper.convertValue(apiUser, JsonNode.class);

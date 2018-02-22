@@ -25,6 +25,8 @@
 		<service-broker.version>1.0.2.RELEASE</service-broker.version>
 		<commons-io.version>2.5</commons-io.version>
 		<springframework.cloud>1.2.1.RELEASE</springframework.cloud>
+		<cloudfoundry.certificate.truster>1.0.1.RELEASE</cloudfoundry.certificate.truster>
+		<commons.validator>1.6</commons.validator>
 
 	</properties>
 
@@ -73,9 +75,14 @@
 		<dependency>
 			<groupId>io.pivotal.spring.cloud</groupId>
 			<artifactId>cloudfoundry-certificate-truster</artifactId>
-			<version>1.0.1.RELEASE</version>
+			<version>${cloudfoundry.certificate.truster}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>${commons.validator}</version>
+		</dependency>
 
 
 		<dependency>

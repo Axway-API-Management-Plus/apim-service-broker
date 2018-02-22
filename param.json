@@ -1,7 +1,7 @@
 {
 	
-	"apiName": "boschAPI",
+	"apiName": "pcftest",
 	"type":"swagger",
-	"swaggerURI": "http://greeting-app-dimensionless-premastery.cfapps.pie-25.cfplatformeng.com/v2/api-docs"
+	"URI": "http://greeting-app-dimensionless-premastery.cfapps.pie-25.cfplatformeng.com/v2/api-docs"
 	
 }

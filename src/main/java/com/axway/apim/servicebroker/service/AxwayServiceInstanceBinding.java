@@ -17,6 +17,7 @@ import org.springframework.cloud.servicebroker.service.ServiceInstanceBindingSer
 import org.springframework.stereotype.Service;
 
 import com.axway.apim.servicebroker.exception.AxwayException;
+import com.axway.apim.servicebroker.util.Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -54,6 +55,7 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 			String userGuid = (String) userContext.getProperty("user_id");
 			userName = cfClient.getUserName(userGuid);
 			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+			Util.isValidEmail(userName);
 		}
 		try {
 			axwayServiceBroker.importAPI(request.getParameters(), routeURL, bindingId, serviceInstanceId, userName);
@@ -83,6 +85,7 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 			String userGuid = (String) userContext.getProperty("user_id");
 			userName = cfClient.getUserName(userGuid);
 			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+			Util.isValidEmail(userName);
 		}
 		try {
 			
