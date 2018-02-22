@@ -56,6 +56,8 @@ This artefact was successfully tested for the following versions:
 	Getting services from marketplace in org axwaydev / space dev as admin...
 	OK
 	```
+	
+	Note: In the `create-service-broker` command, use an app URL shown in the output from the `cf push` command
 
 - Check whether the service broker is added in Pivotal market place
 
@@ -91,7 +93,7 @@ This artefact was successfully tested for the following versions:
 	$cf set-env axway-apim-service-broker cf_uaa_access_token_url https://login.sys.pie-25.cfplatformeng.com/oauth/token
 	$cf set-env axway-apim-service-broker cf_cloud_controller_url https://api.sys.pie-25.cfplatformeng.com
 	
-	$cf set-env axway-apim-service-broker TRUST_CERTS login.sys.pie-25.cfplatformeng.com,api.sys.pie-25.cfplatformeng.com  //If your instance of PCF uses self-signed certs, you may need to use this environment variable to prevent some security errors
+	$cf set-env axway-apim-service-broker TRUST_CERTS login.sys.pie-25.cfplatformeng.com,api.sys.pie-25.cfplatformeng.com  //If your PCF instance uses self-signed certs, you may need to use this environment variable to prevent some security errors
 	```
 
 - Refresh Service Broker Instance to read the new environment variable
