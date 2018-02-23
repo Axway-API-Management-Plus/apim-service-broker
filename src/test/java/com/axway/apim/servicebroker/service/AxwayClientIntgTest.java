@@ -43,13 +43,7 @@ public class AxwayClientIntgTest {
 		
 		//String routeURL = 
 		
-		try {
-			axwayServiceBroker.importAPI(parameters,null,"123", serviceInstanceId, email);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Test failed");
-		}
+		axwayServiceBroker.importAPI(parameters,null,"123", serviceInstanceId, email);
 		
 	}
 	

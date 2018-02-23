@@ -36,7 +36,6 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 	@Autowired
 	private ObjectMapper mapper;
 
-
 	static final Logger logger = LoggerFactory.getLogger(AxwayServiceInstanceBinding.class.getName());
 
 	@Override
@@ -57,12 +56,9 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
 			Util.isValidEmail(userName);
 		}
-		try {
-			axwayServiceBroker.importAPI(request.getParameters(), routeURL, bindingId, serviceInstanceId, userName);
-		} catch (IOException e) {
-			logger.error("Error calling Axway API manager", e);
-			throw new ServiceBrokerException("Error Calling Axway API Manager");
-		}
+
+		axwayServiceBroker.importAPI(request.getParameters(), routeURL, bindingId, serviceInstanceId, userName);
+
 		String trafficURL = url + "/" + bindingId;
 		logger.info("Traffic URL for the API : {}", trafficURL);
 		CreateServiceInstanceRouteBindingResponse createServiceInstanceBindingResponse = new CreateServiceInstanceRouteBindingResponse()
@@ -88,14 +84,13 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 			Util.isValidEmail(userName);
 		}
 		try {
-			
+
 			boolean status = axwayServiceBroker.deleteAPI(bindingId, serviceInstanceId, userName);
-			if(!status)
+			if (!status)
 				throw new ServiceInstanceBindingDoesNotExistException(bindingId);
 		} catch (AxwayException e) {
 			throw new ServiceBrokerException(e.getMessage());
 		}
-		
 
 	}
 

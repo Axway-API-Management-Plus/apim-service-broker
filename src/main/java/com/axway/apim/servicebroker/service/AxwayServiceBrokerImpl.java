@@ -7,6 +7,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 import org.springframework.stereotype.Service;
 
 import com.axway.apim.servicebroker.exception.AxwayException;
@@ -36,14 +38,14 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 
 	@Override
 	public void importAPI(Map<String, Object> parameters, String appRouteURL, String bindingId,
-			String serviceInstanceId, String email) throws AxwayException {
+			String serviceInstanceId, String email) throws ServiceBrokerInvalidParametersException, ServiceBrokerException {
 		//axwayAPIClient.importAPI(parameters, appRouteURL, bindingId, serviceInstanceId, email);
 
 		logger.debug("Creating API Proxy on API manager");
 		logger.debug("Parameters {}", parameters);
 
 		if (parameters == null) {
-			throw new AxwayException("Custom parameters are required to add API on API Manager");
+			throw new ServiceBrokerInvalidParametersException("Custom parameters are required to add API on API Manager");
 		}
 
 		// String orgName = (String) parameters.get("orgName");
@@ -65,11 +67,11 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		}
 */
 		if (type == null) {
-			throw new AxwayException("Custom parameter type is required");
+			throw new ServiceBrokerInvalidParametersException("Custom parameter type is required");
 		}
 
 		if (apiURI == null) {
-			throw new AxwayException("Custom parameter swaggerURI is required");
+			throw new ServiceBrokerInvalidParametersException("Custom parameter swaggerURI is required");
 		}
 
 		if (!apiURI.startsWith("http")) {
@@ -77,19 +79,23 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		}
 		APIUser apiUser = axwayUserClient.getUser(email);
 		if (apiUser == null) {
-			throw new AxwayException("User is not exists on API Manager");
+			throw new ServiceBrokerException("Access Denied : User is not exists on API Manager");
 		}
 		String orgId = apiUser.getOrganizationId();
 		APIOrganization apiOrganization = axwayOrganzationClient.getOrganization(orgId);
 		if (!serviceInstanceId.equals(apiOrganization.getService_instance_id())) {
-			throw new AxwayException("Internal Error : Service instance id mismatch");
+			throw new ServiceBrokerException("Internal Error : Service instance id mismatch");
 		}
 
 		logger.info("Org id from API Manager :" + orgId);
 		String response = axwayAPIClient.createBackend(apiName, orgId, type, apiURI);
 		String backendAPIId = JsonPath.parse(response).read("$.id", String.class);
 		response = axwayAPIClient.createFrontend(backendAPIId, orgId);
-		axwayAPIClient.applySecurity(response, bindingId);
+		try {
+			axwayAPIClient.applySecurity(response, bindingId);
+		} catch (AxwayException e) {
+			throw new ServiceBrokerException(e.getMessage());
+		}
 		
 
 	}
@@ -101,7 +107,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 
 		APIUser apiUser = axwayUserClient.getUser(email);
 		if (apiUser == null) {
-			throw new AxwayException("User do not have a privilage to Unbind	");
+			throw new AxwayException("UAccess Denied : User is not exists on API Manager");
 		}
 		String orgId = apiUser.getOrganizationId();
 		logger.info("Org id :{}",orgId);
