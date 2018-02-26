@@ -1,9 +1,12 @@
 package com.axway.apim.servicebroker.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 import org.springframework.cloud.servicebroker.exception.ServiceInstanceDoesNotExistException;
 import org.springframework.cloud.servicebroker.model.CloudFoundryContext;
 import org.springframework.cloud.servicebroker.model.Context;
@@ -26,10 +29,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class AxwayServiceInstanceService implements ServiceInstanceService {
 
-
 	@Autowired
 	private String url;
-	
+
 	@Autowired
 	private AxwayServiceBroker axwayServiceBroker;;
 
@@ -50,38 +52,44 @@ public class AxwayServiceInstanceService implements ServiceInstanceService {
 
 		Context userContext = createServiceInstanceRequest.getOriginatingIdentity();
 		logger.info("User Identity: {}: ", userContext);
-		if (userContext != null) {
+		if (userContext == null) {
+			Map<String, Object> parameters = createServiceInstanceRequest.getParameters();
+			userName = (String) parameters.get("userName");
+			if (userName == null) {
+				throw new ServiceBrokerInvalidParametersException("Custom Parameter userName is required");
+			}
+		} else {
 			String userGuid = (String) userContext.getProperty("user_id");
 			userName = cfClient.getUserName(userGuid);
 			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-			Util.isValidEmail(userName);
+
 		}
-		
+
+		Util.isValidEmail(userName);
 
 		String serviceInstanceId = createServiceInstanceRequest.getServiceInstanceId();
-		logger.info("Service Instance Id: {}",serviceInstanceId);
+		logger.info("Service Instance Id: {}", serviceInstanceId);
 		CloudFoundryContext context = (CloudFoundryContext) createServiceInstanceRequest.getContext();
-		
+
 		String spaceGuid = context.getSpaceGuid();
-		
+
 		logger.info("Space Guid: {}: ", spaceGuid);
-		
+
 		String spaceName = cfClient.getSpaceName(spaceGuid);
 
 		logger.info(" Space Name: {} ", spaceName);
 		try {
 			boolean status = axwayServiceBroker.createOrgAndUser(spaceName, userName, serviceInstanceId);
-			
+
 			CreateServiceInstanceResponse createServiceInstanceResponse = new CreateServiceInstanceResponse();
-			if(status){
+			if (status) {
 				createServiceInstanceResponse.withDashboardUrl(url);
-				
-			}else{
+
+			} else {
 				createServiceInstanceResponse.withInstanceExisted(true);
 			}
 			return createServiceInstanceResponse;
-			
-			
+
 		} catch (AxwayException e) {
 			throw new ServiceBrokerException(e.getMessage());
 		}
@@ -95,6 +103,7 @@ public class AxwayServiceInstanceService implements ServiceInstanceService {
 		log(deleteServiceInstanceRequest);
 
 		String userName = null;
+		
 
 		Context userContext = deleteServiceInstanceRequest.getOriginatingIdentity();
 		if (userContext != null) {
@@ -104,13 +113,17 @@ public class AxwayServiceInstanceService implements ServiceInstanceService {
 			Util.isValidEmail(userName);
 		}
 
-		logger.info("DeleteServiceInstanceResponse: User identity {} ", deleteServiceInstanceRequest.getOriginatingIdentity());
+
+	
+
+		logger.info("DeleteServiceInstanceResponse: User identity {} ",
+				deleteServiceInstanceRequest.getOriginatingIdentity());
 		String serviceInstanceId = deleteServiceInstanceRequest.getServiceInstanceId();
 
 		try {
 			boolean status = axwayServiceBroker.deleteOrgAppAndUser(userName, serviceInstanceId);
-			
-			if(!status){
+
+			if (!status) {
 				throw new ServiceInstanceDoesNotExistException(serviceInstanceId);
 			}
 			DeleteServiceInstanceResponse deleteServiceInstanceResponse = new DeleteServiceInstanceResponse();

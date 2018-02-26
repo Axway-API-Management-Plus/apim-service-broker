@@ -1,6 +1,7 @@
 package com.axway.apim.servicebroker.service;
 
 import java.net.URI;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,10 +110,25 @@ public class AxwayOrganzationClient implements Constants {
 
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(authHeader);
 
-		logger.info("Calling API : {}", uri.toString());
+		logger.info("Calling Get Organization API : {}", uri.toString());
 
 		ResponseEntity<APIOrganization> orgEntity = restTemplate.exchange(uri, HttpMethod.GET, httpEntity,
 				new ParameterizedTypeReference<APIOrganization>() {
+				});
+
+		return orgEntity.getBody();
+
+	}
+
+	public List<APIOrganization> listOrganization() {
+		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations").build().toUri();
+
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(authHeader);
+
+		logger.info("Calling List Organization API : {}", uri.toString());
+
+		ResponseEntity<List<APIOrganization>> orgEntity = restTemplate.exchange(uri, HttpMethod.GET, httpEntity,
+				new ParameterizedTypeReference<List<APIOrganization>>() {
 				});
 
 		return orgEntity.getBody();

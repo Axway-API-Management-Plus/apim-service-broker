@@ -56,6 +56,23 @@ public class AxwayUserClient implements Constants {
 		}
 		return apiUsers.iterator().next();
 	}
+	
+	public APIUser getUserByOrgId(String orgId) {
+		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users")
+				.queryParam("field", "orgid").queryParam("op", "eq").queryParam("value", orgId).build().toUri();
+
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(authHeader);
+		logger.info("Calling API : {}", uri.toString());
+		ResponseEntity<List<APIUser>> userEntity = restTemplate.exchange(uri, HttpMethod.GET, httpEntity,
+				new ParameterizedTypeReference<List<APIUser>>() {
+				});
+
+		List<APIUser> apiUsers = userEntity.getBody();
+		if (apiUsers.isEmpty()) {
+			return null;
+		}
+		return apiUsers.iterator().next();
+	}
 
 	public String createUser(String organizationId, String email) throws AxwayException {
 		APIUser apiUser = new APIUser();

@@ -2,7 +2,7 @@ package com.axway.apim.servicebroker.model;
 
 public class APIOrganization {
 
-	
+	private String id;
 	private String name;
 	private String description;
 	private String email;
@@ -13,6 +13,15 @@ public class APIOrganization {
 	
 	//custom attribute
 	private String service_instance_id;
+	
+	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

@@ -4,7 +4,7 @@ import java.util.Base64;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpHeaders;import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public final class Util {
 
@@ -24,6 +24,7 @@ public final class Util {
 	}
 	
 	public static void isValidEmail(String email) throws ServiceBrokerInvalidParametersException{
+		
 		if(!EmailValidator.getInstance().isValid(email)){
 			throw new ServiceBrokerInvalidParametersException("Invalid user name");
 		}

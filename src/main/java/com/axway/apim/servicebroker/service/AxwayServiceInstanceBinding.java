@@ -1,7 +1,5 @@
 package com.axway.apim.servicebroker.service;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class AxwayServiceInstanceBinding implements ServiceInstanceBindingService {
 
-	@Value("${axway_apimanager_traffic_url:https://10.129.14.86:8065}")
+	@Value("${axway_apimanager_traffic_url:https://phx-107.demo.axway.com:8065}")
 	private String url;
 
 	@Autowired

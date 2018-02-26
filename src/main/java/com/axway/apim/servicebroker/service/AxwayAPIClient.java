@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +20,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.axway.apim.servicebroker.exception.AxwayException;
 import com.axway.apim.servicebroker.model.APIOrganizationAccess;
 import com.axway.apim.servicebroker.model.APISecurity;
 import com.axway.apim.servicebroker.model.FrondendAPI;
@@ -195,14 +195,14 @@ public class AxwayAPIClient implements Constants {
 		return frontEndAPIResponse;
 	}
 
-	public void applySecurity(String frontEndAPIResponse, String bindingId) throws AxwayException {
+	public void applySecurity(String frontEndAPIResponse, String bindingId) throws ServiceBrokerException {
 		JsonNode jsonNode;
 		try {
 			jsonNode = mapper.readTree(frontEndAPIResponse);
 		} catch (JsonProcessingException e) {
-			throw new AxwayException("Internal Error");
+			throw new ServiceBrokerException("Internal Error");
 		} catch (IOException e) {
-			throw new AxwayException("Internal Error");
+			throw new ServiceBrokerException("Internal Error");
 		}
 
 		ArrayNode devices = (ArrayNode) ((ArrayNode) jsonNode.findPath("securityProfiles")).get(0).get("devices");

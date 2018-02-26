@@ -3,6 +3,7 @@ package com.axway.apim.servicebroker.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,14 +39,17 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 
 	@Override
 	public void importAPI(Map<String, Object> parameters, String appRouteURL, String bindingId,
-			String serviceInstanceId, String email) throws ServiceBrokerInvalidParametersException, ServiceBrokerException {
-		//axwayAPIClient.importAPI(parameters, appRouteURL, bindingId, serviceInstanceId, email);
+			String serviceInstanceId, String email)
+			throws ServiceBrokerInvalidParametersException, ServiceBrokerException {
+		// axwayAPIClient.importAPI(parameters, appRouteURL, bindingId,
+		// serviceInstanceId, email);
 
 		logger.debug("Creating API Proxy on API manager");
 		logger.debug("Parameters {}", parameters);
 
 		if (parameters == null) {
-			throw new ServiceBrokerInvalidParametersException("Custom parameters are required to add API on API Manager");
+			throw new ServiceBrokerInvalidParametersException(
+					"Custom parameters are required to add API on API Manager");
 		}
 
 		// String orgName = (String) parameters.get("orgName");
@@ -62,10 +66,10 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		// throw new AxwayException("Custom parameter orgName is required");
 		// }
 
-		/*if (apiName == null) {
-			throw new AxwayException("Custom parameter apiName is required");
-		}
-*/
+		/*
+		 * if (apiName == null) { throw new
+		 * AxwayException("Custom parameter apiName is required"); }
+		 */
 		if (type == null) {
 			throw new ServiceBrokerInvalidParametersException("Custom parameter type is required");
 		}
@@ -77,26 +81,12 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		if (!apiURI.startsWith("http")) {
 			apiURI = "https://" + appRouteURL + apiURI;
 		}
-		APIUser apiUser = axwayUserClient.getUser(email);
-		if (apiUser == null) {
-			throw new ServiceBrokerException("Access Denied : User is not exists on API Manager");
-		}
-		String orgId = apiUser.getOrganizationId();
-		APIOrganization apiOrganization = axwayOrganzationClient.getOrganization(orgId);
-		if (!serviceInstanceId.equals(apiOrganization.getService_instance_id())) {
-			throw new ServiceBrokerException("Internal Error : Service instance id mismatch");
-		}
-
+		String orgId = getOrgId(email, serviceInstanceId);
 		logger.info("Org id from API Manager :" + orgId);
 		String response = axwayAPIClient.createBackend(apiName, orgId, type, apiURI);
 		String backendAPIId = JsonPath.parse(response).read("$.id", String.class);
 		response = axwayAPIClient.createFrontend(backendAPIId, orgId);
-		try {
-			axwayAPIClient.applySecurity(response, bindingId);
-		} catch (AxwayException e) {
-			throw new ServiceBrokerException(e.getMessage());
-		}
-		
+		axwayAPIClient.applySecurity(response, bindingId);
 
 	}
 
@@ -104,22 +94,13 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 	public boolean deleteAPI(String bindingId, String serviceInstanceId, String email) throws AxwayException {
 
 		logger.info("Deleting API Proxy on API manager");
+		String orgId = getOrgId(email, serviceInstanceId);
 
-		APIUser apiUser = axwayUserClient.getUser(email);
-		if (apiUser == null) {
-			throw new AxwayException("UAccess Denied : User is not exists on API Manager");
-		}
-		String orgId = apiUser.getOrganizationId();
-		logger.info("Org id :{}",orgId);
-		APIOrganization apiOrganization = axwayOrganzationClient.getOrganization(orgId);
-		if (!serviceInstanceId.equals(apiOrganization.getService_instance_id())) {
-			throw new AxwayException("Internal Error : Service instance id mismatch");
-		}
 		// Get the API based on the name and apply the filters like unpublished
 
 		String responseBody = axwayAPIClient.listAPIs();
-		List<Map<String, Object>> apis = JsonPath.parse(responseBody)
-				.read("$.*[?(@.organizationId =='" + orgId + "' && @.path =='/" + bindingId + "' && @.state =='published')]");
+		List<Map<String, Object>> apis = JsonPath.parse(responseBody).read(
+				"$.*[?(@.organizationId =='" + orgId + "' && @.path =='/" + bindingId + "' && @.state =='published')]");
 		logger.info("Paths :" + apis);
 
 		if (!apis.isEmpty()) {
@@ -140,10 +121,10 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 
 				axwayAPIClient.deleteFrondendAPI(frondEndApiId);
 				axwayAPIClient.deleteBackendAPI(backendId);
-			}else{
+			} else {
 				return false;
 			}
-			
+
 		}
 		return true;
 
@@ -170,29 +151,51 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 	@Override
 	public boolean deleteOrgAppAndUser(String email, String serviceInstanceId) throws AxwayException {
 		logger.info("Deleting Subscription");
-		
-		List<FrondendAPI> frondendAPIs = new ArrayList<>();
 
-		APIUser apiUser = axwayUserClient.getUser(email);
-		if (apiUser == null) {
-			return false;
+		List<FrondendAPI> frondendAPIs = new ArrayList<>();
+		String orgId = null;
+		String userId = null;
+		if (email != null) {
+			// Service Broker 2.12 flow
+			APIUser apiUser = axwayUserClient.getUser(email);
+			if (apiUser == null) {
+				return false;
+			}
+			orgId = apiUser.getOrganizationId();
+			userId = apiUser.getId();
+		} else {
+			// Service Broker 2.13 flow
+			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
+			System.out.println(serviceInstanceId);
+
+			Optional<APIOrganization> organization = apiOrganizations.stream()
+					.filter(apiOrganization -> (apiOrganization.getService_instance_id() != null
+							&& apiOrganization.getService_instance_id().equalsIgnoreCase(serviceInstanceId)))
+					.findAny();
+			if (organization.isPresent()) {
+				orgId = organization.get().getId();
+				APIUser apiUser = axwayUserClient.getUserByOrgId(orgId);
+				userId = apiUser.getId();
+			} else {
+				return false;
+			}
+
 		}
-		String orgId = apiUser.getOrganizationId();
-		
+
 		List<APIOrganizationAccess> apiOrganizationAccesses = axwayAPIClient.listAPIs(orgId);
-		
+
 		for (APIOrganizationAccess apiOrganizationAccess : apiOrganizationAccesses) {
 			String apiId = apiOrganizationAccess.getApiId();
 			FrondendAPI frondendAPI = axwayAPIClient.getAPI(apiId);
-			if(frondendAPI.getState().equals(PUBLISHED)){
+			if (frondendAPI.getState().equals(PUBLISHED)) {
 				logger.info("Publised APIs are avaialble under the organization");
 				throw new AxwayException(
 						"Can't delete Organization as it has published API, Please unpublish the API from API Manager");
 			}
-				
+
 			frondendAPIs.add(frondendAPI);
 		}
-		
+
 		for (FrondendAPI frondendAPI : frondendAPIs) {
 			String frondEndApiId = frondendAPI.getId();
 			String backendId = frondendAPI.getApiId();
@@ -201,33 +204,65 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 			axwayAPIClient.deleteBackendAPI(backendId);
 		}
 
-//		String responseBody = axwayAPIClient.listAPIs();
-//
-//		List<Map<String, Object>> apis = JsonPath.parse(responseBody)
-//				.read("$.*[?(@.state!='published'  && @.organizationId =='" + orgId + "')]");
-//		if (!apis.isEmpty()) {
-//			for (Map<String, Object> map : apis) {
-//				String frondEndApiId = (String) map.get("id");
-//				String backendId = (String) map.get("apiId");
-//
-//				axwayAPIClient.deleteFrondendAPI(frondEndApiId);
-//				axwayAPIClient.deleteBackendAPI(backendId);
-//			}
-//
-//		} else {
-//			logger.info("Publised APIs are avaialble under the organization");
-//			throw new AxwayException(
-//					"Can't delete Organization as it has published API, Please unbind the applications from Service");
-//		}
+		// String responseBody = axwayAPIClient.listAPIs();
+		//
+		// List<Map<String, Object>> apis = JsonPath.parse(responseBody)
+		// .read("$.*[?(@.state!='published' && @.organizationId =='" + orgId +
+		// "')]");
+		// if (!apis.isEmpty()) {
+		// for (Map<String, Object> map : apis) {
+		// String frondEndApiId = (String) map.get("id");
+		// String backendId = (String) map.get("apiId");
+		//
+		// axwayAPIClient.deleteFrondendAPI(frondEndApiId);
+		// axwayAPIClient.deleteBackendAPI(backendId);
+		// }
+		//
+		// } else {
+		// logger.info("Publised APIs are avaialble under the organization");
+		// throw new AxwayException(
+		// "Can't delete Organization as it has published API, Please unbind the
+		// applications from Service");
+		// }
 
-	
 		List<APIApplication> applications = axwayApplicationClient.getApplications(orgId);
 		axwayApplicationClient.deleteApplications(applications);
-		axwayUserClient.deleteUser(apiUser.getId());
+		axwayUserClient.deleteUser(userId);
 		axwayOrganzationClient.deleteOrganization(orgId);
 
 		return true;
 
+	}
+
+	private String getOrgId(String email, String serviceInstanceId) throws ServiceBrokerException {
+		if (email != null) {
+			// Service Broker 2.12 flow
+			APIUser apiUser = axwayUserClient.getUser(email);
+			if (apiUser == null) {
+				throw new ServiceBrokerException("UAccess Denied : User is not exists on API Manager");
+			}
+			String orgId = apiUser.getOrganizationId();
+			logger.info("Org id :{}", orgId);
+			APIOrganization apiOrganization = axwayOrganzationClient.getOrganization(orgId);
+			if (!serviceInstanceId.equals(apiOrganization.getService_instance_id())) {
+				throw new ServiceBrokerException("Internal Error : Service instance id mismatch");
+			}
+			return orgId;
+		} else {
+			// Service Broker 2.13 flow
+			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
+			Optional<APIOrganization> organization = apiOrganizations.stream()
+					.filter(apiOrganization -> (apiOrganization.getService_instance_id() != null
+							&& apiOrganization.getService_instance_id().equalsIgnoreCase(serviceInstanceId)))
+					.findAny();
+			if (organization.isPresent()) {
+				String orgId = organization.get().getId();
+				return orgId;
+
+			} else {
+				throw new ServiceBrokerException("Internal Error : Organization is not available");
+			}
+		}
 	}
 
 }
