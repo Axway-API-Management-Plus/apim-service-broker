@@ -14,8 +14,28 @@ This artefact was successfully tested for the following versions:
 - Apache Maven 3.3.9 or above 
 - Pivotal Cloud Foundry Elastic Runtime  version 1.12 or above
 - CF Cli version 6.32.0+0191c33d9.2017-09-26 or above
+- Service Broker version 2.12 or above
 
 ## Axway Service Broker  Installation
+
+- Add a custom property to organizations
+
+	Edit the following file:
+	```bash
+	INSTALL_DIR/apigateway/webapps/apiportal/vordel/apiportal/app/app.config
+	```
+	Insert the following code fragment marked in bold in the organizations property:
+	```bash
+	customPropertiesConfig: {
+     
+     	 organization: {
+            service_instance_id:{
+                label: 'Service Instance Id'
+            }
+        }
+    }
+    ```
+
 
 - Publish Server broker Application
 
