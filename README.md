@@ -108,10 +108,10 @@ This artefact was successfully tested for the following versions:
 	$cf set-env axway-apim-service-broker axway_apimanager_password changeme
 	$cf set-env axway-apim-service-broker axway_apimanager_traffic_url https://myAPIM.server.com:8065 // In High Availability scenario the URL will be a Load Balancer URL
 	
-	$cf set-env axway-apim-service-broker cf_uaa_username admin@axway.com
-	$cf set-env axway-apim-service-broker cf_uaa_password changme
-	$cf set-env axway-apim-service-broker cf_uaa_access_token_url https://login.sys.pie-25.cfplatformeng.com/oauth/token
-	$cf set-env axway-apim-service-broker cf_cloud_controller_url https://api.sys.pie-25.cfplatformeng.com
+	$cf set-env axway-apim-service-broker cf_admin_username admin@axway.com
+	$cf set-env axway-apim-service-broker cf_admin_password changme
+	$cf set-env axway-apim-service-broker login_host https://login.sys.pie-25.cfplatformeng.com/oauth/token
+	$cf set-env axway-apim-service-broker cc_host https://api.sys.pie-25.cfplatformeng.com
 	
 	$cf set-env axway-apim-service-broker TRUST_CERTS login.sys.pie-25.cfplatformeng.com,api.sys.pie-25.cfplatformeng.com  //If your PCF instance uses self-signed certs, you may need to use this environment variable to prevent some security errors
 	```
