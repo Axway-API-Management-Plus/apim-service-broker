@@ -27,7 +27,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class AxwayServiceInstanceService implements ServiceInstanceService {
+public class AxwayServiceInstanceService implements ServiceInstanceService, Constants {
 
 	@Autowired
 	private String url;
@@ -72,14 +72,19 @@ public class AxwayServiceInstanceService implements ServiceInstanceService {
 		CloudFoundryContext context = (CloudFoundryContext) createServiceInstanceRequest.getContext();
 
 		String spaceGuid = context.getSpaceGuid();
+		String orgGuid = context.getOrganizationGuid();
+		
 
 		logger.info("Space Guid: {}: ", spaceGuid);
 
 		String spaceName = cfClient.getSpaceName(spaceGuid);
+		String cfOrgName = cfClient.getOrg(orgGuid);
+		
+		String orgName = ORG_PREFIX + DOT + cfOrgName + DOT + spaceName +  DOT +serviceInstanceId;
 
 		logger.info(" Space Name: {} ", spaceName);
 		try {
-			boolean status = axwayServiceBroker.createOrgAndUser(spaceName, userName, serviceInstanceId);
+			boolean status = axwayServiceBroker.createOrgAndUser(orgName, userName, serviceInstanceId);
 
 			CreateServiceInstanceResponse createServiceInstanceResponse = new CreateServiceInstanceResponse();
 			if (status) {

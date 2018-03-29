@@ -4,7 +4,7 @@ import java.util.Base64;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
-import org.springframework.http.HttpHeaders;import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpHeaders;
 
 public final class Util {
 

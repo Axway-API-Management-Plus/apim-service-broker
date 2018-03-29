@@ -14,16 +14,20 @@ import com.axway.apim.servicebroker.exception.AxwayAPIGatewayErrorHandler;
 @Configuration
 public class CloudFoundryConfig {
 	
+	private String TOKEN_URI = "/oauth/token";
+	
 	private OAuth2ClientContext oauth2ClientContext = new DefaultOAuth2ClientContext();
 	
 	
-	@Value("${cf_uaa_username:pcf@axway.com}")
+	//@Value("${cf_uaa_username:admin}")
+	@Value("${cf_admin_username:admin}")
 	private String username;
 
-	@Value("${cf_uaa_password:changeme}")
+	//@Value("${cf_uaa_password:L2_JxeE43z1YJGItb4YmszNkQ98dQEjA}")
+	@Value("${cf_admin_password:changeme}")
 	private String password;
 	
-	@Value("${cf_uaa_access_token_url:https://login.pcf.axway.com/oauth/token}")
+	@Value("${login_host:https://login.sys.pie-25.cfplatformeng.com}")
 	private String accessTokenURI;
 
 	
@@ -33,6 +37,7 @@ public class CloudFoundryConfig {
 		details.setUsername(username);
 		details.setPassword(password);
 		details.setGrantType("password");
+		accessTokenURI = accessTokenURI + TOKEN_URI;
 		details.setAccessTokenUri(accessTokenURI);
 		return details;
 	}

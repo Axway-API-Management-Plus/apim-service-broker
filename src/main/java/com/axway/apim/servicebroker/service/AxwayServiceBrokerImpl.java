@@ -133,7 +133,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 	@Override
 	public boolean createOrgAndUser(String orgName, String email, String serviceInstanceId) throws AxwayException {
 
-		orgName = ORG_PREFIX + DOT + orgName + DOT + serviceInstanceId;
+		
 		String orgId = axwayOrganzationClient.getOrganizationId(orgName);
 
 		APIUser apiUser = axwayUserClient.getUser(email);

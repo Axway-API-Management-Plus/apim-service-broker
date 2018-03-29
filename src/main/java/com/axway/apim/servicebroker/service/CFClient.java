@@ -17,13 +17,16 @@ public class CFClient {
 	@Qualifier("cfOauthRestTemplate")
 	private OAuth2RestTemplate cfOauthRestTemplate;
 
-	@Value("${cf_cloud_controller_url:https://api.pcf.axway.com}")
+	@Value("${cc_host:https://api.sys.pie-25.cfplatformeng.com}")
 	private String url;
 
 	private static final String USERAPI_BASEPATH = "/v2/users/";
 	private static final String SPACEAPI_BASEPATH = "/v2/spaces/";
+	private static final String ORGAPI_BASEPATH = "/v2/organizations/";
+	
+	
 
-	public String getSpaceName(String spaceGuid ) {
+	public String getSpaceName(String spaceGuid) {
 
 		ResponseEntity<String> response = cfOauthRestTemplate.getForEntity(url + SPACEAPI_BASEPATH + spaceGuid,
 				String.class);
@@ -41,6 +44,14 @@ public class CFClient {
 		String userName = documentContext.read("$.entity.username", String.class);
 		return userName;
 
+	}
+
+	public String getOrg(String orgGuid) {
+		ResponseEntity<String> response = cfOauthRestTemplate.getForEntity(url + ORGAPI_BASEPATH + orgGuid,
+				String.class);
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		String orgName = documentContext.read("$.entity.name", String.class);
+		return orgName;
 	}
 
 }
