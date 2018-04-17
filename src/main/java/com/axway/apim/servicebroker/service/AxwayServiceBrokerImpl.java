@@ -81,12 +81,19 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		if (!apiURI.startsWith("http")) {
 			apiURI = "https://" + appRouteURL + apiURI;
 		}
-		String orgId = getOrgId(email, serviceInstanceId);
+		APIUser apiUser  = getOrgId(email, serviceInstanceId);
+		
+		String orgId = apiUser.getOrganizationId();
+		String userId = apiUser.getId();
 		logger.info("Org id from API Manager :" + orgId);
 		String response = axwayAPIClient.createBackend(apiName, orgId, type, apiURI);
-		String backendAPIId = JsonPath.parse(response).read("$.id", String.class);
-		response = axwayAPIClient.createFrontend(backendAPIId, orgId);
-		axwayAPIClient.applySecurity(response, bindingId);
+		
+		
+		//String backendAPIId = JsonPath.parse(response).read("$.id", String.class);
+		String backendAPIId  = axwayAPIClient.updateBackend(userId, response);
+		
+		response = axwayAPIClient.createFrontend(backendAPIId, orgId, userId);
+		axwayAPIClient.applySecurity(response, bindingId,userId);
 
 	}
 
@@ -94,7 +101,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 	public boolean deleteAPI(String bindingId, String serviceInstanceId, String email) throws AxwayException {
 
 		logger.info("Deleting API Proxy on API manager");
-		String orgId = getOrgId(email, serviceInstanceId);
+		String orgId = getOrgId(email, serviceInstanceId).getOrganizationId();
 
 		// Get the API based on the name and apply the filters like unpublished
 
@@ -234,12 +241,45 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 
 	}
 
-	private String getOrgId(String email, String serviceInstanceId) throws ServiceBrokerException {
+//	private String getOrgId(String email, String serviceInstanceId) throws ServiceBrokerException {
+//		if (email != null) {
+//			// Service Broker 2.13 flow
+//			APIUser apiUser = axwayUserClient.getUser(email);
+//			if (apiUser == null) {
+//				throw new ServiceBrokerException("Access Denied : User is not exists on API Manager");
+//			}
+//			String orgId = apiUser.getOrganizationId();
+//			logger.info("Org id :{}", orgId);
+//			APIOrganization apiOrganization = axwayOrganzationClient.getOrganization(orgId);
+//			if (!serviceInstanceId.equals(apiOrganization.getService_instance_id())) {
+//				throw new ServiceBrokerException("Internal Error : Service instance id mismatch");
+//			}
+//			return orgId;
+//		} else {
+//			// Service Broker 2.12 flow
+//			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
+//			Optional<APIOrganization> organization = apiOrganizations.stream()
+//					.filter(apiOrganization -> (apiOrganization.getService_instance_id() != null
+//							&& apiOrganization.getService_instance_id().equalsIgnoreCase(serviceInstanceId)))
+//					.findAny();
+//			if (organization.isPresent()) {
+//				
+//				
+//				String orgId = organization.get().getId();
+//				return orgId;
+//
+//			} else {
+//				throw new ServiceBrokerException("Internal Error : Organization is not available");
+//			}
+//		}
+//	}
+	
+	private APIUser getOrgId(String email, String serviceInstanceId) throws ServiceBrokerException {
 		if (email != null) {
-			// Service Broker 2.12 flow
+			// Service Broker 2.13 flow
 			APIUser apiUser = axwayUserClient.getUser(email);
 			if (apiUser == null) {
-				throw new ServiceBrokerException("UAccess Denied : User is not exists on API Manager");
+				throw new ServiceBrokerException("Access Denied : User is not exists on API Manager");
 			}
 			String orgId = apiUser.getOrganizationId();
 			logger.info("Org id :{}", orgId);
@@ -247,17 +287,21 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 			if (!serviceInstanceId.equals(apiOrganization.getService_instance_id())) {
 				throw new ServiceBrokerException("Internal Error : Service instance id mismatch");
 			}
-			return orgId;
+			return apiUser;
 		} else {
-			// Service Broker 2.13 flow
+			// Service Broker 2.12 flow
 			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
 			Optional<APIOrganization> organization = apiOrganizations.stream()
 					.filter(apiOrganization -> (apiOrganization.getService_instance_id() != null
 							&& apiOrganization.getService_instance_id().equalsIgnoreCase(serviceInstanceId)))
 					.findAny();
 			if (organization.isPresent()) {
-				String orgId = organization.get().getId();
-				return orgId;
+				email = organization.get().getEmail();
+				APIUser apiUser = axwayUserClient.getUser(email);
+				return apiUser;
+				
+				//String orgId = organization.get().getId();
+				//return orgId;
 
 			} else {
 				throw new ServiceBrokerException("Internal Error : Organization is not available");

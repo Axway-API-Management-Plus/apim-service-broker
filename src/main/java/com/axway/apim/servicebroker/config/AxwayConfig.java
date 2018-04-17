@@ -24,14 +24,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 public class AxwayConfig {
 	
-	@Value("${axway_apimanager_url:https://demo.axway.com:8075}")
+	@Value("${axway_apimanager_url:https://phx-107.demo.axway.com:8075}")
 	protected String url;
 
 	@Value("${axway_apimanager_username:apiadmin}")
 	private String username;
 
-	@Value("${axway_apimanager_password:changeme}")
-	protected String password;
+	@Value("${axway_apimanager_password:Space*52}")
+	protected char[] password;
 	
 
 	@Bean
@@ -87,7 +87,7 @@ public class AxwayConfig {
 	
 	@Bean
 	public HttpHeaders authHeader() {
-		HttpHeaders authHeader = Util.createAuthHeaders(username, password);
+		HttpHeaders authHeader = Util.createAuthHeaders(username, new String(password));
 		return authHeader;
 	}
 	

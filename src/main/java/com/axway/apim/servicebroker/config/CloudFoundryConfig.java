@@ -25,7 +25,7 @@ public class CloudFoundryConfig {
 
 	//@Value("${cf_uaa_password:L2_JxeE43z1YJGItb4YmszNkQ98dQEjA}")
 	@Value("${cf_admin_password:changeme}")
-	private String password;
+	private char[] password;
 	
 	@Value("${login_host:https://login.sys.pie-25.cfplatformeng.com}")
 	private String accessTokenURI;
@@ -35,7 +35,7 @@ public class CloudFoundryConfig {
 	public OAuth2ProtectedResourceDetails cf() {
 		ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
 		details.setUsername(username);
-		details.setPassword(password);
+		details.setPassword(new String(password));
 		details.setGrantType("password");
 		accessTokenURI = accessTokenURI + TOKEN_URI;
 		details.setAccessTokenUri(accessTokenURI);

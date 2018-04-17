@@ -178,8 +178,26 @@ public class AxwayAPIClient implements Constants {
 		logger.info("Create Backend API Response code: {}", strResponse.getStatusCodeValue());
 		return strResponse.getBody();
 	}
+	
+	public String updateBackend(String userId, String response) {
+		JsonNode jsonNode ;
+		try {
+			jsonNode = mapper.readTree(response);
+		} catch (JsonProcessingException e) {
+			throw new ServiceBrokerException("Internal Error");
+		} catch (IOException e) {
+			throw new ServiceBrokerException("Internal Error");
+		}
+		String id = jsonNode.findPath("id").asText();
+		((ObjectNode) jsonNode).put("createdBy " , userId);
+		URI uri = UriComponentsBuilder.fromUriString(url + "/api/portal/v1.3/apirepo/" + id).build().toUri();
+		HttpEntity<JsonNode> jsonEntity = new HttpEntity<JsonNode>(jsonNode, authHeader);
+		ResponseEntity<String> securityUpdate = restTemplate.exchange(uri, HttpMethod.PUT, jsonEntity, String.class);
+		logger.info("Update Backend Response Code : {}", securityUpdate.getStatusCodeValue());
+		return id;
+	}
 
-	public String createFrontend(String backendAPIId, String orgId) {
+	public String createFrontend(String backendAPIId, String orgId, String userId) {
 		String json = "{\"apiId\":\"" + backendAPIId + "\",\"organizationId\":\"" + orgId + "\"}";
 		HttpHeaders headers = new HttpHeaders();
 
@@ -195,7 +213,7 @@ public class AxwayAPIClient implements Constants {
 		return frontEndAPIResponse;
 	}
 
-	public void applySecurity(String frontEndAPIResponse, String bindingId) throws ServiceBrokerException {
+	public void applySecurity(String frontEndAPIResponse, String bindingId, String userId) throws ServiceBrokerException {
 		JsonNode jsonNode;
 		try {
 			jsonNode = mapper.readTree(frontEndAPIResponse);
@@ -209,6 +227,7 @@ public class AxwayAPIClient implements Constants {
 
 		String virtualAPIId = jsonNode.findPath("id").asText();
 		((ObjectNode) jsonNode).put("path", "/" + bindingId);
+		((ObjectNode) jsonNode).put("createdBy " , userId);
 
 		logger.debug("Security Device {}", devices.getClass().getName());
 		devices.addPOJO(new APISecurity());
