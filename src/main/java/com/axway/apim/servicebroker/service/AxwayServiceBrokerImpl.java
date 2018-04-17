@@ -89,8 +89,8 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		String response = axwayAPIClient.createBackend(apiName, orgId, type, apiURI);
 		
 		
-		//String backendAPIId = JsonPath.parse(response).read("$.id", String.class);
-		String backendAPIId  = axwayAPIClient.updateBackend(userId, response);
+		String backendAPIId = JsonPath.parse(response).read("$.id", String.class);
+		//String backendAPIId  = axwayAPIClient.updateBackend(userId, response);
 		
 		response = axwayAPIClient.createFrontend(backendAPIId, orgId, userId);
 		axwayAPIClient.applySecurity(response, bindingId,userId);
@@ -108,15 +108,16 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		String responseBody = axwayAPIClient.listAPIs();
 		List<Map<String, Object>> apis = JsonPath.parse(responseBody).read(
 				"$.*[?(@.organizationId =='" + orgId + "' && @.path =='/" + bindingId + "' && @.state =='published')]");
-		logger.info("Paths :" + apis);
+		logger.info("Published APIs {} :" ,apis);
 
 		if (!apis.isEmpty()) {
 			throw new AxwayException("Unbind is not allowed as API is in published state");
 
 		} else {
 
-			apis = JsonPath.parse(responseBody).read("$.*[?(@.state!='published' && @.path =='/" + bindingId
-					+ "' && @.organizationId =='" + orgId + "')]");
+			apis = JsonPath.parse(responseBody).read(
+					"$.*[?(@.organizationId =='" + orgId + "' && @.path =='/" + bindingId + "' && @.state =='unpublished')]");
+			logger.info("unpublished APIs {} :" ,apis);
 			if (!apis.isEmpty()) {
 				Map<String, Object> apiDefinition = apis.get(0);
 				String frondEndApiId = (String) apiDefinition.get("id");
