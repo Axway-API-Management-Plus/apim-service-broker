@@ -164,9 +164,9 @@ $cf push
 	
     ```json
 	{
-		"apiName": "pcftest",
+		"apiname": "pcftest",
 		"type":": "swagger", 
-		"URI": "/v2/api-docs" 
+		"uri": "/v2/api-docs" 
 	}
 	
 	```

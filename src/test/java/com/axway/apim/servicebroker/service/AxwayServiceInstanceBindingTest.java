@@ -43,9 +43,8 @@ public class AxwayServiceInstanceBindingTest extends BaseClass {
 	public void shouldCreateServiceBinding() throws Exception {
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put("orgName", "Axway");
-		parameters.put("backendName", "pcftest");
-		parameters.put("swaggerURL", "http://petstore.swagger.io/v2/swagger.json");
+		parameters.put("apiname", "pcftest");
+		parameters.put("uri", "http://petstore.swagger.io/v2/swagger.json");
 		Map<String, Object> bind_resource = new HashMap<String, Object>();
 		
 		BindResource bindResource = new BindResource("","testapp.axway.com",bind_resource);

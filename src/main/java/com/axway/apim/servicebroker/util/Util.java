@@ -26,7 +26,7 @@ public final class Util {
 	public static void isValidEmail(String email) throws ServiceBrokerInvalidParametersException{
 		
 		if(!EmailValidator.getInstance().isValid(email)){
-			throw new ServiceBrokerInvalidParametersException("Invalid user name");
+			throw new ServiceBrokerInvalidParametersException("Username should be a valid email address");
 		}
 	}
 	

@@ -5,13 +5,21 @@
 	"metadata": {
 		"displayName": "Standard",
 		"longDescription": "Standard Plan",
+		"costs":[
+			{
+				"amount":{
+				   "usd":0.0
+				},
+				"unit":"MONTHLY"
+			 }
+		],
 		"bullets": [
           "Routing",
           "Authentication",
           "Throtlling"
         ]
 	},
-	"free": true
+	"free": false
 },{
 	"id": "2A6C15A6-1DE1-4870-A4F2-EA0A905F4A0F",
 	"name": "APIM-Premium",
@@ -19,11 +27,19 @@
 	"metadata": {
 		"displayName": "Premium",
 		"longDescription": "Premium Plan",
+		"costs":[
+			{
+				"amount":{
+				   "usd":0.0
+				},
+				"unit":"MONTHLY"
+			 }
+		],
 		"bullets": [
           "Routing",
           "Authentication",
           "Throtlling"
         ]
 	},
-	"free": true
+	"free": false
 }]

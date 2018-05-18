@@ -54,7 +54,7 @@ public class AxwayClientIntgTest {
 		Map<String, Object> parameters = new HashMap<>();
 		
 		//parameters.put("orgName", "Axway");
-		parameters.put("apiName", "pcftest2");
+		parameters.put("apiname", "pcftest2");
 		
 		//String routeURL = 
 		

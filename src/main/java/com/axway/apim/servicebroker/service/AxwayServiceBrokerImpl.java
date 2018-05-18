@@ -54,9 +54,9 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 
 		// String orgName = (String) parameters.get("orgName");
 		String type = (String) parameters.get("type");
-		String apiName = (String) parameters.get("apiName");
+		String apiName = (String) parameters.get("apiname");
 		// String swaggerURL = "https://" + appRouteURL +"/v2/api-docs";
-		String apiURI = (String) parameters.get("URI");
+		String apiURI = (String) parameters.get("uri");
 
 		// logger.debug("Organziation name {}", orgName);
 		logger.debug("API Name{}", apiName);
@@ -75,7 +75,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		}
 
 		if (apiURI == null) {
-			throw new ServiceBrokerInvalidParametersException("Custom parameter swaggerURI is required");
+			throw new ServiceBrokerInvalidParametersException("Custom parameter uri is required");
 		}
 
 		if (!apiURI.startsWith("http")) {
@@ -85,7 +85,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		
 		String orgId = apiUser.getOrganizationId();
 		String userId = apiUser.getId();
-		logger.info("Org id from API Manager :" + orgId);
+		logger.info("Org id from API Manager : {}" , orgId);
 		String response = axwayAPIClient.createBackend(apiName, orgId, type, apiURI);
 		
 		

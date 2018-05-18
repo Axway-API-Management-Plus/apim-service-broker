@@ -37,8 +37,8 @@ public class AxwayServiceBrokerImplTest {
 		Map<String, Object> parameters = new HashMap<>();
 		
 		parameters.put("type", "swagger");
-		parameters.put("apiName", "pcftest");
-		parameters.put("URI","http://petstore.swagger.io/v2/swagger.json");
+		parameters.put("apiname", "pcftest");
+		parameters.put("uri","http://petstore.swagger.io/v2/swagger.json");
 		
 	
 		axwayServiceBroker.importAPI(parameters,null,"123", serviceInstanceId, email);
@@ -63,8 +63,8 @@ public class AxwayServiceBrokerImplTest {
 	
 		Map<String, Object> parameters = new HashMap<>();
 		
-		parameters.put("apiName", "pcftest");
-		parameters.put("URI","http://petstore.swagger.io/v2/swagger.json");
+		parameters.put("apiname", "pcftest");
+		parameters.put("uri","http://petstore.swagger.io/v2/swagger.json");
 		
 	
 		try {
@@ -100,7 +100,7 @@ public class AxwayServiceBrokerImplTest {
 	
 		Map<String, Object> parameters = new HashMap<>();
 		
-		parameters.put("apiName", "pcftest");
+		parameters.put("apiname", "pcftest");
 		parameters.put("type", "swagger");
 		
 	
@@ -108,7 +108,7 @@ public class AxwayServiceBrokerImplTest {
 			axwayServiceBroker.importAPI(parameters,null,"123", serviceInstanceId, email);
 			fail("importAPIWithoutSwaggerURL failed");
 		} catch (ServiceBrokerInvalidParametersException e) {
-			assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameter URI is required");
+			assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameter uri is required");
 		}
 		
 	}
