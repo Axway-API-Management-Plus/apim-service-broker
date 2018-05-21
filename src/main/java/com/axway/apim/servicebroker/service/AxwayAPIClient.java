@@ -23,7 +23,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.axway.apim.servicebroker.model.APIOrganizationAccess;
 import com.axway.apim.servicebroker.model.APISecurity;
 import com.axway.apim.servicebroker.model.FrondendAPI;
-import com.axway.apim.servicebroker.model.Type;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -153,13 +152,7 @@ public class AxwayAPIClient implements Constants {
 			postParameters.add("name", apiName);
 		}
 
-		Type enumType = Type.valueOf(type.toUpperCase());
-
-		if (enumType.compareTo(Type.SWAGGER) == 0) {
-			type = "swagger";
-		} else if (enumType.compareTo(Type.WSDL) == 0) {
-			type = "wsdl";
-		}
+		
 
 		postParameters.add("type", type);
 		postParameters.add("url", swaggerURI);

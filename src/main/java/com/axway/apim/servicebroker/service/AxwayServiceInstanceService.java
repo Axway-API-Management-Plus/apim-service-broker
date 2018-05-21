@@ -54,9 +54,12 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 		logger.info("User Identity: {}: ", userContext);
 		if (userContext == null) {
 			Map<String, Object> parameters = createServiceInstanceRequest.getParameters();
+			if(parameters == null){
+				throw new ServiceBrokerInvalidParametersException("Custom Parameter username is required");
+			}
 			userName = (String) parameters.get("username");
 			if (userName == null) {
-				throw new ServiceBrokerInvalidParametersException("Custom Parameter userName is required");
+				throw new ServiceBrokerInvalidParametersException("Custom Parameter username is required");
 			}
 		} else {
 			String userGuid = (String) userContext.getProperty("user_id");

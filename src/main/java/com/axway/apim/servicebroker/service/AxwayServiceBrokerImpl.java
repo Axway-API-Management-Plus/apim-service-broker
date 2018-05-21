@@ -18,6 +18,7 @@ import com.axway.apim.servicebroker.model.APIOrganization;
 import com.axway.apim.servicebroker.model.APIOrganizationAccess;
 import com.axway.apim.servicebroker.model.APIUser;
 import com.axway.apim.servicebroker.model.FrondendAPI;
+import com.axway.apim.servicebroker.model.Type;
 import com.jayway.jsonpath.JsonPath;
 
 @Service
@@ -72,6 +73,20 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		 */
 		if (type == null) {
 			throw new ServiceBrokerInvalidParametersException("Custom parameter type is required");
+		}
+		Type enumType = null;
+		
+		try{
+		
+			enumType = Type.valueOf(type.toUpperCase());
+		}catch (IllegalArgumentException e) {
+			throw new ServiceBrokerInvalidParametersException("Custom parameter type value can only be swagger or wsdl");
+		}
+
+		if (enumType.compareTo(Type.SWAGGER) == 0) {
+			type = "swagger";
+		} else if (enumType.compareTo(Type.WSDL) == 0) {
+			type = "wsdl";
 		}
 
 		if (apiURI == null) {

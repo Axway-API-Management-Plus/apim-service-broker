@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 import org.springframework.cloud.servicebroker.exception.ServiceInstanceBindingDoesNotExistException;
 import org.springframework.cloud.servicebroker.model.Context;
 import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest;
@@ -45,6 +46,9 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 		logger.info("Bind Request Binding id : {}", bindingId);
 		log(request);
 		String routeURL = request.getBindResource().getRoute();
+		if( routeURL == null){
+			throw new ServiceBrokerInvalidParametersException("Application binding is not allowed");
+		}
 		logger.info("Route URL : {}", routeURL);
 		Context userContext = request.getOriginatingIdentity();
 		logger.info("User Identity: {}: ", userContext);
