@@ -34,7 +34,7 @@ public class AxwayAPIClient implements Constants {
 	private static final Logger logger = LoggerFactory.getLogger(AxwayAPIClient.class.getName());
 
 	@Autowired
-	@Qualifier("getRestTemplate")
+	//@Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	@Autowired

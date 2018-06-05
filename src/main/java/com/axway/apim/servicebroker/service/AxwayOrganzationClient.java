@@ -36,7 +36,7 @@ public class AxwayOrganzationClient implements Constants {
 	private HttpHeaders authHeader;
 
 	@Autowired
-	@Qualifier("getRestTemplate")
+	//@Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	public String createOrganization(String orgName, String email, String serviceInstanceId) {

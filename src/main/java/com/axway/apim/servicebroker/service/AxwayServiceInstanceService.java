@@ -80,8 +80,11 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 
 		logger.info("Space Guid: {}: ", spaceGuid);
 
-		String spaceName = cfClient.getSpaceName(spaceGuid);
-		String cfOrgName = cfClient.getOrg(orgGuid);
+//		String spaceName = cfClient.getSpaceName(spaceGuid);
+//		String cfOrgName = cfClient.getOrg(orgGuid);
+//		
+		String spaceName = "axway-dev2";
+		String cfOrgName = "axway";
 		
 		String orgName = ORG_PREFIX + DOT + cfOrgName + DOT + spaceName +  DOT +serviceInstanceId;
 

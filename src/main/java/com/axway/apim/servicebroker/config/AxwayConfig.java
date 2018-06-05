@@ -5,6 +5,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.servicebroker.model.BrokerApiVersion;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,9 +34,17 @@ public class AxwayConfig {
 	@Value("${axway_apimanager_password:Space*52}")
 	protected char[] password;
 	
+	@Value("${axway.apim.connect.timeout}")
+	protected int connectTimeout;
+	
+	@Value("${axway.apim.read.timeout}")
+	protected int readTimeout;
+	
+	
+	
 
 	@Bean
-	public RestTemplate getRestTemplate() {
+	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
 
 		HostnameVerifier allHostsValid = new HostnameVerifier() {
 			public boolean verify(String hostname, SSLSession session) {
@@ -45,7 +54,11 @@ public class AxwayConfig {
 
 		// Install the all-trusting host verifier
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-		RestTemplate restClient = new RestTemplate();
+		//RestTemplate restClient = new RestTemplate();
+		RestTemplate restClient = restTemplateBuilder
+        .setConnectTimeout(connectTimeout)
+        .setReadTimeout(readTimeout)
+        .build();
 		restClient.setErrorHandler(new AxwayAPIGatewayErrorHandler());
 		return restClient;
 	}

@@ -28,7 +28,7 @@ public class AxwayApplicationClient implements Constants {
 	private HttpHeaders authHeader;
 
 	@Autowired
-	@Qualifier("getRestTemplate")
+	//@Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 	
 	

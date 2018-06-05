@@ -189,8 +189,6 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		} else {
 			// Service Broker 2.13 flow
 			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
-			System.out.println(serviceInstanceId);
-
 			Optional<APIOrganization> organization = apiOrganizations.stream()
 					.filter(apiOrganization -> (apiOrganization.getService_instance_id() != null
 							&& apiOrganization.getService_instance_id().equalsIgnoreCase(serviceInstanceId)))

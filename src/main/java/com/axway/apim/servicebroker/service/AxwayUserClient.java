@@ -37,7 +37,7 @@ public class AxwayUserClient implements Constants {
 	private String url;
 
 	@Autowired
-	@Qualifier("getRestTemplate")
+	//@Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	public APIUser getUser(String username) {
@@ -51,6 +51,7 @@ public class AxwayUserClient implements Constants {
 				});
 
 		List<APIUser> apiUsers = userEntity.getBody();
+		logger.info("Response Code for get User : {}",userEntity.getStatusCodeValue());
 		if (apiUsers.isEmpty()) {
 			return null;
 		}
@@ -89,7 +90,7 @@ public class AxwayUserClient implements Constants {
 		int httpStatusCode = user.getStatusCodeValue();
 		logger.info("Create User Response code : {}", httpStatusCode);
 		if (httpStatusCode != HttpStatus.CREATED.value()) {
-			throw new AxwayException("Internal server error");
+			throw new AxwayException("A user with the supplied login name already exists");
 		}
 
 		String userId = JsonPath.parse(user.getBody()).read("$.id", String.class);
