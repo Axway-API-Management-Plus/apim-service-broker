@@ -25,13 +25,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 public class AxwayConfig {
 	
-	@Value("${axway_apimanager_url:https://phx-107.demo.axway.com:8075}")
+	@Value("${axway_apimanager_url:https://localhost:8075}")
 	protected String url;
 
 	@Value("${axway_apimanager_username:apiadmin}")
 	private String username;
 
-	@Value("${axway_apimanager_password:Space*52}")
+	@Value("${axway_apimanager_password:changeme}")
 	protected char[] password;
 	
 	@Value("${axway.apim.connect.timeout}")
@@ -58,7 +58,9 @@ public class AxwayConfig {
 		RestTemplate restClient = restTemplateBuilder
         .setConnectTimeout(connectTimeout)
         .setReadTimeout(readTimeout)
+        .detectRequestFactory(false)
         .build();
+		
 		restClient.setErrorHandler(new AxwayAPIGatewayErrorHandler());
 		return restClient;
 	}
