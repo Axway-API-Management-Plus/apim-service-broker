@@ -51,22 +51,11 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 		String userName = null;
 
 		Context userContext = createServiceInstanceRequest.getOriginatingIdentity();
-		logger.info("User Identity: {}: ", userContext);
-		if (userContext == null) {
-			Map<String, Object> parameters = createServiceInstanceRequest.getParameters();
-			if(parameters == null){
-				throw new ServiceBrokerInvalidParametersException("Custom Parameter username is required");
-			}
-			userName = (String) parameters.get("username");
-			if (userName == null) {
-				throw new ServiceBrokerInvalidParametersException("Custom Parameter username is required");
-			}
-		} else {
-			String userGuid = (String) userContext.getProperty("user_id");
-			userName = cfClient.getUserName(userGuid);
-			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+		logger.info("CreateServiceInstance: User Identity: {}: ", userContext);
 
-		}
+		String userGuid = (String) userContext.getProperty("user_id");
+		userName = cfClient.getUserName(userGuid);
+		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
 
 		Util.isValidEmail(userName);
 
@@ -76,15 +65,13 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 
 		String spaceGuid = context.getSpaceGuid();
 		String orgGuid = context.getOrganizationGuid();
-		
 
 		logger.info("Space Guid: {}: ", spaceGuid);
 
 		String spaceName = cfClient.getSpaceName(spaceGuid);
 		String cfOrgName = cfClient.getOrg(orgGuid);
 
-		
-		String orgName = ORG_PREFIX + DOT + cfOrgName + DOT + spaceName +  DOT +serviceInstanceId;
+		String orgName = ORG_PREFIX + DOT + cfOrgName + DOT + spaceName + DOT + serviceInstanceId;
 
 		logger.info(" Space Name: {} ", spaceName);
 		try {
@@ -112,9 +99,10 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 		log(deleteServiceInstanceRequest);
 
 		String userName = null;
-		
 
 		Context userContext = deleteServiceInstanceRequest.getOriginatingIdentity();
+		logger.info("DeleteServiceInstanceResponse: User identity {} ",
+				deleteServiceInstanceRequest.getOriginatingIdentity());
 		if (userContext != null) {
 			String userGuid = (String) userContext.getProperty("user_id");
 			userName = cfClient.getUserName(userGuid);
@@ -122,11 +110,6 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 			Util.isValidEmail(userName);
 		}
 
-
-	
-
-		logger.info("DeleteServiceInstanceResponse: User identity {} ",
-				deleteServiceInstanceRequest.getOriginatingIdentity());
 		String serviceInstanceId = deleteServiceInstanceRequest.getServiceInstanceId();
 
 		try {

@@ -178,15 +178,15 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		List<FrondendAPI> frondendAPIs = new ArrayList<>();
 		String orgId = null;
 		String userId = null;
-		if (email != null) {
-			// Service Broker 2.12 flow
-			APIUser apiUser = axwayUserClient.getUser(email);
-			if (apiUser == null) {
-				return false;
-			}
-			orgId = apiUser.getOrganizationId();
-			userId = apiUser.getId();
-		} else {
+//		if (email != null) {
+//			// Service Broker 2.12 flow
+//			APIUser apiUser = axwayUserClient.getUser(email);
+//			if (apiUser == null) {
+//				return false;
+//			}
+//			orgId = apiUser.getOrganizationId();
+//			userId = apiUser.getId();
+//		} else {
 			// Service Broker 2.13 flow
 			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
 			Optional<APIOrganization> organization = apiOrganizations.stream()
@@ -201,7 +201,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 				return false;
 			}
 
-		}
+		//}
 
 		List<APIOrganizationAccess> apiOrganizationAccesses = axwayAPIClient.listAPIs(orgId);
 
@@ -289,7 +289,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 //	}
 	
 	private APIUser getOrgId(String email, String serviceInstanceId) throws ServiceBrokerException {
-		if (email != null) {
+		//if (email != null) {
 			// Service Broker 2.13 flow
 			APIUser apiUser = axwayUserClient.getUser(email);
 			if (apiUser == null) {
@@ -302,25 +302,25 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 				throw new ServiceBrokerException("Internal Error : Service instance id mismatch");
 			}
 			return apiUser;
-		} else {
-			// Service Broker 2.12 flow
-			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
-			Optional<APIOrganization> organization = apiOrganizations.stream()
-					.filter(apiOrganization -> (apiOrganization.getService_instance_id() != null
-							&& apiOrganization.getService_instance_id().equalsIgnoreCase(serviceInstanceId)))
-					.findAny();
-			if (organization.isPresent()) {
-				email = organization.get().getEmail();
-				APIUser apiUser = axwayUserClient.getUser(email);
-				return apiUser;
-				
-				//String orgId = organization.get().getId();
-				//return orgId;
-
-			} else {
-				throw new ServiceBrokerException("Internal Error : Organization is not available");
-			}
-		}
+//		} else {
+//			// Service Broker 2.12 flow
+//			List<APIOrganization> apiOrganizations = axwayOrganzationClient.listOrganization();
+//			Optional<APIOrganization> organization = apiOrganizations.stream()
+//					.filter(apiOrganization -> (apiOrganization.getService_instance_id() != null
+//							&& apiOrganization.getService_instance_id().equalsIgnoreCase(serviceInstanceId)))
+//					.findAny();
+//			if (organization.isPresent()) {
+//				email = organization.get().getEmail();
+//				APIUser apiUser = axwayUserClient.getUser(email);
+//				return apiUser;
+//				
+//				//String orgId = organization.get().getId();
+//				//return orgId;
+//
+//			} else {
+//				throw new ServiceBrokerException("Internal Error : Organization is not available");
+//			}
+//		}
 	}
 
 }
