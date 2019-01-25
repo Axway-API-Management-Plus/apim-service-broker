@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 public class BaseClass {
 
-	@Value("${security.user.name}")
+	@Value("${spring.security.user.name}")
 	protected String username;
-	@Value("${security.user.password}")
+	@Value("${spring.security.user.password}")
 	protected String password;
 }

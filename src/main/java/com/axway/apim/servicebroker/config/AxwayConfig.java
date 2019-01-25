@@ -1,5 +1,7 @@
 package com.axway.apim.servicebroker.config;
 
+import java.time.Duration;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
@@ -34,10 +36,10 @@ public class AxwayConfig {
 	@Value("${axway_apimanager_password:changeme}")
 	protected char[] password;
 	
-	@Value("${axway.apim.connect.timeout}")
+	@Value("${axway.apim.connecttimeout}")
 	protected int connectTimeout;
 	
-	@Value("${axway.apim.read.timeout}")
+	@Value("${axway.apim.readtimeout}")
 	protected int readTimeout;
 	
 	
@@ -56,8 +58,8 @@ public class AxwayConfig {
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 		//RestTemplate restClient = new RestTemplate();
 		RestTemplate restClient = restTemplateBuilder
-        .setConnectTimeout(connectTimeout)
-        .setReadTimeout(readTimeout)
+        .setConnectTimeout(Duration.ofSeconds(connectTimeout))
+        .setReadTimeout(Duration.ofSeconds(readTimeout))
         .detectRequestFactory(false)
         .build();
 		
@@ -67,6 +69,7 @@ public class AxwayConfig {
 
 	@Bean
 	public BrokerApiVersion brokerApiVersion() {
+		//return new BrokerApiVersion("2.13");
 		return new BrokerApiVersion();
 	}
 

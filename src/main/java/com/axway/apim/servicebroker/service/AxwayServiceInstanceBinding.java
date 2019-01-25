@@ -8,10 +8,11 @@ import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
 import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 import org.springframework.cloud.servicebroker.exception.ServiceInstanceBindingDoesNotExistException;
 import org.springframework.cloud.servicebroker.model.Context;
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest;
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingResponse;
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceRouteBindingResponse;
-import org.springframework.cloud.servicebroker.model.DeleteServiceInstanceBindingRequest;
+import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstanceBindingRequest;
+import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstanceBindingResponse;
+import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstanceRouteBindingResponse;
+import org.springframework.cloud.servicebroker.model.binding.DeleteServiceInstanceBindingRequest;
+import org.springframework.cloud.servicebroker.model.binding.DeleteServiceInstanceBindingResponse;
 import org.springframework.cloud.servicebroker.service.ServiceInstanceBindingService;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 		logger.info("Bind Request Binding id : {}", bindingId);
 		log(request);
 		String routeURL = request.getBindResource().getRoute();
-		if( routeURL == null){
+		if (routeURL == null) {
 			throw new ServiceBrokerInvalidParametersException("Application binding is not allowed");
 		}
 		logger.info("Route URL : {}", routeURL);
@@ -63,15 +64,15 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 
 		String trafficURL = url + "/" + bindingId;
 		logger.info("Traffic URL for the API : {}", trafficURL);
-		CreateServiceInstanceRouteBindingResponse createServiceInstanceBindingResponse = new CreateServiceInstanceRouteBindingResponse()
-				.withRouteServiceUrl(trafficURL);
+		CreateServiceInstanceRouteBindingResponse createServiceInstanceBindingResponse = CreateServiceInstanceRouteBindingResponse
+				.builder().routeServiceUrl(trafficURL).build();
 		return createServiceInstanceBindingResponse;
 
 		// app1->/guid/greeting
 	}
 
 	@Override
-	public void deleteServiceInstanceBinding(DeleteServiceInstanceBindingRequest request) {
+	public DeleteServiceInstanceBindingResponse deleteServiceInstanceBinding(DeleteServiceInstanceBindingRequest request) {
 
 		String userName = null;
 		String bindingId = request.getBindingId();
@@ -88,8 +89,10 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 		try {
 
 			boolean status = axwayServiceBroker.deleteAPI(bindingId, serviceInstanceId, userName);
+			DeleteServiceInstanceBindingResponse deleteServiceInstanceBindingResponse = DeleteServiceInstanceBindingResponse.builder().build();
 			if (!status)
 				throw new ServiceInstanceBindingDoesNotExistException(bindingId);
+			return deleteServiceInstanceBindingResponse;
 		} catch (AxwayException e) {
 			throw new ServiceBrokerException(e.getMessage());
 		}

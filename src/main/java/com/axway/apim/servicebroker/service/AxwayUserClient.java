@@ -91,7 +91,6 @@ public class AxwayUserClient implements Constants {
 		if (httpStatusCode != HttpStatus.CREATED.value()) {
 			throw new AxwayException("A user with the supplied login name already exists");
 		}
-
 		String userId = JsonPath.parse(user.getBody()).read("$.id", String.class);
 		return userId;
 		

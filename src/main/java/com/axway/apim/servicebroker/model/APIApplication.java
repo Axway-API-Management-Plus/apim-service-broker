@@ -1,9 +1,14 @@
 package com.axway.apim.servicebroker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class APIApplication {
 
 	private String id;
 	private String name;
+	
+	
 	public String getId() {
 		return id;
 	}

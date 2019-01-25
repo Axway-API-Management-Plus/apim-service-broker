@@ -1,5 +1,8 @@
 package com.axway.apim.servicebroker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class APIOrganizationAccess {
 
 	private String id;
