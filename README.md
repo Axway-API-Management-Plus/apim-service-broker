@@ -4,12 +4,12 @@
 
 ## API Management Version Compatibilty
 This artefact was successfully tested for the following versions:
-- Axway AMPLIFY API Management 7.5.3
+- Axway AMPLIFY API Management 7.5.3 and 7.6.2
 
 
 ## Prerequisites
 
-- Axway AMPLIFY API Management 7.5.3
+- Axway AMPLIFY API Management 7.5.3 or above
 - JDK 1.8.0_xxx
 - Apache Maven 3.3.9 or above 
 - Pivotal Cloud Foundry Elastic Runtime  version 1.12 or above
