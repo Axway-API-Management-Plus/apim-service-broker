@@ -1,0 +1,18 @@
+{
+	"id": "3a63f068-3045-473f-91df-745856e70867",
+	"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+	"name": "anna@demo.xway.com",
+	"description": null,
+	"loginName": "anna@demo.xway.com",
+	"email": "anna@demo.xway.com",
+	"phone": "2132343400",
+	"mobile": null,
+	"role": "user",
+	"image": null,
+	"enabled": true,
+	"createdOn": 1548450891490,
+	"state": "approved",
+	"type": "internal",
+	"authAttrs": null,
+	"dn": "cn=anna@demo.xway.com,o=Axway,ou=organizations,ou=APIPortal"
+}

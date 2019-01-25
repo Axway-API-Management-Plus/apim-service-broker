@@ -13,34 +13,33 @@ import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.axway.apim.servicebroker.model.APIOrganizationAccess;
+import com.axway.apim.servicebroker.model.APIApplication;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@RunWith(SpringRunner.class)
 @AutoConfigureWireMock(port = 8081)
 @TestPropertySource(properties = { "axway_apimanager_url=http://localhost:8081/" })
-public class AxwayAPIClientTest {
+
+public class AxwayApplicationClientTest {
+
+	@Autowired
+	private AxwayApplicationClient axwayApplicationClient;
 
 	@Autowired
 	private AxwayOrganzationClient axwayOrganzationClient;
 
-	@Autowired
-	AxwayAPIClient axwayAPIClient;
-
 	@Test
-	public void testListAPIs() {
+	public void getApplications() {
+
 		String orgName = "Axway";
 
 		String orgId = axwayOrganzationClient.getOrganizationId(orgName);
-		List<APIOrganizationAccess> axwayFrondendAPIs = axwayAPIClient.listAPIs(orgId);
-		if (axwayFrondendAPIs.isEmpty()) {
-			fail("API not found");
+		List<APIApplication> apiApplications = axwayApplicationClient.getApplications(orgId);
+		if(apiApplications.isEmpty()){
+			fail("No application found");
 		}
-	}
-
-	@Test
-	public void testDeleteAPI() {
 
 	}
 
+	
 }

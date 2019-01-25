@@ -1,0 +1,18 @@
+[
+	{
+		"id": "cebcfb86-ba41-487e-94ff-bec3285acd7d",
+		"name": "Test",
+		"description": "Simple test application",
+		"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+		"phone": null,
+		"email": null,
+		"createdBy": "13c54603-1fe3-40f5-b985-b54ca34243d1",
+		"managedBy": [
+			"13c54603-1fe3-40f5-b985-b54ca34243d1"
+		],
+		"createdOn": 1495186088047,
+		"enabled": true,
+		"image": "/api/portal/v1.3/applications/cebcfb86-ba41-487e-94ff-bec3285acd7d/image",
+		"state": "approved"
+	}
+]

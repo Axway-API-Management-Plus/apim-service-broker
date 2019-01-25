@@ -1,0 +1,13 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/api/portal/v1.3/applications?field=orgid&op=eq&value=9aef95ec-8167-46ab-8270-19cf1582c03f"
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "listApplicationByOrgId_response.json",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}
