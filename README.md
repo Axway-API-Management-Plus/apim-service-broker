@@ -1,4 +1,4 @@
-https://travis-ci.org/Axway-API-Management-Plus/apim-service-broker.svg?branch=master
+[![Build Status](https://travis-ci.org/Axway-API-Management-Plus/apim-service-broker.svg?branch=master)]
 # Description
 - Axway Service Broker for Pivotal Cloud Foundry based on [Fully brokered Architecture](https://docs.pivotal.io/pivotalcf/1-12/services/route-services.html#fully-brokered)
 
