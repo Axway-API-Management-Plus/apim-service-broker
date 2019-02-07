@@ -40,24 +40,26 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 	@Override
 	public CreateServiceInstanceBindingResponse createServiceInstanceBinding(
 			CreateServiceInstanceBindingRequest request) {
-		String userName = null;
 		String bindingId = request.getBindingId();
 		String serviceInstanceId = request.getServiceInstanceId();
 		logger.info("Bind Request Binding id : {}", bindingId);
 		log(request);
 		String routeURL = request.getBindResource().getRoute();
-		if( routeURL == null){
+		logger.info("Route URL : {}", routeURL);
+		if (routeURL == null) {
 			throw new ServiceBrokerInvalidParametersException("Application binding is not allowed");
 		}
-		logger.info("Route URL : {}", routeURL);
 		Context userContext = request.getOriginatingIdentity();
 		logger.info("User Identity: {}: ", userContext);
-		if (userContext != null) {
-			String userGuid = (String) userContext.getProperty("user_id");
-			userName = cfClient.getUserName(userGuid);
-			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-			Util.isValidEmail(userName);
+
+		if (userContext == null) {
+			logger.error("OriginatingIdentity is not present");
+			throw new ServiceBrokerException("Invalid Request");
 		}
+		String userGuid = (String) userContext.getProperty("user_id");
+		String userName = cfClient.getUserName(userGuid);
+		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+		Util.isValidEmail(userName);
 
 		axwayServiceBroker.importAPI(request.getParameters(), routeURL, bindingId, serviceInstanceId, userName);
 
@@ -73,18 +75,21 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 	@Override
 	public void deleteServiceInstanceBinding(DeleteServiceInstanceBindingRequest request) {
 
-		String userName = null;
 		String bindingId = request.getBindingId();
 		String serviceInstanceId = request.getServiceInstanceId();
 		logger.info("UnBind Request Binding id : {}", bindingId);
 		Context userContext = request.getOriginatingIdentity();
 		logger.info("User Identity: {}: ", userContext);
-		if (userContext != null) {
-			String userGuid = (String) userContext.getProperty("user_id");
-			userName = cfClient.getUserName(userGuid);
-			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-			Util.isValidEmail(userName);
+
+		if (userContext == null) {
+			logger.error("OriginatingIdentity is not present");
+			throw new ServiceBrokerException("Invalid Request");
 		}
+
+		String userGuid = (String) userContext.getProperty("user_id");
+		String userName = cfClient.getUserName(userGuid);
+		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+		Util.isValidEmail(userName);
 		try {
 
 			boolean status = axwayServiceBroker.deleteAPI(bindingId, serviceInstanceId, userName);
