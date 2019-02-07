@@ -1,5 +1,6 @@
 package com.axway.apim.servicebroker.config;
 
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,8 +17,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
-import com.axway.apim.servicebroker.util.Util;
 
 public class CFResourceOwnerPasswordAccessTokenProvider extends OAuth2AccessTokenSupport implements AccessTokenProvider {
 	
@@ -37,7 +36,7 @@ public class CFResourceOwnerPasswordAccessTokenProvider extends OAuth2AccessToke
 		MultiValueMap<String, String> form = new LinkedMultiValueMap<String, String>();
 		form.add("grant_type", "refresh_token");
 		form.add("refresh_token", refreshToken.getValue());
-		HttpHeaders headers = Util.createAuthHeaders(USERNAME, "");
+		HttpHeaders headers = createAuthHeaders(USERNAME, "");
 		return retrieveToken(request, resource, form, headers);
 	}
 
@@ -45,7 +44,7 @@ public class CFResourceOwnerPasswordAccessTokenProvider extends OAuth2AccessToke
 			throws UserRedirectRequiredException, AccessDeniedException, OAuth2AccessDeniedException {
 		
 		ResourceOwnerPasswordResourceDetails resource = (ResourceOwnerPasswordResourceDetails) details;
-		HttpHeaders headers = Util.createAuthHeaders(USERNAME, "");
+		HttpHeaders headers = createAuthHeaders(USERNAME, "");
 		return retrieveToken(request, resource, getParametersForTokenRequest(resource, request), headers);
 
 	}
@@ -79,6 +78,21 @@ public class CFResourceOwnerPasswordAccessTokenProvider extends OAuth2AccessToke
 
 		return form;
 
+	}
+	
+	private HttpHeaders createAuthHeaders(String username, String password) {
+
+		return new HttpHeaders() {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				String auth = username + ":" + password;
+				byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
+				String authHeader = "Basic " + new String(encodedAuth);
+				set("Authorization", authHeader);
+			}
+		};
 	}
 
 }

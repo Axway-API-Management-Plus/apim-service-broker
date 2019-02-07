@@ -9,9 +9,10 @@ public class UtilTest {
 
 	@Test
 	public void testIsValidEmail() {
-		try{
-		Util.isValidEmail("rnatarjan@axway.com");
-		}catch(ServiceBrokerInvalidParametersException e){
+		try {
+			Util util = new Util();
+			util.isValidEmail("rnatarjan@axway.com");
+		} catch (ServiceBrokerInvalidParametersException e) {
 			fail("Invalid emai");
 		}
 	}

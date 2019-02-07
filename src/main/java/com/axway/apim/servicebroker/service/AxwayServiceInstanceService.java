@@ -1,12 +1,10 @@
 package com.axway.apim.servicebroker.service;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 import org.springframework.cloud.servicebroker.exception.ServiceInstanceDoesNotExistException;
 import org.springframework.cloud.servicebroker.model.CloudFoundryContext;
 import org.springframework.cloud.servicebroker.model.Context;
@@ -39,6 +37,12 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 	private CFClient cfClient;
 
 	@Autowired
+	private Util util;
+
+	@Value("${axway.apim.orgname.prefix}")
+	protected String orgnamePrefix;
+
+	@Autowired
 	private ObjectMapper mapper;
 
 	private static final Logger logger = LoggerFactory.getLogger(AxwayServiceInstanceService.class.getName());
@@ -48,21 +52,27 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 			CreateServiceInstanceRequest createServiceInstanceRequest) {
 		log(createServiceInstanceRequest);
 
-		String userName = null;
-
 		Context userContext = createServiceInstanceRequest.getOriginatingIdentity();
+
 		logger.info("CreateServiceInstance: User Identity: {}: ", userContext);
+		if (userContext == null) {
+			logger.error("OriginatingIdentity is not present");
+			throw new ServiceBrokerException("Invalid Request");
+		}
 
 		String userGuid = (String) userContext.getProperty("user_id");
-		userName = cfClient.getUserName(userGuid);
+		String userName = cfClient.getUserName(userGuid);
 		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
 
-		Util.isValidEmail(userName);
+		util.isValidEmail(userName);
 
 		String serviceInstanceId = createServiceInstanceRequest.getServiceInstanceId();
 		logger.info("Service Instance Id: {}", serviceInstanceId);
 		CloudFoundryContext context = (CloudFoundryContext) createServiceInstanceRequest.getContext();
-
+		if (context == null) {
+			logger.error("Cloud Foundry Context is not present");
+			throw new ServiceBrokerException("Invalid Request");
+		}
 		String spaceGuid = context.getSpaceGuid();
 		String orgGuid = context.getOrganizationGuid();
 
@@ -70,13 +80,11 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 
 		String spaceName = cfClient.getSpaceName(spaceGuid);
 		String cfOrgName = cfClient.getOrg(orgGuid);
-
-		String orgName = ORG_PREFIX + DOT + cfOrgName + DOT + spaceName + DOT + serviceInstanceId;
+		String orgName = orgnamePrefix + DOT + cfOrgName + DOT + spaceName + DOT + serviceInstanceId;
 
 		logger.info(" Space Name: {} ", spaceName);
 		try {
 			boolean status = axwayServiceBroker.createOrgAndUser(orgName, userName, serviceInstanceId);
-
 			CreateServiceInstanceResponse createServiceInstanceResponse = new CreateServiceInstanceResponse();
 			if (status) {
 				createServiceInstanceResponse.withDashboardUrl(url);
@@ -97,24 +105,23 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 			DeleteServiceInstanceRequest deleteServiceInstanceRequest) {
 
 		log(deleteServiceInstanceRequest);
-
-		String userName = null;
-
 		Context userContext = deleteServiceInstanceRequest.getOriginatingIdentity();
 		logger.info("DeleteServiceInstanceResponse: User identity {} ",
 				deleteServiceInstanceRequest.getOriginatingIdentity());
-		if (userContext != null) {
-			String userGuid = (String) userContext.getProperty("user_id");
-			userName = cfClient.getUserName(userGuid);
-			logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-			Util.isValidEmail(userName);
+
+		if (userContext == null) {
+			logger.error("OriginatingIdentity is not present");
+			throw new ServiceBrokerException("Invalid Request");
 		}
 
-		String serviceInstanceId = deleteServiceInstanceRequest.getServiceInstanceId();
+		String userGuid = (String) userContext.getProperty("user_id");
+		String userName = cfClient.getUserName(userGuid);
+		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+		util.isValidEmail(userName);
 
+		String serviceInstanceId = deleteServiceInstanceRequest.getServiceInstanceId();
 		try {
 			boolean status = axwayServiceBroker.deleteOrgAppAndUser(userName, serviceInstanceId);
-
 			if (!status) {
 				throw new ServiceInstanceDoesNotExistException(serviceInstanceId);
 			}

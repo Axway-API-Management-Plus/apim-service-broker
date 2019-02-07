@@ -9,7 +9,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.servicebroker.model.BrokerApiVersion;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
 import com.axway.apim.servicebroker.exception.AxwayAPIGatewayErrorHandler;
@@ -58,6 +57,7 @@ public class AxwayConfig {
 		RestTemplate restClient = restTemplateBuilder
         .setConnectTimeout(connectTimeout)
         .setReadTimeout(readTimeout)
+        .basicAuthorization(username, new String(password))
         .detectRequestFactory(false)
         .build();
 		
@@ -101,9 +101,8 @@ public class AxwayConfig {
 	}
 	
 	@Bean
-	public HttpHeaders authHeader() {
-		HttpHeaders authHeader = Util.createAuthHeaders(username, new String(password));
-		return authHeader;
+	public Util util() {
+		return new Util();
 	}
 	
 	@Bean
@@ -111,7 +110,4 @@ public class AxwayConfig {
 		return url;
 	}
 	
-	
-	
-
 }
