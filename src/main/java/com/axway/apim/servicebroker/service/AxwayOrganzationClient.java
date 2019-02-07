@@ -7,9 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,10 +31,7 @@ public class AxwayOrganzationClient implements Constants {
 	private ObjectMapper mapper;
 
 	@Autowired
-	private HttpHeaders authHeader;
-
-	@Autowired
-	//@Qualifier("getRestTemplate")
+	// @Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	public String createOrganization(String orgName, String email, String serviceInstanceId) {
@@ -45,11 +41,10 @@ public class AxwayOrganzationClient implements Constants {
 		apiOrganization.setEmail(email);
 		apiOrganization.setService_instance_id(serviceInstanceId);
 		JsonNode jsonNode = mapper.convertValue(apiOrganization, JsonNode.class);
-		HttpEntity<JsonNode> jsonEntity = new HttpEntity<JsonNode>(jsonNode, authHeader);
 		// https://${APIManagerHost}:${APIManagerPort}/api/portal/v1.3/organizations
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations").build().toUri();
-
-		ResponseEntity<String> organization = restTemplate.exchange(uri, HttpMethod.POST, jsonEntity, String.class);
+		RequestEntity<JsonNode> jsonEntity = new RequestEntity<JsonNode>(jsonNode, HttpMethod.POST,uri);
+		ResponseEntity<String> organization = restTemplate.exchange(jsonEntity, String.class);
 		logger.info("Create Organziation Response code : {}", organization.getStatusCodeValue());
 
 		try {
@@ -66,8 +61,8 @@ public class AxwayOrganzationClient implements Constants {
 
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations/").path(orgId).build()
 				.toUri();
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(authHeader);
-		ResponseEntity<String> userEntity = restTemplate.exchange(uri, HttpMethod.DELETE, httpEntity, String.class);
+		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.DELETE,uri);
+		ResponseEntity<String> userEntity = restTemplate.exchange(requestEntity, String.class);
 		logger.info("Delete Organization Response Code : {} ", userEntity.getStatusCodeValue());
 	}
 
@@ -75,14 +70,10 @@ public class AxwayOrganzationClient implements Constants {
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations")
 				.queryParam("field", "name").queryParam("op", "eq").queryParam("value", orgName).build().toUri();
 
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(authHeader);
-
+		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
 		logger.info("Calling API : {}", uri.toString());
-		ResponseEntity<String> organizationEntity = restTemplate.exchange(uri, HttpMethod.GET, httpEntity,
-				String.class);
-
+		ResponseEntity<String> organizationEntity = restTemplate.exchange(requestEntity, String.class);
 		String responseBody = organizationEntity.getBody();
-
 		try {
 			String orgId = JsonPath.parse(responseBody).read("$.[0].id", String.class);
 			return orgId;
@@ -95,43 +86,35 @@ public class AxwayOrganzationClient implements Constants {
 
 	public void updateOrganization(APIOrganization apiOrganization) {
 		JsonNode jsonNode = mapper.convertValue(apiOrganization, JsonNode.class);
-		HttpEntity<JsonNode> jsonEntity = new HttpEntity<JsonNode>(jsonNode, authHeader);
+		
 		// https://${APIManagerHost}:${APIManagerPort}/api/portal/v1.3/organizations
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations").build().toUri();
-
-		ResponseEntity<String> organization = restTemplate.exchange(uri, HttpMethod.PUT, jsonEntity, String.class);
+		RequestEntity<JsonNode> jsonEntity = new RequestEntity<JsonNode>(jsonNode, HttpMethod.PUT, uri);
+		ResponseEntity<String> organization = restTemplate.exchange(jsonEntity, String.class);
 		logger.info(" Organziation Response code : {}", organization.getStatusCodeValue());
 	}
 
 	public APIOrganization getOrganization(String orgId) {
+		
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations/").path(orgId).build()
 				.toUri();
-
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(authHeader);
-
+		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
 		logger.info("Calling Get Organization API : {}", uri.toString());
-
-		ResponseEntity<APIOrganization> orgEntity = restTemplate.exchange(uri, HttpMethod.GET, httpEntity,
+		ResponseEntity<APIOrganization> orgEntity = restTemplate.exchange(requestEntity,
 				new ParameterizedTypeReference<APIOrganization>() {
 				});
-
 		return orgEntity.getBody();
-
 	}
 
 	public List<APIOrganization> listOrganization() {
+
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations").build().toUri();
-
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(authHeader);
-
+		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
 		logger.info("Calling List Organization API : {}", uri.toString());
-
-		ResponseEntity<List<APIOrganization>> orgEntity = restTemplate.exchange(uri, HttpMethod.GET, httpEntity,
+		ResponseEntity<List<APIOrganization>> orgEntity = restTemplate.exchange(requestEntity,
 				new ParameterizedTypeReference<List<APIOrganization>>() {
 				});
-
 		return orgEntity.getBody();
-
 	}
 
 }

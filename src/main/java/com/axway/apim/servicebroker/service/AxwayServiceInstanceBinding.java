@@ -31,6 +31,9 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 
 	@Autowired
 	private CFClient cfClient;
+	
+	@Autowired
+	private Util util;
 
 	@Autowired
 	private ObjectMapper mapper;
@@ -59,7 +62,7 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 		String userGuid = (String) userContext.getProperty("user_id");
 		String userName = cfClient.getUserName(userGuid);
 		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-		Util.isValidEmail(userName);
+		util.isValidEmail(userName);
 
 		axwayServiceBroker.importAPI(request.getParameters(), routeURL, bindingId, serviceInstanceId, userName);
 
@@ -89,7 +92,7 @@ public class AxwayServiceInstanceBinding implements ServiceInstanceBindingServic
 		String userGuid = (String) userContext.getProperty("user_id");
 		String userName = cfClient.getUserName(userGuid);
 		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-		Util.isValidEmail(userName);
+		util.isValidEmail(userName);
 		try {
 
 			boolean status = axwayServiceBroker.deleteAPI(bindingId, serviceInstanceId, userName);

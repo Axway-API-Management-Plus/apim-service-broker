@@ -36,6 +36,9 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 	@Autowired
 	private CFClient cfClient;
 
+	@Autowired
+	private Util util;
+
 	@Value("${axway.apim.orgname.prefix}")
 	protected String orgnamePrefix;
 
@@ -61,7 +64,7 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 		String userName = cfClient.getUserName(userGuid);
 		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
 
-		Util.isValidEmail(userName);
+		util.isValidEmail(userName);
 
 		String serviceInstanceId = createServiceInstanceRequest.getServiceInstanceId();
 		logger.info("Service Instance Id: {}", serviceInstanceId);
@@ -114,7 +117,7 @@ public class AxwayServiceInstanceService implements ServiceInstanceService, Cons
 		String userGuid = (String) userContext.getProperty("user_id");
 		String userName = cfClient.getUserName(userGuid);
 		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-		Util.isValidEmail(userName);
+		util.isValidEmail(userName);
 
 		String serviceInstanceId = deleteServiceInstanceRequest.getServiceInstanceId();
 		try {
