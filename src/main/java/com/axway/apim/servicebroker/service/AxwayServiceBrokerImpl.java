@@ -63,7 +63,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		if (type == null) {
 			throw new ServiceBrokerInvalidParametersException("Custom parameter type is required");
 		}
-		AtomicReference<Type> enumType = null;
+		AtomicReference<Type> enumType = new AtomicReference<>();
 
 		try{
 			enumType.set(Type.valueOf(type.toUpperCase()));
