@@ -13,24 +13,20 @@ import com.axway.apim.servicebroker.exception.AxwayAPIGatewayErrorHandler;
 
 @Configuration
 public class CloudFoundryConfig {
-	
+
 	private String TOKEN_URI = "/oauth/token";
-	
+
 	private OAuth2ClientContext oauth2ClientContext = new DefaultOAuth2ClientContext();
-	
-	
-	//@Value("${cf_uaa_username:admin}")
+
 	@Value("${cf_admin_username:admin}")
 	private String username;
 
-	//@Value("${cf_uaa_password:L2_JxeE43z1YJGItb4YmszNkQ98dQEjA}")
 	@Value("${cf_admin_password:changeme}")
 	private char[] password;
-	
+
 	@Value("${login_host:https://login.sys.pie-25.cfplatformeng.com}")
 	private String accessTokenURI;
 
-	
 	@Bean
 	public OAuth2ProtectedResourceDetails cf() {
 		ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
@@ -44,7 +40,7 @@ public class CloudFoundryConfig {
 
 	@Bean
 	OAuth2RestTemplate cfOauthRestTemplate(){
-		
+
 		OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(cf(),oauth2ClientContext);
 		oAuth2RestTemplate.setAccessTokenProvider(new CFResourceOwnerPasswordAccessTokenProvider());
 		oAuth2RestTemplate.setErrorHandler(new AxwayAPIGatewayErrorHandler());

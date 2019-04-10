@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class AxwayConfig {
-	
+
 	@Value("${axway_apimanager_url:https://localhost:8075}")
 	protected String url;
 
@@ -32,15 +32,12 @@ public class AxwayConfig {
 
 	@Value("${axway_apimanager_password:changeme}")
 	protected char[] password;
-	
+
 	@Value("${axway.apim.connect.timeout}")
 	protected int connectTimeout;
-	
+
 	@Value("${axway.apim.read.timeout}")
 	protected int readTimeout;
-	
-	
-	
 
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
@@ -55,12 +52,11 @@ public class AxwayConfig {
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 		//RestTemplate restClient = new RestTemplate();
 		RestTemplate restClient = restTemplateBuilder
-        .setConnectTimeout(connectTimeout)
-        .setReadTimeout(readTimeout)
-        .basicAuthorization(username, new String(password))
-        .detectRequestFactory(false)
-        .build();
-		
+				.setConnectTimeout(connectTimeout)
+				.setReadTimeout(readTimeout)
+				.basicAuthorization(username, new String(password))
+				.detectRequestFactory(false)
+				.build();
 		restClient.setErrorHandler(new AxwayAPIGatewayErrorHandler());
 		return restClient;
 	}
@@ -87,27 +83,26 @@ public class AxwayConfig {
 		AxwayUserClient axwayUserClient = new AxwayUserClient();
 		return axwayUserClient;
 	}
-	
+
 	@Bean
 	public AxwayApplicationClient axwayApplicationClient() {
 		AxwayApplicationClient axwayApplicationClient = new AxwayApplicationClient();
 		return axwayApplicationClient;
 	}
-	
+
 	@Bean
 	public AxwayAPIClient axwayAPIClient() {
 		AxwayAPIClient axwayAPIClient = new AxwayAPIClient();
 		return axwayAPIClient;
 	}
-	
+
 	@Bean
 	public Util util() {
 		return new Util();
 	}
-	
+
 	@Bean
 	public String url() {
 		return url;
 	}
-	
 }

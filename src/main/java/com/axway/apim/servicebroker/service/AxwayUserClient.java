@@ -41,7 +41,12 @@ public class AxwayUserClient implements Constants {
 	public APIUser getUser(String username) {
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users")
 				.queryParam("field", "loginName").queryParam("op", "eq").queryParam("value", username).build().toUri();
+		return getUser(uri);
 
+	}
+
+
+	private APIUser getUser(URI uri){
 		logger.info("Calling API : {}", uri.toString());
 		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
 		ResponseEntity<List<APIUser>> userEntity = restTemplate.exchange(requestEntity,
@@ -49,6 +54,7 @@ public class AxwayUserClient implements Constants {
 				});
 
 		List<APIUser> apiUsers = userEntity.getBody();
+		int statusCode = userEntity.getStatusCodeValue();
 		logger.info("Response Code for get User : {}", userEntity.getStatusCodeValue());
 		if (apiUsers.isEmpty()) {
 			return null;
@@ -59,18 +65,7 @@ public class AxwayUserClient implements Constants {
 	public APIUser getUserByOrgId(String orgId) {
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users").queryParam("field", "orgid")
 				.queryParam("op", "eq").queryParam("value", orgId).build().toUri();
-
-		logger.info("Calling API : {}", uri.toString());
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
-		ResponseEntity<List<APIUser>> userEntity = restTemplate.exchange(requestEntity,
-				new ParameterizedTypeReference<List<APIUser>>() {
-				});
-
-		List<APIUser> apiUsers = userEntity.getBody();
-		if (apiUsers.isEmpty()) {
-			return null;
-		}
-		return apiUsers.iterator().next();
+		return getUser(uri);
 	}
 
 	public String createUser(String organizationId, String email) throws AxwayException {
