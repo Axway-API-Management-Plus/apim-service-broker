@@ -5,7 +5,7 @@
 
 ## API Management Version Compatibilty
 This artefact was successfully tested for the following versions:
-- Axway AMPLIFY API Management 7.5.3 and 7.6.2
+- Axway AMPLIFY API Management 7.5.3, 7.6.2 and 7.7
 
 
 ## Prerequisites
