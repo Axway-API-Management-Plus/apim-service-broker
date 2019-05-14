@@ -1,7 +1,5 @@
 {
-	
 	"apiname": "pcftest",
 	"type":"swagger",
-	"uri": "/v2/api-docs"
-	
+	"uri": "/v3/swagger.json"
 }

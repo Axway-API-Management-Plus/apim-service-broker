@@ -9,6 +9,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -30,9 +31,9 @@ public class AxwayAPIGatewayErrorHandler implements ResponseErrorHandler {
 		if(contentType.includes(MediaType.APPLICATION_JSON)){
 			DocumentContext documentContext = JsonPath.parse(responseBody);
 			String errorDesc = documentContext.read("$.errors[0].message", String.class);
-			throw new AxwayException(errorDesc);
+			throw new ServiceBrokerException("API Manager - "+ errorDesc);
 		}else{
-			throw new AxwayException("Unknown Error From API Manager");
+			throw new ServiceBrokerException("Unknown Error From API Manager");
 		}
 	}
 
