@@ -53,7 +53,6 @@ public class CFResourceOwnerPasswordAccessTokenProvider extends OAuth2AccessToke
 
 		MultiValueMap<String, String> form = new LinkedMultiValueMap<String, String>();
 		form.set("grant_type", "password");
-
 		form.set("username", resource.getUsername());
 		form.set("password", resource.getPassword());
 		form.putAll(request);
@@ -72,20 +71,15 @@ public class CFResourceOwnerPasswordAccessTokenProvider extends OAuth2AccessToke
 					}
 				}
 			}
-
 			form.set("scope", builder.toString());
 		}
-
 		return form;
-
 	}
 	
 	private HttpHeaders createAuthHeaders(String username, String password) {
 
 		return new HttpHeaders() {
-
 			private static final long serialVersionUID = 1L;
-
 			{
 				String auth = username + ":" + password;
 				byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
@@ -94,5 +88,4 @@ public class CFResourceOwnerPasswordAccessTokenProvider extends OAuth2AccessToke
 			}
 		};
 	}
-
 }
