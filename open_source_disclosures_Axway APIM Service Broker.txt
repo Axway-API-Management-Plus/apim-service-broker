@@ -11,7 +11,7 @@ further if you wish to review the copyright notice(s) and the full text
 of the license associated with each component.
 
 
-SECTION 1: NON-STANDARD LICENSES
+SECTION 1: Public Domain
 
    >>> aopalliance-1
 
@@ -119,9 +119,9 @@ APPENDIX: Standard License Files and Templates
 
 
 
---------------- SECTION 1:  NON-STANDARD LICENSES ----------
+--------------- SECTION 1:  Public Domain ----------
 
-NON-STANDARD LICENSES are applicable to the following component(s).
+Public Domain License are applicable to the following component(s).
 
 
 >>> aopalliance-1
