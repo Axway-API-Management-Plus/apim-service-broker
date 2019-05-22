@@ -194,7 +194,7 @@ public class AxwayAPIClient implements Constants {
 		return frontEndAPIResponse;
 	}
 
-	public void applySecurity(String frontEndAPIResponse, String bindingId, String userId)
+	public void applySecurity(String frontEndAPIResponse, String bindingId, String vhost, String userId)
 			throws ServiceBrokerException {
 		JsonNode jsonNode;
 		try {
@@ -208,7 +208,9 @@ public class AxwayAPIClient implements Constants {
 		ArrayNode devices = (ArrayNode) ((ArrayNode) jsonNode.findPath("securityProfiles")).get(0).get("devices");
 
 		String virtualAPIId = jsonNode.findPath("id").asText();
-		((ObjectNode) jsonNode).put("path", "/" + bindingId);
+		((ObjectNode) jsonNode).put(CF_BINDING_ID, bindingId);
+		((ObjectNode) jsonNode).put(VHOST, vhost);
+		//((ObjectNode) jsonNode).put("path", "/" + bindingId);
 		// ((ObjectNode) jsonNode).put("createdBy" , userId);
 
 		logger.debug("Security Device {}", devices.getClass().getName());

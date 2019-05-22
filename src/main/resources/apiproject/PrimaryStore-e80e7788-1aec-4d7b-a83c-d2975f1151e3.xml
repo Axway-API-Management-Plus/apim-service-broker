@@ -13198,11 +13198,11 @@
 	<fval name="caCerts"></fval>
 	<fval name="category"><value contentType="reference">2445048531674422895</value></fval>
 	<fval name="ciphers"><value>FIPS:!SSLv3:!aNULL</value></fval>
-	<fval name="closePreviousConnection"><value>false</value></fval>
+	<fval name="closePreviousConnection"><value>0</value></fval>
 	<fval name="connectionFailurePolicy"><value contentType="reference">-1</value></fval>
-	<fval name="forwardClientHostHeader"><value>0</value></fval>
+	<fval name="forwardClientHostHeader"><value>1</value></fval>
 	<fval name="handleRedirects"><value>1</value></fval>
-	<fval name="loadResponseBody"><value>false</value></fval>
+	<fval name="loadResponseBody"><value>0</value></fval>
 	<fval name="logFailure"><value>Failed to route request to endpoint.</value></fval>
 	<fval name="logFatal"><value>Error occurred while routing request to endpoint. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>2</value></fval>
