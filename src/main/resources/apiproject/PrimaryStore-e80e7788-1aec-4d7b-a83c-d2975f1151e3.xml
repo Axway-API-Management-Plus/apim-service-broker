@@ -11883,7 +11883,7 @@
 	<fval name="issuer"><value>${http.request.url}</value></fval>
 	<fval name="jwtExpiresIn"><value>60</value></fval>
 	<fval name="jwtSigner"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="logFailure"><value>Filter failed</value></fval>
 	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
 	<fval name="logMask"><value>2</value></fval>
@@ -12525,7 +12525,7 @@
 	<fval name="issuer"><value>${http.request.url}</value></fval>
 	<fval name="jwtExpiresIn"><value>60</value></fval>
 	<fval name="jwtSigner"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="logFailure"><value>Filter failed</value></fval>
 	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
 	<fval name="logMask"><value>2</value></fval>
@@ -13238,7 +13238,7 @@
 	<fval name="stickyCookiePath"><value></value></fval>
 	<fval name="stickyness"><value>0</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
-	<fval name="url"><value>http://localhost:7070${http.request.path}${path}</value></fval>
+	<fval name="url"><value>http://localhost:7070${path}</value></fval>
 	<fval name="useRootCerts"><value>1</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SaveToFileFilter" entityPK="-4776697884111987202" parentPK="2331372335669071159">

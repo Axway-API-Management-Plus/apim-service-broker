@@ -1301,7 +1301,7 @@
 	<fval name="resolveSubjectCNtoNetAddr"><value>0</value></fval>
 	<fval name="reuseAddress"><value>false</value></fval>
 	<fval name="serverCert"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="sessionCacheSize"><value>32</value></fval>
 	<fval name="ssloptions">
 		<value>nosslv2</value>
@@ -2702,7 +2702,7 @@
 	<fval name="resolveSubjectCNtoNetAddr"><value>0</value></fval>
 	<fval name="reuseAddress"><value>false</value></fval>
 	<fval name="serverCert"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="sessionCacheSize"><value>32</value></fval>
 	<fval name="ssloptions">
 		<value>notlsv1_1</value>
@@ -2758,7 +2758,7 @@
 	<fval name="resolveSubjectCNtoNetAddr"><value>0</value></fval>
 	<fval name="reuseAddress"><value>false</value></fval>
 	<fval name="serverCert"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="sessionCacheSize"><value>32</value></fval>
 	<fval name="ssloptions">
 		<value>notlsv1_1</value>
@@ -4027,7 +4027,7 @@
 	<fval name="resolveSubjectCNtoNetAddr"><value>0</value></fval>
 	<fval name="reuseAddress"><value>false</value></fval>
 	<fval name="serverCert"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="sessionCacheSize"><value>32</value></fval>
 	<fval name="ssloptions">
 		<value>nosslv2</value>
