@@ -1,5 +1,5 @@
 {
 	"apiname": "pcftest",
 	"type":"swagger",
-	"uri": "/v3/swagger.json"
+	"uri": "http://greeting-app-interested-fossa.apps.sanpablo.cf-app.com/api/v3/swagger.json"
 }

@@ -13270,7 +13270,7 @@
 	<fval name="logSuccess"><value>Passed script filter</value></fval>
 	<fval name="name"><value>Get Path from X-Cf-Forwarded-Url</value></fval>
 	<fval name="requiredProperties"></fval>
-	<fval name="script"><value>import java.net.URI;&#xD;&#xA;&#xD;&#xA;def invoke(msg)         &#xD;&#xA;{&#xD;&#xA;    def url = msg.get(&quot;url&quot;);        &#xD;&#xA;    def URI  = new URI(url);&#xD;&#xA;    def path = URI.getRawPath();&#xD;&#xA;    msg.put(&quot;path&quot;,path);&#xD;&#xA;    return true;        &#xD;&#xA;}</value></fval>
+	<fval name="script"><value>import java.net.URI;&#xD;&#xA;&#xD;&#xA;def invoke(msg)         &#xD;&#xA;{&#xD;&#xA;    def url = msg.get(&quot;url&quot;);        &#xD;&#xA;    def URI  = new URI(url);&#xD;&#xA;    def path = URI.getRawPath();&#xD;&#xA;    msg.put(&quot;path&quot;,path);&#xD;&#xA;    def httpHeaders = msg.get(&quot;http.headers&quot;);&#xD;&#xA;    def port = URI.getPort();&#xD;&#xA;    if ( port == -1) {&#xD;&#xA;&#x9;  httpHeaders.setHeader(&quot;Host&quot;, URI.getHost());&#xD;&#xA;  }  else{&#xD;&#xA;    httpHeaders.setHeader(&quot;Host&quot;, URI.getHost() + &quot;:&quot; + port);&#xD;&#xA; }&#xD;&#xA;    return true;        &#xD;&#xA;}</value></fval>
 	<fval name="successNode"><value contentType="reference">2331372335669071159</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeExtractHTTPHeaderFilter" entityPK="8895625963261121359" parentPK="361572352584357271">
