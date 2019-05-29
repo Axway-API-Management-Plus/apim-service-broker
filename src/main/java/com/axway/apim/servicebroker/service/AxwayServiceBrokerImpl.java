@@ -91,7 +91,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		String response = axwayAPIClient.createBackend(apiName, orgId, type, apiURI);
 		String backendAPIId = JsonPath.parse(response).read("$.id", String.class);
 		response = axwayAPIClient.createFrontend(backendAPIId, orgId, userId);
-		axwayAPIClient.applySecurity(response, bindingId,userId);
+		axwayAPIClient.applySecurity(response, bindingId, appRouteURL, userId);
 
 	}
 
@@ -104,7 +104,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 		// Get the API based on the name and apply the filters like unpublished
 		String responseBody = axwayAPIClient.listAPIs();
 		List<Map<String, Object>> apis = JsonPath.parse(responseBody).read(
-				"$.*[?(@.organizationId =='" + orgId + "' && @.path =='/" + bindingId + "' && @.state =='published')]");
+				"$.*[?(@.organizationId =='" + orgId + "' && @.cfBindingId =='" + bindingId + "' && @.state =='published')]");
 		logger.info("Published APIs {} :" ,apis);
 
 		if (!apis.isEmpty()) {
@@ -112,7 +112,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 
 		} else {
 			apis = JsonPath.parse(responseBody).read(
-					"$.*[?(@.organizationId =='" + orgId + "' && @.path =='/" + bindingId + "' && @.state =='unpublished')]");
+					"$.*[?(@.organizationId =='" + orgId + "' && @.cfBindingId =='" + bindingId + "' && @.state =='unpublished')]");
 			logger.info("unpublished APIs {} :" ,apis);
 			if (!apis.isEmpty()) {
 				Map<String, Object> apiDefinition = apis.get(0);

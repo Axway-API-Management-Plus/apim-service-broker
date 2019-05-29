@@ -106,7 +106,8 @@
 			"Standard": [
 				"FHIR"
 			]
-		}
+		},
+		"cfBindingId": "78a38296-bded-44a9-9329-f2cd0a92e962"
 	},
 	{
 		"id": "f9393827-7890-4b5c-8112-bd14d20e43d8",

@@ -11883,7 +11883,7 @@
 	<fval name="issuer"><value>${http.request.url}</value></fval>
 	<fval name="jwtExpiresIn"><value>60</value></fval>
 	<fval name="jwtSigner"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="logFailure"><value>Filter failed</value></fval>
 	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
 	<fval name="logMask"><value>2</value></fval>
@@ -12525,7 +12525,7 @@
 	<fval name="issuer"><value>${http.request.url}</value></fval>
 	<fval name="jwtExpiresIn"><value>60</value></fval>
 	<fval name="jwtSigner"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=*.demo.axway.com,OU=Axway IT,O=Axway Inc.,L=Phoenix,ST=Arizona,C=US 2017'/></key></key>	</value></fval>
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='Samples Test CA'/></key></key>	</value></fval>
 	<fval name="logFailure"><value>Filter failed</value></fval>
 	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
 	<fval name="logMask"><value>2</value></fval>
@@ -13198,11 +13198,11 @@
 	<fval name="caCerts"></fval>
 	<fval name="category"><value contentType="reference">2445048531674422895</value></fval>
 	<fval name="ciphers"><value>FIPS:!SSLv3:!aNULL</value></fval>
-	<fval name="closePreviousConnection"><value>false</value></fval>
+	<fval name="closePreviousConnection"><value>0</value></fval>
 	<fval name="connectionFailurePolicy"><value contentType="reference">-1</value></fval>
-	<fval name="forwardClientHostHeader"><value>0</value></fval>
+	<fval name="forwardClientHostHeader"><value>1</value></fval>
 	<fval name="handleRedirects"><value>1</value></fval>
-	<fval name="loadResponseBody"><value>false</value></fval>
+	<fval name="loadResponseBody"><value>0</value></fval>
 	<fval name="logFailure"><value>Failed to route request to endpoint.</value></fval>
 	<fval name="logFatal"><value>Error occurred while routing request to endpoint. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>2</value></fval>
@@ -13238,7 +13238,7 @@
 	<fval name="stickyCookiePath"><value></value></fval>
 	<fval name="stickyness"><value>0</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
-	<fval name="url"><value>http://localhost:7070${http.request.path}${path}</value></fval>
+	<fval name="url"><value>http://localhost:7070${path}</value></fval>
 	<fval name="useRootCerts"><value>1</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SaveToFileFilter" entityPK="-4776697884111987202" parentPK="2331372335669071159">
@@ -13270,7 +13270,7 @@
 	<fval name="logSuccess"><value>Passed script filter</value></fval>
 	<fval name="name"><value>Get Path from X-Cf-Forwarded-Url</value></fval>
 	<fval name="requiredProperties"></fval>
-	<fval name="script"><value>import java.net.URI;&#xD;&#xA;&#xD;&#xA;def invoke(msg)         &#xD;&#xA;{&#xD;&#xA;    def url = msg.get(&quot;url&quot;);        &#xD;&#xA;    def URI  = new URI(url);&#xD;&#xA;    def path = URI.getRawPath();&#xD;&#xA;    msg.put(&quot;path&quot;,path);&#xD;&#xA;    return true;        &#xD;&#xA;}</value></fval>
+	<fval name="script"><value>import java.net.URI;&#xD;&#xA;&#xD;&#xA;def invoke(msg)         &#xD;&#xA;{&#xD;&#xA;    def url = msg.get(&quot;url&quot;);        &#xD;&#xA;    def URI  = new URI(url);&#xD;&#xA;    def path = URI.getRawPath();&#xD;&#xA;    msg.put(&quot;path&quot;,path);&#xD;&#xA;    def httpHeaders = msg.get(&quot;http.headers&quot;);&#xD;&#xA;    def port = URI.getPort();&#xD;&#xA;    if ( port == -1) {&#xD;&#xA;&#x9;  httpHeaders.setHeader(&quot;Host&quot;, URI.getHost());&#xD;&#xA;  }  else{&#xD;&#xA;    httpHeaders.setHeader(&quot;Host&quot;, URI.getHost() + &quot;:&quot; + port);&#xD;&#xA; }&#xD;&#xA;    return true;        &#xD;&#xA;}</value></fval>
 	<fval name="successNode"><value contentType="reference">2331372335669071159</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeExtractHTTPHeaderFilter" entityPK="8895625963261121359" parentPK="361572352584357271">
