@@ -136,6 +136,11 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 			return false;
 		}
 
+		// Check whether the  user is already associated  with some other organization
+		if( apiUser.getOrganizationId() != null){
+			throw new AxwayException("A user with the supplied login name already exists");
+		}
+
 		orgId = axwayOrganzationClient.createOrganization(orgName, email, serviceInstanceId);
 		String userId = axwayUserClient.createUser(orgId, email);
 		axwayUserClient.resetPassword(userId);
@@ -167,7 +172,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
 			String apiId = apiOrganizationAccess.getApiId();
 			FrondendAPI frondendAPI = axwayAPIClient.getAPI(apiId);
 			if (frondendAPI.getState().equals(PUBLISHED)) {
-				logger.info("Publised APIs are avaialble under the organization");
+				logger.info("Published APIs are available under the organization");
 				throw new AxwayException(
 						"Can't delete Organization as it has published API, Please unpublish the API from API Manager");
 			}
