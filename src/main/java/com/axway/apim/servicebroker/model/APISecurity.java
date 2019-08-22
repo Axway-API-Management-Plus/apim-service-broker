@@ -7,8 +7,7 @@ public class APISecurity {
 	private String name = "Pass Through";
 	private String type = "passThrough";
 	private int order = 1;
-	
-	
+
 	private Properties properties;
 	
 	public APISecurity(){
@@ -17,8 +16,7 @@ public class APISecurity {
 		properties.setProperty("removeCredentialsOnSuccess", "true");
 		
 	}
-	
-		
+
 	public String getName() {
 		return name;
 	}
@@ -50,6 +48,4 @@ public class APISecurity {
 	public void setProperties(Properties properties) {
 		this.properties = properties;
 	}
-	
-
 }

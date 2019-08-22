@@ -48,14 +48,14 @@ public class AxwayUserClient implements Constants {
 
 	private APIUser getUser(URI uri){
 		logger.info("Calling API : {}", uri.toString());
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
 		ResponseEntity<List<APIUser>> userEntity = restTemplate.exchange(requestEntity,
 				new ParameterizedTypeReference<List<APIUser>>() {
 				});
 
 		List<APIUser> apiUsers = userEntity.getBody();
 		int statusCode = userEntity.getStatusCodeValue();
-		logger.info("Response Code for get User : {}", userEntity.getStatusCodeValue());
+		logger.info("Response Code for get User : {}", statusCode);
 		if (apiUsers.isEmpty()) {
 			return null;
 		}
@@ -78,7 +78,7 @@ public class AxwayUserClient implements Constants {
 		JsonNode jsonNode = mapper.convertValue(apiUser, JsonNode.class);
 		// https://${APIManagerHost}:${APIManagerPort}/api/portal/v1.3/organizations
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users").build().toUri();
-		RequestEntity<JsonNode> requestEntity = new RequestEntity<JsonNode>(jsonNode, HttpMethod.POST, uri);
+		RequestEntity<JsonNode> requestEntity = new RequestEntity<>(jsonNode, HttpMethod.POST, uri);
 		ResponseEntity<String> user = restTemplate.exchange(requestEntity, String.class);
 		int httpStatusCode = user.getStatusCodeValue();
 		logger.info("Create User Response code : {}", httpStatusCode);
@@ -86,24 +86,21 @@ public class AxwayUserClient implements Constants {
 			throw new AxwayException("A user with the supplied login name already exists");
 		}
 
-		String userId = JsonPath.parse(user.getBody()).read("$.id", String.class);
-		return userId;
-
+		return JsonPath.parse(user.getBody()).read("$.id", String.class);
 	}
 
 	public void resetPassword(String userId) {
 
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users/").path(userId)
 				.path("/resetpassword").build().toUri();
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.PUT, uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.PUT, uri);
 		restTemplate.exchange(uri, HttpMethod.PUT, requestEntity, String.class);
-
 	}
 
-	public void deleteUser(String id) throws AxwayException {
+	public void deleteUser(String id)  {
 
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users/").path(id).build().toUri();
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.DELETE, uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.DELETE, uri);
 		ResponseEntity<String> userEntity = restTemplate.exchange(requestEntity, String.class);
 		logger.info("Delete User Response Code : {} ", userEntity.getStatusCodeValue());
 	}

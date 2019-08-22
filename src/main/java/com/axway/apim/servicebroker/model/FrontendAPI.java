@@ -3,7 +3,7 @@ package com.axway.apim.servicebroker.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FrondendAPI {
+public class FrontendAPI {
 
 	private String id;
 	private String apiId;

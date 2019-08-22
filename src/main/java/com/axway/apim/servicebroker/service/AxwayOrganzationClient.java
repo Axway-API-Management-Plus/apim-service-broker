@@ -45,23 +45,22 @@ public class AxwayOrganzationClient implements Constants {
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations").build().toUri();
 		RequestEntity<JsonNode> jsonEntity = new RequestEntity<JsonNode>(jsonNode, HttpMethod.POST,uri);
 		ResponseEntity<String> organization = restTemplate.exchange(jsonEntity, String.class);
-		logger.info("Create Organziation Response code : {}", organization.getStatusCodeValue());
+		logger.info("Create Organization Response code : {}", organization.getStatusCodeValue());
 
 		try {
-			String orgId = JsonPath.parse(organization.getBody()).read("$.id", String.class);
-			return orgId;
+			return JsonPath.parse(organization.getBody()).read("$.id", String.class);
 		} catch (PathNotFoundException e) {
-			logger.error("Unable to retreive Organization detail", e);
+			logger.error("Unable to retrieve Organization detail", e);
 			return null;
 		}
 
 	}
 
-	public void deleteOrganization(String orgId) throws AxwayException {
+	public void deleteOrganization(String orgId){
 
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations/").path(orgId).build()
 				.toUri();
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.DELETE,uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.DELETE,uri);
 		ResponseEntity<String> userEntity = restTemplate.exchange(requestEntity, String.class);
 		logger.info("Delete Organization Response Code : {} ", userEntity.getStatusCodeValue());
 	}
@@ -70,15 +69,14 @@ public class AxwayOrganzationClient implements Constants {
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations")
 				.queryParam("field", "name").queryParam("op", "eq").queryParam("value", orgName).build().toUri();
 
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
 		logger.info("Calling API : {}", uri.toString());
 		ResponseEntity<String> organizationEntity = restTemplate.exchange(requestEntity, String.class);
 		String responseBody = organizationEntity.getBody();
 		try {
-			String orgId = JsonPath.parse(responseBody).read("$.[0].id", String.class);
-			return orgId;
+			return JsonPath.parse(responseBody).read("$.[0].id", String.class);
 		} catch (PathNotFoundException e) {
-			logger.error("Unable to retreive Organization detail", e);
+			logger.error("Unable to retrieve Organization detail", e);
 			return null;
 		}
 
@@ -89,7 +87,7 @@ public class AxwayOrganzationClient implements Constants {
 		
 		// https://${APIManagerHost}:${APIManagerPort}/api/portal/v1.3/organizations
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations").build().toUri();
-		RequestEntity<JsonNode> jsonEntity = new RequestEntity<JsonNode>(jsonNode, HttpMethod.PUT, uri);
+		RequestEntity<JsonNode> jsonEntity = new RequestEntity<>(jsonNode, HttpMethod.PUT, uri);
 		ResponseEntity<String> organization = restTemplate.exchange(jsonEntity, String.class);
 		logger.info(" Organziation Response code : {}", organization.getStatusCodeValue());
 	}
@@ -98,7 +96,7 @@ public class AxwayOrganzationClient implements Constants {
 		
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations/").path(orgId).build()
 				.toUri();
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
 		logger.info("Calling Get Organization API : {}", uri.toString());
 		ResponseEntity<APIOrganization> orgEntity = restTemplate.exchange(requestEntity,
 				new ParameterizedTypeReference<APIOrganization>() {
@@ -109,7 +107,7 @@ public class AxwayOrganzationClient implements Constants {
 	public List<APIOrganization> listOrganization() {
 
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations").build().toUri();
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
 		logger.info("Calling List Organization API : {}", uri.toString());
 		ResponseEntity<List<APIOrganization>> orgEntity = restTemplate.exchange(requestEntity,
 				new ParameterizedTypeReference<List<APIOrganization>>() {

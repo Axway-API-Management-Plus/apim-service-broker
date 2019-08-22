@@ -28,16 +28,14 @@ public class AxwayApplicationClient implements Constants {
 
 	public List<APIApplication> getApplications(String orgId) {
 		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/applications")
-				.queryParam("field", "orgid").queryParam("op", "eq").queryParam("value", orgId).build().toUri();
+					.queryParam("field", "orgid").queryParam("op", "eq").queryParam("value", orgId).build().toUri();
 
-		RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
 		logger.info("Calling API : {}", uri.toString());
 		ResponseEntity<List<APIApplication>> userEntity = restTemplate.exchange(requestEntity,
 				new ParameterizedTypeReference<List<APIApplication>>() {
 				});
-
-		List<APIApplication> apiUsers = userEntity.getBody();
-		return apiUsers;
+		return  userEntity.getBody();
 	}
 
 	public void deleteApplications(List<APIApplication> applications) {
@@ -46,7 +44,7 @@ public class AxwayApplicationClient implements Constants {
 			String appId = apiApplication.getId();
 			URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/applications/").path(appId)
 					.build().toUri();
-			RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.DELETE, uri);
+			RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.DELETE, uri);
 			ResponseEntity<String> userEntity = restTemplate.exchange(requestEntity, String.class);
 			logger.info("Delete Application Response Code : {} ", userEntity.getStatusCodeValue());
 

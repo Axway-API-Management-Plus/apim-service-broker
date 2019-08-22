@@ -14,5 +14,19 @@
 		"enabled": true,
 		"image": "/api/portal/v1.3/applications/cebcfb86-ba41-487e-94ff-bec3285acd7d/image",
 		"state": "approved"
+	},
+	{
+		"id": "678cd41f-9ba3-4451-a09a-48df36207616",
+		"name": "Oauth Test",
+		"description": null,
+		"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+		"phone": null,
+		"email": null,
+		"createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+		"managedBy": [],
+		"createdOn": 1557428068824,
+		"enabled": true,
+		"image": null,
+		"state": "approved"
 	}
 ]
