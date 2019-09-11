@@ -1,0 +1,126 @@
+{
+  "id": "066f113d-1f80-4e29-b210-c54d72dc",
+  "organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+  "apiId": "8530b775-66bb-4ec9-80c1-0178dc2f7974",
+  "name": "Test",
+  "version": "1.0",
+  "apiRoutingKey": null,
+  "vhost": null,
+  "path": "/healthcheck",
+  "descriptionType": "original",
+  "descriptionManual": null,
+  "descriptionMarkdown": null,
+  "descriptionUrl": null,
+  "summary": null,
+  "retired": false,
+  "expired": false,
+  "image": "/api/portal/v1.3/discovery/swagger/apis/066f113d-1f80-4e29-b210-c54d72dc/image",
+  "retirementDate": 0,
+  "deprecated": false,
+  "state": "unpublished",
+  "createdOn": 1555099058170,
+  "createdBy": "f7289d70-c71b-4c6b-a2bb-9461f93b91aa",
+  "corsProfiles": [
+    {
+      "name": "_default",
+      "isDefault": true,
+      "origins": [
+        "*"
+      ],
+      "allowedHeaders": [],
+      "exposedHeaders": [
+        "X-CorrelationID"
+      ],
+      "supportCredentials": false,
+      "maxAgeSeconds": 0
+    },
+    {
+      "name": "New CORS Profile",
+      "isDefault": false,
+      "origins": [
+        "*"
+      ],
+      "allowedHeaders": [
+        "origin",
+        "authorization",
+        "accept",
+        "content-type",
+        "x-requested-with"
+      ],
+      "exposedHeaders": [],
+      "supportCredentials": true,
+      "maxAgeSeconds": 0
+    }
+  ],
+  "securityProfiles": [
+    {
+      "name": "_default",
+      "isDefault": true,
+      "devices": [
+        {
+          "name": "OAuth",
+          "type": "oauth",
+          "order": 1,
+          "properties": {
+            "tokenStore": "<key type='OAuth2StoresGroup'><id field='name' value='OAuth2 Stores'/><key type='AccessTokenStoreGroup'><id field='name' value='Access Token Stores'/><key type='AccessTokenPersist'><id field='name' value='OAuth Access Token Store'/></key></key></key>",
+            "accessTokenLocation": "HEADER",
+            "authorizationHeaderPrefix": "Bearer",
+            "accessTokenLocationQueryString": "",
+            "scopesMustMatch": "Any",
+            "scopes": "resource.WRITE, resource.READ",
+            "removeCredentialsOnSuccess": "true",
+            "implicitGrantEnabled": "true",
+            "implicitGrantLoginEndpointUrl": "https://localhost:8089/api/oauth/authorize",
+            "implicitGrantLoginTokenName": "access_token",
+            "authCodeGrantTypeEnabled": "true",
+            "authCodeGrantTypeRequestEndpointUrl": "https://localhost:8089/api/oauth/authorize",
+            "authCodeGrantTypeRequestClientIdName": "client_id",
+            "authCodeGrantTypeRequestSecretName": "client_secret",
+            "authCodeGrantTypeTokenEndpointUrl": "https://localhost:8089/api/oauth/token",
+            "authCodeGrantTypeTokenEndpointTokenName": "access_code"
+          }
+        }
+      ]
+    }
+  ],
+  "authenticationProfiles": [
+    {
+      "name": "_default",
+      "isDefault": true,
+      "parameters": {
+        "username": "rathna",
+        "password": "rathna"
+      },
+      "type": "http_basic"
+    }
+  ],
+  "inboundProfiles": {
+    "_default": {
+      "securityProfile": "_default",
+      "corsProfile": "_default",
+      "monitorAPI": true,
+      "monitorSubject": "authentication.subject.id"
+    }
+  },
+  "outboundProfiles": {
+    "_default": {
+      "authenticationProfile": "_default",
+      "routeType": "proxy",
+      "requestPolicy": null,
+      "responsePolicy": null,
+      "routePolicy": null,
+      "faultHandlerPolicy": null,
+      "apiId": "8530b775-66bb-4ec9-80c1-0178dc2f7974",
+      "apiMethodId": null,
+      "parameters": []
+    }
+  },
+  "serviceProfiles": {
+    "_default": {
+      "apiId": "8530b775-66bb-4ec9-80c1-0178dc2f7974",
+      "basePath": "http://localhost:8080"
+    }
+  },
+  "caCerts": [],
+  "tags": {}
+}

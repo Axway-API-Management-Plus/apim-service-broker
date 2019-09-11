@@ -18,9 +18,7 @@ public class APIUser {
 	private long createdOn; //(integer, optional): Epoch/Unix time stamp when the organization was created ,
 	private String state = "approved"; //(string, optional): The current state of the account, one of: approved, pending ,
 	private String type = "internal"; //(string, optional): Indicates the type of user. Possible values: internal, external ,
-	
-	
-	
+
 	public String getId() {
 		return id;
 	}
@@ -75,7 +73,6 @@ public class APIUser {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -100,6 +97,4 @@ public class APIUser {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
 }

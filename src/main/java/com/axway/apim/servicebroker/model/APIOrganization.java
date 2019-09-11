@@ -13,12 +13,9 @@ public class APIOrganization {
 	private String phone;
 	private boolean enabled = true;
 	private boolean development = true;
-	
 	//custom attribute
 	private String service_instance_id;
-	
-	
-	
+
 	public String getId() {
 		return id;
 	}
@@ -73,6 +70,4 @@ public class APIOrganization {
 	public void setService_instance_id(String service_instance_id) {
 		this.service_instance_id = service_instance_id;
 	}
-	
-
 }
