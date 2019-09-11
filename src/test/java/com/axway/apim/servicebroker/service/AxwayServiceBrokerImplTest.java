@@ -147,4 +147,22 @@ public class AxwayServiceBrokerImplTest {
 
     }
 
+    @Test
+    public void createOrgAppAndUser(){
+        try {
+            axwayServiceBroker.createOrgAndUser("Axway", email, serviceInstanceId );
+        } catch (AxwayException e) {
+            fail("Test failed");
+        }
+    }
+
+    @Test
+    public void deleteOrgAppAndUser(){
+        try {
+            axwayServiceBroker.deleteOrgAppAndUser(email, serviceInstanceId );
+        } catch (AxwayException e) {
+            fail("Test failed");
+        }
+    }
+
 }

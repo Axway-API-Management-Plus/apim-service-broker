@@ -1,0 +1,20 @@
+[
+	{
+		"id": "3a63f068-3045-473f-91df-745856e70867",
+		"organizationId": "9aef95ec-8167-46ab-8270-19cf1582c03f",
+		"name": "rathna1",
+		"description": null,
+		"loginName": "rathna1",
+		"email": "rathna1@gmail.com",
+		"phone": "21323434",
+		"mobile": null,
+		"role": "oadmin",
+		"image": null,
+		"enabled": true,
+		"createdOn": 1548450891490,
+		"state": "approved",
+		"type": "internal",
+		"authAttrs": null,
+		"dn": "cn=rathna1,o=Axway,ou=organizations,ou=APIPortal"
+	}
+]
