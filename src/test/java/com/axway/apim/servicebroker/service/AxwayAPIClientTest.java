@@ -32,8 +32,8 @@ public class AxwayAPIClientTest {
 		String orgName = "Axway";
 
 		String orgId = axwayOrganzationClient.getOrganizationId(orgName);
-		List<APIOrganizationAccess> axwayFrondendAPIs = axwayAPIClient.listAPIs(orgId);
-		if (axwayFrondendAPIs.isEmpty()) {
+		List<APIOrganizationAccess> axwayFrontendAPIs = axwayAPIClient.listAPIs(orgId);
+		if (axwayFrontendAPIs.isEmpty()) {
 			fail("API not found");
 		}
 	}

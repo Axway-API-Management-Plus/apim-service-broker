@@ -2,10 +2,12 @@ package com.axway.apim.servicebroker.service;
 
 import static org.assertj.core.api.Assertions.fail;
 
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,6 +21,7 @@ import com.axway.apim.servicebroker.exception.AxwayException;
 
 public class AxwayUserClientTest{
 
+
 	@Autowired
 	private AxwayUserClient axwayUserClient;
 	
@@ -30,16 +33,12 @@ public class AxwayUserClientTest{
 
 		String email = "anna@demo.xway.com";
 		String orgName = "Axway";
-
 		String orgId = axwayOrganzationClient.getOrganizationId(orgName);
-
 		try {
 			axwayUserClient.createUser(orgId, email);
 		} catch (AxwayException e) {
 			fail("Test failed");
 		}
-		
-
 	}
 	
 	
@@ -48,5 +47,4 @@ public class AxwayUserClientTest{
 		String userId = "13c54603-1fe3-40f5-b985-b54ca34243d1";
 		axwayUserClient.resetPassword(userId);
 	}
-
 }
