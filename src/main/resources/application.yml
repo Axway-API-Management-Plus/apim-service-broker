@@ -19,6 +19,7 @@ spring:
       password: changeme
       roles:
         - ADMIN
+    enable-csrf: false
 
 
   cloud:

@@ -1,17 +1,9 @@
 package com.axway.apim.servicebroker.service;
 
-import org.junit.Test;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 //import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 
-import com.axway.apim.servicebroker.BaseClass;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 
-public class CF extends BaseClass {
+public class CF  {
 
 	// @Autowired
 	// ReactorCloudFoundryClient cloudFoundryClient;

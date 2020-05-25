@@ -51,7 +51,7 @@ public class AxwayServiceBrokerImplTest {
             axwayServiceBroker.importAPI(null, null, "123", serviceInstanceId, email);
             fail("importAPIWithoutParamaters failed");
         } catch (ServiceBrokerInvalidParametersException e) {
-            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameters are required to add API on API Manager");
+            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Service broker parameters are invalid: Custom parameters are required to add API on API Manager");
         }
 
     }
@@ -69,7 +69,7 @@ public class AxwayServiceBrokerImplTest {
             axwayServiceBroker.importAPI(parameters, null, "123", serviceInstanceId, email);
             fail("importAPIWithoutType failed");
         } catch (ServiceBrokerInvalidParametersException e) {
-            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameter type is required");
+            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Service broker parameters are invalid: Custom parameter type is required");
         }
 
     }
@@ -106,7 +106,7 @@ public class AxwayServiceBrokerImplTest {
             axwayServiceBroker.importAPI(parameters, null, "123", serviceInstanceId, email);
             fail("importAPIWithoutSwaggerURL failed");
         } catch (ServiceBrokerInvalidParametersException e) {
-            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameter uri is required");
+            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Service broker parameters are invalid: Custom parameter uri is required");
         }
 
     }

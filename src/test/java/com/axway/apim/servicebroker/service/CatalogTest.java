@@ -1,32 +1,59 @@
 package com.axway.apim.servicebroker.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
-import com.axway.apim.servicebroker.BaseClass;
+import java.util.Base64;
 
-public class CatalogTest extends BaseClass {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
+@WithMockUser
+public class CatalogTest  {
+
+
+	@Value("${spring.security.user.name}")
+	protected String username;
+	@Value("${spring.security.user.password}")
+	protected String password;
+
+	@MockBean
+	private CFClient cfClient;
+
+
+	@MockBean
+	private CloudFoundryClient cloudFoundryClient;
+
 
 	@Autowired
-	private MockMvc mockMvc;
+	WebTestClient webTestClient;
+
 
 	@Test
 	public void testCatalog() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/v2/catalog")
-				.with(httpBasic(username, password))).andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.services[0].name", is("Axway-APIM")))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.services[0].id", is("ED01F448-40C7-4A9D-93D0-51E7D4E93CA1")))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.services[0].description", is("Axway service broker implementation")))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.services[0].bindable", is(true)))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.services[0].plans[0].name", is("APIM-Free")));
+
+			webTestClient.get().uri("/v2/catalog").accept(MediaType.APPLICATION_JSON).header("Authorization", "Basic ", Base64.getEncoder().encodeToString((username + ":" +password).getBytes()))
+				.exchange()
+				.expectStatus().isOk()
+				.expectHeader().contentType(MediaType.APPLICATION_JSON)
+				.expectBody()
+				.jsonPath("$.services[0].name").isEqualTo("Axway-APIM")
+				.jsonPath("$.services[0].id").isEqualTo("ED01F448-40C7-4A9D-93D0-51E7D4E93CA1")
+				.jsonPath("$.services[0].description").isEqualTo("Axway service broker implementation")
+				.jsonPath("$.services[0].bindable").isEqualTo("true")
+				.jsonPath("$.services[0].plans[0].name").isEqualTo("APIM-Free");
+
+
 	}
-	
-	
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.axway.apim.servicebroker.service;
 
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.cloudfoundry.client.v2.organizations.GetOrganizationRequest;
 import org.cloudfoundry.client.v2.spaces.GetSpaceRequest;
 import org.cloudfoundry.client.v2.users.GetUserRequest;
@@ -18,17 +19,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class CFClient {
 
-	private ReactorCloudFoundryClient reactorCloudFoundryClient;
+	private CloudFoundryClient cloudFoundryClient;
 
 	@Autowired
-	public CFClient(ReactorCloudFoundryClient reactorCloudFoundryClient){
-		this.reactorCloudFoundryClient = reactorCloudFoundryClient;
+	public CFClient(CloudFoundryClient cloudFoundryClient){
+		this.cloudFoundryClient = cloudFoundryClient;
 	}
 
 
 	public String getSpaceName(String spaceGuid) {
 
-		String spaceName = reactorCloudFoundryClient.spaces().get(GetSpaceRequest.builder().spaceId(spaceGuid).build())
+		String spaceName = cloudFoundryClient.spaces().get(GetSpaceRequest.builder().spaceId(spaceGuid).build())
 				.block().getEntity().getName();
 		return spaceName;
 
@@ -37,7 +38,7 @@ public class CFClient {
 	public String getUserName(String userGuid) {
 
 
-		String userName = reactorCloudFoundryClient.users().get(GetUserRequest.builder().userId(userGuid).build())
+		String userName = cloudFoundryClient.users().get(GetUserRequest.builder().userId(userGuid).build())
 				.block().getEntity().getUsername();
 		return userName;
 
@@ -45,7 +46,7 @@ public class CFClient {
 
 	public String getOrg(String orgGuid) {
 
-		String orgName = reactorCloudFoundryClient.organizations().get(GetOrganizationRequest.builder().
+		String orgName = cloudFoundryClient.organizations().get(GetOrganizationRequest.builder().
 				organizationId(orgGuid).build()).block().getEntity().getName();
 		return orgName;
 	}

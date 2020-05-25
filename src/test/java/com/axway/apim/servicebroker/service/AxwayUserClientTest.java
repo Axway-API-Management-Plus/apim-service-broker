@@ -10,16 +10,14 @@ import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.axway.apim.servicebroker.BaseClass;
 import com.axway.apim.servicebroker.exception.AxwayException;
-import com.axway.apim.servicebroker.service.AxwayUserClient;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureWireMock(port = 8081)
 @TestPropertySource(properties = { "axway_apimanager_url=http://localhost:8081" })
 
-public class AxwayUserClientTest extends BaseClass{
+public class AxwayUserClientTest{
 
 	@Autowired
 	private AxwayUserClient axwayUserClient;

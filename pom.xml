@@ -102,10 +102,6 @@
         </dependency>
 
 
-<!--        <dependency>-->
-<!--            <groupId>io.projectreactor.netty</groupId>-->
-<!--            <artifactId>reactor-netty</artifactId>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>io.pivotal.spring.cloud</groupId>
@@ -128,6 +124,8 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
     <build>
         <plugins>
