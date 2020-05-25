@@ -1,18 +1,7 @@
 package com.axway.apim.servicebroker.service;
 
 import org.junit.Test;
-/*import org.cloudfoundry.client.v2.organizations.ListOrganizationsRequest;
-import org.cloudfoundry.operations.CloudFoundryOperations;
-import org.cloudfoundry.operations.DefaultCloudFoundryOperations;
-import org.cloudfoundry.operations.organizations.OrganizationInfoRequest;
-import org.cloudfoundry.operations.organizations.OrganizationSummary;
-import org.cloudfoundry.operations.spaces.SpaceSummary;
-import org.cloudfoundry.reactor.client.ReactorCloudFoundryClient;
-import org.cloudfoundry.uaa.UaaClient;
-import org.cloudfoundry.uaa.users.ListUsersResponse;
-import org.cloudfoundry.uaa.users.ListUsersRequest;
-import org.cloudfoundry.uaa.users.User;
-import org.junit.Test;*/
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -90,7 +79,7 @@ public class CF extends BaseClass {
 //		System.out.println(orgName);
 //
 //	}
-
+//
 //	@Test
 //	public void getSpace() {
 //
