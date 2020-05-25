@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+//import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 
 import com.jayway.jsonpath.DocumentContext;
@@ -13,7 +13,7 @@ import com.jayway.jsonpath.JsonPath;
 @Service
 public class CFClient {
 
-	@Autowired
+	/*@Autowired
 	@Qualifier("cfOauthRestTemplate")
 	private OAuth2RestTemplate cfOauthRestTemplate;
 
@@ -52,6 +52,18 @@ public class CFClient {
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		String orgName = documentContext.read("$.entity.name", String.class);
 		return orgName;
+	}*/
+
+	public String getUserName(String userGuid) {
+		return "abc";
+	}
+
+	public String getOrg(String orgGuid) {
+		return "org";
+	}
+
+	public String getSpaceName(String spaceGuid) {
+		return "space";
 	}
 
 }

@@ -9,10 +9,10 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.cloud.servicebroker.model.BindResource;
+//import org.springframework.cloud.servicebroker.model.BindResource;
 import org.springframework.cloud.servicebroker.model.CloudFoundryContext;
 import org.springframework.cloud.servicebroker.model.Context;
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest;
+//import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -44,32 +44,32 @@ public class AxwayServiceInstanceBindingTest extends BaseClass {
 	private String instance_id = "5a76d1c5-4bc3-455a-98b1-e3c079dc5cb2";
 	private String binding_id = "7ed4c3d3-c3a4-41b6-9acc-72b3a7fa2f39";
 
-	@Test
-	public void shouldCreateServiceBinding() throws Exception {
-
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put("apiname", "pcftest");
-		parameters.put("uri", "http://petstore.swagger.io/v2/swagger.json");
-		
-		
-		Context context = new CloudFoundryContext("dff68133-725d-4b50-9c94-670c7bc5ee7d", "dea89260-6f9f-40ad-a5ec-dffa48692c18");
-		
-		Map<String, Object> bind_resource = new HashMap<String, Object>();
-
-		BindResource bindResource = new BindResource("", "testapp.axway.com", bind_resource);
-
-		CreateServiceInstanceBindingRequest createServiceInstanceBindingRequest = new CreateServiceInstanceBindingRequest(
-				service_id, plan_id, bindResource, context, parameters);
-
-		String request = objectMapper.writeValueAsString(createServiceInstanceBindingRequest);
-		mockMvc.perform(MockMvcRequestBuilders
-				.put("/v2/service_instances/{instance_id}/service_bindings/{binding_id}", instance_id, binding_id)
-				.with(httpBasic(username, password)).contentType(MediaType.APPLICATION_JSON).content(request)
-				.header("X-Broker-API-Originating-Identity", getCfUserId()))
-				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.route_service_url", containsString("https")));
-	}
+//	@Test
+//	public void shouldCreateServiceBinding() throws Exception {
+//
+//		Map<String, Object> parameters = new HashMap<>();
+//
+//		parameters.put("apiname", "pcftest");
+//		parameters.put("uri", "http://petstore.swagger.io/v2/swagger.json");
+//
+//
+//		Context context = new CloudFoundryContext("dff68133-725d-4b50-9c94-670c7bc5ee7d", "dea89260-6f9f-40ad-a5ec-dffa48692c18");
+//
+//		Map<String, Object> bind_resource = new HashMap<String, Object>();
+//
+//		BindResource bindResource = new BindResource("", "testapp.axway.com", bind_resource);
+//
+//		CreateServiceInstanceBindingRequest createServiceInstanceBindingRequest = new CreateServiceInstanceBindingRequest(
+//				service_id, plan_id, bindResource, context, parameters);
+//
+//		String request = objectMapper.writeValueAsString(createServiceInstanceBindingRequest);
+//		mockMvc.perform(MockMvcRequestBuilders
+//				.put("/v2/service_instances/{instance_id}/service_bindings/{binding_id}", instance_id, binding_id)
+//				.with(httpBasic(username, password)).contentType(MediaType.APPLICATION_JSON).content(request)
+//				.header("X-Broker-API-Originating-Identity", getCfUserId()))
+//				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+//				.andExpect(MockMvcResultMatchers.jsonPath("$.route_service_url", containsString("https")));
+//	}
 
 	@Test
 	public void shouldDeleteServiceBinding() throws Exception {
