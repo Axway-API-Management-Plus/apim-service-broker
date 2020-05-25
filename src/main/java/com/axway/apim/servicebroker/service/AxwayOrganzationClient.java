@@ -1,8 +1,10 @@
 package com.axway.apim.servicebroker.service;
 
-import java.net.URI;
-import java.util.List;
-
+import com.axway.apim.servicebroker.model.APIOrganization;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.axway.apim.servicebroker.exception.AxwayException;
-import com.axway.apim.servicebroker.model.APIOrganization;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.PathNotFoundException;
+import java.net.URI;
+import java.util.List;
 
 public class AxwayOrganzationClient implements Constants {
 
@@ -31,7 +29,6 @@ public class AxwayOrganzationClient implements Constants {
 	private ObjectMapper mapper;
 
 	@Autowired
-	// @Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	public String createOrganization(String orgName, String email, String serviceInstanceId) {

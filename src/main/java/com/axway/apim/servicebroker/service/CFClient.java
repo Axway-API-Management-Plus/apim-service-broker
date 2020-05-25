@@ -36,31 +36,15 @@ public class CFClient {
 	}
 
 	public String getUserName(String userGuid) {
-
-
 		String userName = cloudFoundryClient.users().get(GetUserRequest.builder().userId(userGuid).build())
 				.block().getEntity().getUsername();
 		return userName;
-
 	}
 
 	public String getOrg(String orgGuid) {
-
 		String orgName = cloudFoundryClient.organizations().get(GetOrganizationRequest.builder().
 				organizationId(orgGuid).build()).block().getEntity().getName();
 		return orgName;
 	}
-
-//	public String getUserName(String userGuid) {
-//		return "abc";
-//	}
-//
-//	public String getOrg(String orgGuid) {
-//		return "org";
-//	}
-//
-//	public String getSpaceName(String spaceGuid) {
-//		return "space";
-//	}
 
 }

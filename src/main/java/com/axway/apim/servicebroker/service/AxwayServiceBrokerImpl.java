@@ -36,7 +36,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
     @Override
     public void importAPI(Map<String, Object> parameters, String appRouteURL, String bindingId,
                           String serviceInstanceId, String email)
-            throws ServiceBrokerInvalidParametersException, ServiceBrokerException {
+            throws ServiceBrokerException {
         logger.debug("Creating API Proxy on API manager");
         logger.debug("Parameters {}", parameters);
 

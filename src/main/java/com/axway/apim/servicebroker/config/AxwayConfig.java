@@ -1,20 +1,5 @@
 package com.axway.apim.servicebroker.config;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSession;
-
-import io.netty.channel.ChannelOption;
-import io.netty.handler.timeout.ReadTimeoutHandler;
-import io.netty.handler.timeout.WriteTimeoutHandler;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.servicebroker.model.BrokerApiVersion;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.web.client.RestTemplate;
-
 import com.axway.apim.servicebroker.exception.AxwayAPIGatewayErrorHandler;
 import com.axway.apim.servicebroker.service.AxwayAPIClient;
 import com.axway.apim.servicebroker.service.AxwayApplicationClient;
@@ -22,14 +7,17 @@ import com.axway.apim.servicebroker.service.AxwayOrganzationClient;
 import com.axway.apim.servicebroker.service.AxwayUserClient;
 import com.axway.apim.servicebroker.util.Util;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
-import reactor.netty.tcp.TcpClient;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.servicebroker.model.BrokerApiVersion;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-
-//import com.axway.apim.servicebroker.exception.AxwayAPIGatewayErrorHandler;
 
 @Configuration
 public class AxwayConfig {
@@ -91,8 +79,8 @@ public class AxwayConfig {
 
     @Bean
     public RestTemplateBuilder restTemplateBuilder() {
-        // Need to provide a rest template builder because
-        // @RestTemplateAutoConfiguration does not work with webflux
+        // Need to provide a rest template builder becaus @RestTemplateAutoConfiguration does not work with webflux
+        // Need to migrate to webclient
         return new RestTemplateBuilder();
     }
 

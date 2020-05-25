@@ -28,7 +28,6 @@ public class AxwayAPIClient implements Constants {
     private static final Logger logger = LoggerFactory.getLogger(AxwayAPIClient.class.getName());
 
     @Autowired
-    // @Qualifier("getRestTemplate")
     private RestTemplate restTemplate;
 
     @Autowired
@@ -137,10 +136,8 @@ public class AxwayAPIClient implements Constants {
         if (apiName != null) {
             postParameters.add("name", apiName);
         }
-
         postParameters.add("type", type);
         postParameters.add("url", swaggerURI);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(

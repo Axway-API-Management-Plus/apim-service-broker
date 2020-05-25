@@ -10,7 +10,7 @@ import com.axway.apim.servicebroker.exception.AxwayException;
 public interface AxwayServiceBroker {
 
 	public void importAPI(Map<String, Object> parameters, String appRouteURL, String bindingId,
-			String serviceInstanceId, String email) throws ServiceBrokerInvalidParametersException, ServiceBrokerException;
+			String serviceInstanceId, String email) throws ServiceBrokerException;
 
 	public boolean deleteAPI(String bindingId, String serviceInstanceId, String email) throws AxwayException;
 

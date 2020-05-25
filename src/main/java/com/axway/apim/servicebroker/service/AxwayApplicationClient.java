@@ -23,7 +23,6 @@ public class AxwayApplicationClient implements Constants {
 	private String url;
 
 	@Autowired
-	// @Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	public List<APIApplication> getApplications(String orgId) {
