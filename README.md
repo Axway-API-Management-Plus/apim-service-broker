@@ -42,7 +42,7 @@ This artefact was successfully tested for the following versions:
 
 	Check out the code from github
 	```bash
-	$git clone https://github.com/Axway-API-Management-Plus/Cloud-Foundry-Service-Broker-Sample.git
+	$git clone https://github.com/Axway-API-Management-Plus/apim-service-broker.git
 	```
 	Build the project (output from `cf push` command provides fully qualified URL as output)
 	```bash

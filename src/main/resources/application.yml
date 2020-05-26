@@ -2,6 +2,8 @@ logging:
   level:
     org.springframework.cloud.servicebroker: DEBUG
     org.springframework.boot: INFO
+    org.springframework.security: DEBUG
+    org.cloudfoundry.client: DEBUG
 
 axway:
   apim:
@@ -19,7 +21,6 @@ spring:
       password: changeme
       roles:
         - ADMIN
-    enable-csrf: false
 
 
   cloud:
@@ -41,11 +42,11 @@ spring:
               - api gateway
               - Axway AMPLIFY
             metadata:
-              longDescription: Axway Amplify APIM Service Broker,
-              documentationUrl: https://github.com/Axway-API-Management-Plus,
-              providerDisplayName: Axway,
-              displayName: Axway Amplify APIM,
-              imageUrl: https://cdn.axway.com/globalnav/axway-logo-top.svg,
+              longDescription: Axway Amplify APIM Service Broker
+              documentationUrl: https://github.com/Axway-API-Management-Plus
+              providerDisplayName: Axway
+              displayName: Axway Amplify APIM
+              imageUrl: https://cdn.axway.com/globalnav/axway-logo-top.svg
               supportUrl: https://github.com/Axway-API-Management-Plus
 
             requires:

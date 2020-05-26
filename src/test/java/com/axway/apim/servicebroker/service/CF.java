@@ -3,7 +3,19 @@ package com.axway.apim.servicebroker.service;
 //import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Mono;
+
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class CF  {
+
+	@Autowired
+	CFClient cfClient;
 
 	// @Autowired
 	// ReactorCloudFoundryClient cloudFoundryClient;
@@ -72,19 +84,15 @@ public class CF  {
 //
 //	}
 //
-//	@Test
-//	public void getSpace() {
-//
-//		String spaceGuid = "dea89260-6f9f-40ad-a5ec-dffa48692c18";
-//		System.out.println(cfOauthRestTemplate.getAccessToken().getValue());
-//		ResponseEntity<String> response = cfOauthRestTemplate.getForEntity(
-//				"https://api.sys.pie-25.cfplatformeng.com/v2/spaces/" + spaceGuid , String.class);
-//		System.out.println(response.getBody());
-//		DocumentContext documentContext = JsonPath.parse(response.getBody());
-//		String spaceName = documentContext.read("$.entity.name", String.class);
-//		System.out.println(spaceName);
-//
-//	}
+	@Test
+	public void getSpace() {
+
+		//String spaceName =
+		cfClient.getSpaceName("a66866d3-746c-477d-9d7e-238d9b0a3247");
+
+		//System.out.println(appDetail.);
+
+	}
 //
 //	@Test
 //	public void getUser() {

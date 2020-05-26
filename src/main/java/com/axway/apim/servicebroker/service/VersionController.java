@@ -9,6 +9,6 @@ public class VersionController implements Constants {
 
     @RequestMapping(value = "/version" , method = RequestMethod.GET, produces = { "application/json" })
     public String getVersion() {
-        return "{\"version\" :" + Constants.VERSION + "}";
+        return "{\"version\" :" + "\"" + Constants.VERSION + "\"}";
     }
 }

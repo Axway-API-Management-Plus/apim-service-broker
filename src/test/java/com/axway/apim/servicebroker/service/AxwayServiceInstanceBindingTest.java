@@ -9,7 +9,6 @@ import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,23 +18,19 @@ import org.springframework.cloud.servicebroker.model.binding.BindResource;
 import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstanceBindingRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import org.springframework.test.web.reactive.server.WebTestClientConfigurer;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 import org.springframework.util.Base64Utils;
 import reactor.core.publisher.Mono;
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-//import org.springframework.cloud.servicebroker.model.BindResource;
-//import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest;
+//import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
+
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
@@ -77,7 +72,7 @@ public class AxwayServiceInstanceBindingTest  {
 	@Test
 	public void shouldCreateServiceBinding() throws Exception {
 
-		webTestClient = webTestClient.mutateWith(csrf());
+		//webTestClient = webTestClient.mutateWith(csrf());
 
 		Map<String, Object> parameters = new HashMap<>();
 

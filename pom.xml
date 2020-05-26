@@ -122,6 +122,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/AxwayClientIntgTest.java</exclude>
+                        <exclude>**/CF.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
