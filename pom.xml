@@ -38,11 +38,7 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-cloudfoundry-service-broker</artifactId>-->
-<!--			<version>${service-broker.version}</version>-->
-<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.cloudfoundry</groupId>
 			<artifactId>cloudfoundry-client-reactor</artifactId>
@@ -53,11 +49,7 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-contract-wiremock</artifactId>
-			<version>${springframework.cloud}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
@@ -67,12 +59,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency><groupId>org.cloudfoundry</groupId><artifactId>cloudfoundry-client</artifactId><version>2.13.0.RELEASE</version></dependency><dependency><groupId>org.cloudfoundry</groupId><artifactId>cloudfoundry-util</artifactId><version>2.13.0.RELEASE</version></dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security.oauth</groupId>-->
-<!--			<artifactId>spring-security-oauth2</artifactId>-->
-<!--		</dependency>-->
+
 		<dependency>
 			<groupId>io.pivotal.spring.cloud</groupId>
 			<artifactId>cloudfoundry-certificate-truster</artifactId>
@@ -86,6 +73,13 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-contract-wiremock</artifactId>
+			<version>${springframework.cloud}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
