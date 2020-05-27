@@ -3,9 +3,10 @@
 - Axway Service Broker for Pivotal Cloud Foundry based on [Fully brokered Architecture](https://docs.pivotal.io/pivotalcf/1-12/services/route-services.html#fully-brokered)
 
 
-## API Management Version Compatibilty
-This artefact was successfully tested for the following versions:
-- Axway AMPLIFY API Management 7.6.2 SP3 and 7.7
+## API Management Version Compatibility
+This artifact successfully tested with following versions:
+- Axway AMPLIFY API Management 7.6.2 SP3 and v7.7.20200330
+- cf 2.8.1
 
 
 ## Prerequisites
@@ -33,7 +34,18 @@ This artefact was successfully tested for the following versions:
             service_instance_id:{
                 label: 'Service Instance Id'
             }
+        }, 
+        api: {
+            cfBindingId:{
+                label: 'Cloud Foundry Binding Id',
+                 permissions: {
+                   admin: { read: true, write: true, visible:true },
+                   oadmin: { read: true, write: false, visible:true },
+                   user: { read: true, write: false, visible:true }
+                }
+            }
         }
+ 
     }
     ```
 
@@ -46,12 +58,12 @@ This artefact was successfully tested for the following versions:
 	```
 	Build the project (output from `cf push` command provides fully qualified URL as output)
 	```bash
-	$mvn clean install
+	$mvn clean package
 	```
 	
 	or you can use the following command if you want to skip testing step:
 	```bash
-	$mvn clean install -Dmaven.test.skip=true
+	$mvn clean package -Dmaven.test.skip=true
 	```
 	Now, you can push your app to PCF:
 	```bash
@@ -111,10 +123,9 @@ This artefact was successfully tested for the following versions:
 	
 	$cf set-env axway-apim-service-broker cf_admin_username admin@axway.com
 	$cf set-env axway-apim-service-broker cf_admin_password changme
-	$cf set-env axway-apim-service-broker login_host https://login.sys.pie-25.cfplatformeng.com/oauth/token
-	$cf set-env axway-apim-service-broker cc_host https://api.sys.pie-25.cfplatformeng.com
+	$cf set-env axway-apim-service-broker api_host uaa.sys.industry.cf-app.com
 	
-	$cf set-env axway-apim-service-broker TRUST_CERTS login.sys.pie-25.cfplatformeng.com,api.sys.pie-25.cfplatformeng.com  //If your PCF instance uses self-signed certs, you may need to use this environment variable to prevent some security errors
+	$cf set-env axway-apim-service-broker TRUST_CERTS uaa.sys.industry.cf-app.com  //If your PCF instance uses self-signed certs, you may need to use this environment variable to prevent some security errors
 	```
 
 - Refresh Service Broker Instance to read the new environment variable
@@ -165,10 +176,10 @@ $cf push
 	
     ```json
 	{
-		"apiname": "pcftest",
-		"type":": "swagger", 
-		"uri": "/v2/api-docs" 
-	}
+    	"apiname": "pcftest",
+    	"type": "swagger",
+    	"uri": "/v2/api-docs"
+    }
 	
 	```
 	`apiName` is optional. If `apiName` is not specified, Service broker fetch the API Name and from swagger or WSDL.
@@ -185,11 +196,16 @@ $cf push
 	
 - Test the Pivotal Application
 
-    Try to access your apps endpoint. To verify that the request goes through API Gateway, open Axway API Gateway Manager and look at the traffic tab. You should see two entries:
-    - One that comes from GoRouter (PCF)
-    - The second one comes as a riderect from API Gateway itself
+    Try to access your PCF application endpoint. To verify that the request goes through API Gateway, open Axway API Gateway Manager and look at the traffic tab. You should see two entries:
+    - One  comes from GoRouter (PCF) to API Gateway
+    - The second one comes as a redirect from API Gateway itself
 
-- Un-bind Application from Axway Service broker
+
+
+
+## Axway Service Broker  uninstallation
+
+- Unbind Route - Un-bind Application from Axway Service broker
 
 ```bash
 $cf unbind-route-service cfapps.pie-25.cfplatformeng.com  AxwayAPIM --hostname greeting-app-tournois-postresurrection 
@@ -197,22 +213,21 @@ $cf unbind-route-service cfapps.pie-25.cfplatformeng.com  AxwayAPIM --hostname g
 
 The route unbinding command invokes Axway Service Broker and Service Broker does the following:
 1. If API is in Published state, it will throw an error.
-2. If API is in un-published state, delete frontend, backend API.
+2. If API is in un-published state, delete front end API, backend API.
 
-
-## Axway Service Broker  uninstallation
-	
+- Delete Service
 ```bash
 $cf delete-service AxwayAPIM
 ```
 
-The delete service command does the following:
+Cloud Foundry delete service command does the following:
 1. If the service has binded application or routes, it throws an error.  
 2. Delete Frontend and Backend APIs
 3. Delete applications
 4. Delete User
 5. Delete Organization 
 
+- Delete Service Broker
 ```bash
 $cf delete-service-broker axway-apim-service-broker
 ```

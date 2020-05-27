@@ -1,7 +1,7 @@
 package com.axway.apim.servicebroker.service;
 
 public interface Constants {
-	String VERSION = "1.1.8";
+	String VERSION = "1.2.0";
 	String API_BASEPATH = "/api/portal/v1.3/";
 	String DOT = ".";
 	String PUBLISHED = "published";

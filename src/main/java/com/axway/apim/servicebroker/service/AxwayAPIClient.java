@@ -1,5 +1,7 @@
 package com.axway.apim.servicebroker.service;
 
+import com.axway.apim.servicebroker.exception.AxwayException;
+import com.axway.apim.servicebroker.exception.ServiceBrokerException;
 import com.axway.apim.servicebroker.model.APIOrganizationAccess;
 import com.axway.apim.servicebroker.model.APISecurity;
 import com.axway.apim.servicebroker.model.FrontendAPI;
@@ -11,7 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+//import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -32,14 +34,14 @@ public class AxwayAPIClient implements Constants {
     private RestTemplate restTemplate;
 
     @Autowired
-    private String url;
+    private String apiManagerURL;
 
     @Autowired
     private ObjectMapper mapper;
 
     public List<APIOrganizationAccess> listAPIs(String orgId) {
         // https://phx-107.demo.axway.com:8075/api/portal/v1.3/organizations/14df2c8b-c28c-4062-ba8b-31449524a611/apis/
-        URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/organizations/").path(orgId)
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/organizations/").path(orgId)
                 .path("/apis").build().toUri();
         RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
         ResponseEntity<List<APIOrganizationAccess>> frontendAPIs = restTemplate.exchange(requestEntity,
@@ -51,7 +53,7 @@ public class AxwayAPIClient implements Constants {
 
     public FrontendAPI getAPI(String apiId) {
 
-        URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/proxies/").path(apiId).build()
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/proxies/").path(apiId).build()
                 .toUri();
         RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
         ResponseEntity<FrontendAPI> apiEntity = restTemplate.exchange(requestEntity,
@@ -85,7 +87,7 @@ public class AxwayAPIClient implements Constants {
         // and bindingId
         // https://phx-107.demo.axway.com:8075/api/portal/v1.3/proxies?field=name&op=eq&value=pcftest2
 
-        URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/proxies").build().toUri();
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/proxies").build().toUri();
         RequestEntity<?> requestEntity = new RequestEntity<Object>(HttpMethod.GET, uri);
         // .queryParam("field", "name").queryParam("op",
         // "eq").queryParam("value", apiName);
@@ -106,7 +108,7 @@ public class AxwayAPIClient implements Constants {
     public void deleteFrontendAPI(String frondEndApiId) {
         // delete Front End
         // https://phx-107.demo.axway.com:8075/api/portal/v1.3/proxies/c7c4a1d1-ce56-4bd3-be0b-dae0f9cf0f80
-        URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/proxies/").path(frondEndApiId)
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/proxies/").path(frondEndApiId)
                 .build().toUri();
         RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.DELETE, uri);
         logger.info("Deleting FrontEnd API");
@@ -119,7 +121,7 @@ public class AxwayAPIClient implements Constants {
         // Delete back end
         // https://${APIManagerHost}:${APIManagerPort}/api/portal/v1.3/apirepo/${BackEndAPIID}
         logger.info("Deleting BackEnd API");
-        URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/apirepo/").path(backendId).build()
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/apirepo/").path(backendId).build()
                 .toUri();
         RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.DELETE, uri);
         ResponseEntity<String> apiEntity = restTemplate.exchange(requestEntity, String.class);
@@ -129,7 +131,7 @@ public class AxwayAPIClient implements Constants {
 
     public String createBackend(String apiName, String orgId, String type, String swaggerURI) {
 
-        URI uri = UriComponentsBuilder.fromUriString(url + "/api/portal/v1.3/apirepo/importFromUrl").build().toUri();
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL + "/api/portal/v1.3/apirepo/importFromUrl").build().toUri();
         logger.info("Backend Creation URL : {}", uri.toString());
         MultiValueMap<String, String> postParameters = new LinkedMultiValueMap<>();
         // Add query parameter
@@ -172,7 +174,7 @@ public class AxwayAPIClient implements Constants {
     // return id;
     // }
 
-    public String createFrontend(String backendAPIId, String orgId, String userId) {
+    public String createFrontend(String backendAPIId, String orgId, String userId)  {
         String json = "{\"apiId\":\"" + backendAPIId + "\",\"organizationId\":\"" + orgId + "\"}";
         JsonNode jsonNode;
         try {
@@ -180,20 +182,17 @@ public class AxwayAPIClient implements Constants {
         } catch (IOException e) {
             throw new ServiceBrokerException("Internal Error");
         }
-        URI uri = UriComponentsBuilder.fromUriString(url + "/api/portal/v1.3/proxies/").build().toUri();
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL + "/api/portal/v1.3/proxies/").build().toUri();
         RequestEntity<JsonNode> jsonEntity = new RequestEntity<>(jsonNode, HttpMethod.POST, uri);
         ResponseEntity<String> virtualizedAPIResponse = restTemplate.exchange(jsonEntity, String.class);
         return virtualizedAPIResponse.getBody();
     }
 
-    public void applySecurity(String frontEndAPIResponse, String bindingId, String vhost, String userId)
-            throws ServiceBrokerException {
+    public void applySecurity(String frontEndAPIResponse, String bindingId, String vhost, String userId) {
         JsonNode jsonNode;
         try {
             jsonNode = mapper.readTree(frontEndAPIResponse);
         } catch (JsonProcessingException e) {
-            throw new ServiceBrokerException("Internal Error");
-        } catch (IOException e) {
             throw new ServiceBrokerException("Internal Error");
         }
         ArrayNode devices = (ArrayNode) (jsonNode.findPath("securityProfiles")).get(0).get("devices");
@@ -204,7 +203,7 @@ public class AxwayAPIClient implements Constants {
         // ((ObjectNode) jsonNode).put("createdBy" , userId);
         logger.debug("Security Device {}", devices.getClass().getName());
         devices.addPOJO(new APISecurity());
-        URI uri = UriComponentsBuilder.fromUriString(url + "/api/portal/v1.3/proxies/" + virtualAPIId).build().toUri();
+        URI uri = UriComponentsBuilder.fromUriString(apiManagerURL + "/api/portal/v1.3/proxies/" + virtualAPIId).build().toUri();
         RequestEntity<JsonNode> jsonEntity = new RequestEntity<>(jsonNode, HttpMethod.PUT, uri);
         ResponseEntity<String> securityUpdate = restTemplate.exchange(jsonEntity, String.class);
         logger.info("Apply Security Response Code : {}", securityUpdate.getStatusCodeValue());

@@ -3,8 +3,10 @@ package com.axway.apim.servicebroker.service;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -15,6 +17,12 @@ public class CatalogTest extends BaseClass {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@MockBean
+	CFClient cfClient;
+
+	@MockBean
+	private CloudFoundryClient cloudFoundryClient;
 
 	@Test
 	public void testCatalog() throws Exception {

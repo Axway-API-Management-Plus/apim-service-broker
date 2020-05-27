@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Id: 8d3572b1-38fa-4fc1-b3fe-269b298fb182
-Timestamp: 1514264273386
-

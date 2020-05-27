@@ -32,14 +32,14 @@ public class AxwayUserClient implements Constants {
 	private Util util;
 
 	@Autowired
-	private String url;
+	private String apiManagerURL;
 
 	@Autowired
 	// @Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	public APIUser getUser(String username) {
-		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users")
+		URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/users")
 				.queryParam("field", "loginName").queryParam("op", "eq").queryParam("value", username).build().toUri();
 		return getUser(uri);
 
@@ -63,7 +63,7 @@ public class AxwayUserClient implements Constants {
 	}
 
 	public APIUser getUserByOrgId(String orgId) {
-		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users").queryParam("field", "orgid")
+		URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/users").queryParam("field", "orgid")
 				.queryParam("op", "eq").queryParam("value", orgId).build().toUri();
 		return getUser(uri);
 	}
@@ -77,7 +77,7 @@ public class AxwayUserClient implements Constants {
 		apiUser.setOrganizationId(organizationId);
 		JsonNode jsonNode = mapper.convertValue(apiUser, JsonNode.class);
 		// https://${APIManagerHost}:${APIManagerPort}/api/portal/v1.3/organizations
-		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users").build().toUri();
+		URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/users").build().toUri();
 		RequestEntity<JsonNode> requestEntity = new RequestEntity<>(jsonNode, HttpMethod.POST, uri);
 		ResponseEntity<String> user = restTemplate.exchange(requestEntity, String.class);
 		int httpStatusCode = user.getStatusCodeValue();
@@ -91,7 +91,7 @@ public class AxwayUserClient implements Constants {
 
 	public void resetPassword(String userId) {
 
-		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users/").path(userId)
+		URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/users/").path(userId)
 				.path("/resetpassword").build().toUri();
 		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.PUT, uri);
 		restTemplate.exchange(uri, HttpMethod.PUT, requestEntity, String.class);
@@ -99,7 +99,7 @@ public class AxwayUserClient implements Constants {
 
 	public void deleteUser(String id)  {
 
-		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/users/").path(id).build().toUri();
+		URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/users/").path(id).build().toUri();
 		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.DELETE, uri);
 		ResponseEntity<String> userEntity = restTemplate.exchange(requestEntity, String.class);
 		logger.info("Delete User Response Code : {} ", userEntity.getStatusCodeValue());

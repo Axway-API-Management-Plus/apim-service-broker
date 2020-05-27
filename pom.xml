@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.axway.apim</groupId>
 	<artifactId>apim-service-broker</artifactId>
-	<version>1.1.8</version>
+	<version>1.2.0</version>
 	<packaging>jar</packaging>
 	<name>axway-apim-service-broker</name>
 	<description>Axway APIM Service Broker</description>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.19.RELEASE</version>
+		<version>2.3.0.RELEASE</version>
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
@@ -20,21 +20,33 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<service-broker.version>1.0.2.RELEASE</service-broker.version>
+		<service-broker.version>1.0.3.RELEASE</service-broker.version>
 		<commons-io.version>2.5</commons-io.version>
-		<springframework.cloud>1.2.6.RELEASE</springframework.cloud>
+		<springframework.cloud>2.2.2.RELEASE</springframework.cloud>
 		<cloudfoundry.certificate.truster>1.0.1.RELEASE</cloudfoundry.certificate.truster>
 		<commons.validator>1.6</commons.validator>
+		<cloudfoundry-client.version>4.6.0.RELEASE</cloudfoundry-client.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-cloudfoundry-service-broker</artifactId>
-			<version>${service-broker.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-cloudfoundry-service-broker</artifactId>-->
+<!--			<version>${service-broker.version}</version>-->
+<!--		</dependency>-->
+		<dependency>
+			<groupId>org.cloudfoundry</groupId>
+			<artifactId>cloudfoundry-client-reactor</artifactId>
+			<version>${cloudfoundry-client.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -57,10 +69,10 @@
 		</dependency>
 		<!-- <dependency><groupId>org.cloudfoundry</groupId><artifactId>cloudfoundry-client</artifactId><version>2.13.0.RELEASE</version></dependency><dependency><groupId>org.cloudfoundry</groupId><artifactId>cloudfoundry-util</artifactId><version>2.13.0.RELEASE</version></dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.security.oauth</groupId>-->
+<!--			<artifactId>spring-security-oauth2</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>io.pivotal.spring.cloud</groupId>
 			<artifactId>cloudfoundry-certificate-truster</artifactId>

@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-VersionComment: Imported Connector configuration
-ChangedBy: admin
-Name: QuickStart Server Configuration
-Description: The QuickStart Server configuration policies
-Version: v1
-

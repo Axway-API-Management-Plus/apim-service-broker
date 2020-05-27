@@ -1,13 +1,14 @@
 package com.axway.apim.servicebroker.service;
 
 import com.axway.apim.servicebroker.exception.AxwayException;
+import com.axway.apim.servicebroker.exception.ServiceBrokerException;
 import com.axway.apim.servicebroker.model.*;
 import com.jayway.jsonpath.JsonPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
+//import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+//import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,13 +37,13 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
     @Override
     public void importAPI(Map<String, Object> parameters, String appRouteURL, String bindingId,
                           String serviceInstanceId, String email)
-            throws ServiceBrokerInvalidParametersException, ServiceBrokerException {
+            throws ServiceBrokerException {
         logger.debug("Creating API Proxy on API manager");
         logger.debug("Parameters {}", parameters);
 
         if (parameters == null) {
-            throw new ServiceBrokerInvalidParametersException(
-                    "Custom parameters are required to add API on API Manager");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameters are required to add API on API Manager");
         }
 
         String type = (String) parameters.get("type");
@@ -55,14 +56,16 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
         logger.debug("Swagger URI {}", apiURI);
 
         if (type == null) {
-            throw new ServiceBrokerInvalidParametersException("Custom parameter type is required");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameter type is required");
         }
         AtomicReference<Type> enumType = new AtomicReference<>();
 
         try {
             enumType.set(Type.valueOf(type.toUpperCase()));
         } catch (IllegalArgumentException e) {
-            throw new ServiceBrokerInvalidParametersException("Custom parameter type value can only be swagger or wsdl");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameter type value can only be swagger or wsdl");
         }
 
         if (enumType.get().compareTo(Type.SWAGGER) == 0) {
@@ -72,7 +75,8 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
         }
 
         if (apiURI == null) {
-            throw new ServiceBrokerInvalidParametersException("Custom parameter uri is required");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameter uri is required");
         }
 
         if (!apiURI.startsWith("http")) {
@@ -186,7 +190,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
         return true;
     }
 
-    private APIUser getOrgId(String email, String serviceInstanceId) throws ServiceBrokerException {
+    private APIUser getOrgId(String email, String serviceInstanceId)  {
 
         APIUser apiUser = axwayUserClient.getUser(email);
         if (apiUser == null) {

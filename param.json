@@ -1,5 +1,5 @@
 {
 	"apiname": "pcftest",
 	"type":"swagger",
-	"uri": "http://greeting-app-talkative-squirrel.apps.tokyo.cf-app.com/api/v3/swagger.json"
+	"uri": "http://greeting-app-grumpy-llama-dx.apps.industry.cf-app.com/v3/swagger.json"
 }
