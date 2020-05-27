@@ -6,6 +6,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,12 +30,20 @@ public class AxwayServiceInstanceBindingTest extends BaseClass {
 
 	@MockBean
 	private AxwayServiceBroker axwayServiceBroker;
-	
+
 	@MockBean
 	private CFClient cfClient;
-	
+
 	@MockBean
-	private Util util;
+	Util util;
+
+	@MockBean
+	private CloudFoundryClient cloudFoundryClient;
+
+	@MockBean
+	ServiceBrokerHelper serviceBrokerHelper;
+
+
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -44,15 +53,15 @@ public class AxwayServiceInstanceBindingTest extends BaseClass {
 	private String instance_id = "5a76d1c5-4bc3-455a-98b1-e3c079dc5cb2";
 	private String binding_id = "7ed4c3d3-c3a4-41b6-9acc-72b3a7fa2f39";
 
-//	@Test
-//	public void shouldCreateServiceBinding() throws Exception {
-//
-//		Map<String, Object> parameters = new HashMap<>();
-//
-//		parameters.put("apiname", "pcftest");
-//		parameters.put("uri", "http://petstore.swagger.io/v2/swagger.json");
-//
-//
+	@Test
+	public void shouldCreateServiceBinding() throws Exception {
+
+		Map<String, Object> parameters = new HashMap<>();
+
+		parameters.put("apiname", "pcftest");
+		parameters.put("uri", "http://petstore.swagger.io/v2/swagger.json");
+
+
 //		Context context = new CloudFoundryContext("dff68133-725d-4b50-9c94-670c7bc5ee7d", "dea89260-6f9f-40ad-a5ec-dffa48692c18");
 //
 //		Map<String, Object> bind_resource = new HashMap<String, Object>();
@@ -63,22 +72,23 @@ public class AxwayServiceInstanceBindingTest extends BaseClass {
 //				service_id, plan_id, bindResource, context, parameters);
 //
 //		String request = objectMapper.writeValueAsString(createServiceInstanceBindingRequest);
-//		mockMvc.perform(MockMvcRequestBuilders
-//				.put("/v2/service_instances/{instance_id}/service_bindings/{binding_id}", instance_id, binding_id)
-//				.with(httpBasic(username, password)).contentType(MediaType.APPLICATION_JSON).content(request)
-//				.header("X-Broker-API-Originating-Identity", getCfUserId()))
-//				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-//				.andExpect(MockMvcResultMatchers.jsonPath("$.route_service_url", containsString("https")));
-//	}
-//
-//	@Test
-//	public void shouldDeleteServiceBinding() throws Exception {
-//
-//		mockMvc.perform(MockMvcRequestBuilders
-//				.delete("/v2/service_instances/{instance_id}/service_bindings/{binding_id}", instance_id, binding_id)
-//				.param("service_id", service_id).param("plan_id", plan_id).header("X-Broker-API-Version", "2.13")
-//				.header("X-Broker-API-Originating-Identity", getCfUserId()).with(httpBasic(username, password)))
-//				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
-//	}
+        String request = "";
+		mockMvc.perform(MockMvcRequestBuilders
+				.put("/v2/service_instances/{instance_id}/service_bindings/{binding_id}", instance_id, binding_id)
+				.with(httpBasic(username, password)).contentType(MediaType.APPLICATION_JSON).content(request)
+				.header("X-Broker-API-Originating-Identity", getCfUserId()))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.route_service_url", containsString("https")));
+	}
+
+	@Test
+	public void shouldDeleteServiceBinding() throws Exception {
+
+		mockMvc.perform(MockMvcRequestBuilders
+				.delete("/v2/service_instances/{instance_id}/service_bindings/{binding_id}", instance_id, binding_id)
+				.param("service_id", service_id).param("plan_id", plan_id).header("X-Broker-API-Version", "2.15")
+				.header("X-Broker-API-Originating-Identity", getCfUserId()).with(httpBasic(username, password)))
+				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
+	}
 
 }

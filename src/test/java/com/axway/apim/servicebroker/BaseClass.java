@@ -19,9 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 public class BaseClass {
 
-	@Value("${security.user.name}")
+	@Value("${spring.security.user.name}")
 	protected String username;
-	@Value("${security.user.password}")
+	@Value("${spring.security.user.password}")
 	protected String password;
 	
 	protected String getCfUserId() throws JsonProcessingException {

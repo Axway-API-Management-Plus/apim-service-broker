@@ -20,14 +20,14 @@ public class AxwayApplicationClient implements Constants {
 	private static final Logger logger = LoggerFactory.getLogger(AxwayApplicationClient.class.getName());
 
 	@Autowired
-	private String url;
+	private String apiManagerURL;
 
 	@Autowired
 	// @Qualifier("getRestTemplate")
 	private RestTemplate restTemplate;
 
 	public List<APIApplication> getApplications(String orgId) {
-		URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/applications")
+		URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/applications")
 					.queryParam("field", "orgid").queryParam("op", "eq").queryParam("value", orgId).build().toUri();
 
 		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
@@ -42,7 +42,7 @@ public class AxwayApplicationClient implements Constants {
 
 		for (APIApplication apiApplication : applications) {
 			String appId = apiApplication.getId();
-			URI uri = UriComponentsBuilder.fromUriString(url).path(API_BASEPATH).path("/applications/").path(appId)
+			URI uri = UriComponentsBuilder.fromUriString(apiManagerURL).path(API_BASEPATH).path("/applications/").path(appId)
 					.build().toUri();
 			RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.DELETE, uri);
 			ResponseEntity<String> userEntity = restTemplate.exchange(requestEntity, String.class);

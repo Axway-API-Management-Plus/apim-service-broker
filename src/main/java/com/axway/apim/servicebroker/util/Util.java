@@ -8,14 +8,14 @@ import org.apache.commons.validator.routines.EmailValidator;
 public class Util {
 
 
-    public static void isValidEmail(String email) {
+    public void isValidEmail(String email) {
 
         if (!EmailValidator.getInstance().isValid(email)) {
             throw new ServiceBrokerException("Username should be a valid email address");
         }
     }
 
-    public static  String getNameFromEmail(String email) {
+    public String getNameFromEmail(String email) {
 
         if (EmailValidator.getInstance().isValid(email)) {
             return email.split("@")[0];

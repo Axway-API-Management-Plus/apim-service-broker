@@ -16,23 +16,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class ServiceInstanceController implements Constants{
+public class ServiceInstanceController implements Constants {
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceInstanceController.class);
 
-	@Value("${axway.apim.orgname.prefix}")
-	protected String orgnamePrefix;
+    @Value("${axway.apim.orgname.prefix}")
+    protected String orgNamePrefix;
 
+    private String apiManagerURL;
     private CFClient cfClient;
-    private AxwayServiceBroker axwayServiceBroker;;
+    private AxwayServiceBroker axwayServiceBroker;
+    private ServiceBrokerHelper serviceBrokerHelper;
+    private Util util;
 
     @Autowired
-    public ServiceInstanceController(CFClient cfClient, AxwayServiceBroker axwayServiceBroker){
+    public ServiceInstanceController(CFClient cfClient, AxwayServiceBroker axwayServiceBroker
+            , ServiceBrokerHelper serviceBrokerHelper, String apiManagerURL, Util util) {
         this.cfClient = cfClient;
         this.axwayServiceBroker = axwayServiceBroker;
+        this.apiManagerURL = apiManagerURL;
+        this.serviceBrokerHelper = serviceBrokerHelper;
+        this.util = util;
     }
-
-
 
     @PutMapping(value = "/v2/service_instances/{instanceId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CreateServiceInstanceResponse> createServiceInstance(
@@ -42,57 +47,44 @@ public class ServiceInstanceController implements Constants{
             @RequestHeader(value = "X-Api-Info-Location", required = false) String apiInfoLocation,
             @RequestHeader(value = "X-Broker-API-Originating-Identity", required = false) String originatingIdentityString,
             @RequestHeader(value = "X-Broker-API-Request-Identity", required = false) String requestIdentity,
-            @RequestBody String request) {
-        Context userContext = createServiceInstanceRequest.getOriginatingIdentity();
+            @RequestHeader(value = "X-Broker-API-Version", required = false) String serviceBrokerVersion,
+                    @RequestBody Map<String, Object> request) {
 
-		logger.info("CreateServiceInstance: User Identity: {}: ", userContext);
-		if (userContext == null) {
-			logger.error("OriginatingIdentity is not present");
-			throw new ServiceBrokerException("Invalid Request");
-		}
+        String userGuid = serviceBrokerHelper.parseIdentity(originatingIdentityString);
+        String userName = cfClient.getUserName(userGuid);
+        logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+        util.isValidEmail(userName);
+        Map<String, Object> context = ( Map<String, Object>) request.get("context");
+        if (context == null) {
+            logger.error("Cloud Foundry Context is not present");
+            throw new ServiceBrokerException("Invalid Request");
+        }
+        String spaceGuid = (String) context.get("space_guid");
+        String orgGuid = (String) context.get("organization_guid");
+        logger.info("Space Guid: {} Organization Guid: {}", spaceGuid, orgGuid);
+        String spaceName = cfClient.getSpaceName(spaceGuid);
+        String cfOrgName = cfClient.getOrg(orgGuid);
+        logger.info(" Space Name: {} Organization name : {}", spaceName, cfOrgName);
+        String orgName = orgNamePrefix + DOT + cfOrgName + DOT + spaceName + DOT + serviceInstanceId;
+        try {
+            boolean status = axwayServiceBroker.createOrgAndUser(orgName, userName, serviceInstanceId);
+            CreateServiceInstanceResponse createServiceInstanceResponse = new CreateServiceInstanceResponse();
+            if (status) {
+                createServiceInstanceResponse.setDashboardUrl(apiManagerURL);
 
-		String userGuid = (String) userContext.getProperty("user_id");
-		String userName = cfClient.getUserName(userGuid);
-		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+            } else {
+                createServiceInstanceResponse.setInstanceExisted(true);
+            }
+            return new ResponseEntity<>(createServiceInstanceResponse, HttpStatus.OK);
 
-		Util.isValidEmail(userName);
-
-
-		logger.info("Service Instance Id: {}", serviceInstanceId);
-		CloudFoundryContext context = (CloudFoundryContext) createServiceInstanceRequest.getContext();
-		if (context == null) {
-			logger.error("Cloud Foundry Context is not present");
-			throw new ServiceBrokerException("Invalid Request");
-		}
-		String spaceGuid = context.getSpaceGuid();
-		String orgGuid = context.getOrganizationGuid();
-
-		logger.info("Space Guid: {}: ", spaceGuid);
-
-		String spaceName = cfClient.getSpaceName(spaceGuid);
-		String cfOrgName = cfClient.getOrg(orgGuid);
-		String orgName = orgnamePrefix + DOT + cfOrgName + DOT + spaceName + DOT + serviceInstanceId;
-
-		logger.info(" Space Name: {} ", spaceName);
-		try {
-			boolean status = axwayServiceBroker.createOrgAndUser(orgName, userName, serviceInstanceId);
-			CreateServiceInstanceResponse createServiceInstanceResponse = new CreateServiceInstanceResponse();
-			if (status) {
-				createServiceInstanceResponse.setDashboardUrl(url);
-
-			} else {
-				createServiceInstanceResponse.setInstanceExisted(true);
-			}
-			return new ResponseEntity<>(createServiceInstanceResponse,  HttpStatus.OK);
-
-		} catch (AxwayException e) {
-			throw new ServiceBrokerException(e.getMessage());
-		}
-        return new ResponseEntity<>(HttpStatus.OK);
+        } catch (AxwayException e) {
+            throw new ServiceBrokerException(e.getMessage());
+        }
+       //return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/v2/service_instances/{instanceId}")
-    public ResponseEntity deleteServiceInstance(
+    public ResponseEntity<String> deleteServiceInstance(
             @PathVariable Map<String, String> pathVariables,
             @PathVariable("instanceId") String serviceInstanceId,
             @RequestParam("service_id") String serviceDefinitionId,
@@ -100,32 +92,23 @@ public class ServiceInstanceController implements Constants{
             @RequestParam(value = "accepts_incomplete", required = false) boolean acceptsIncomplete,
             @RequestHeader(value = "X-Api-Info-Location", required = false) String apiInfoLocation,
             @RequestHeader(value = "X-Broker-API-Originating-Identity", required = false) String originatingIdentityString,
-            @RequestHeader(value = "X-Broker-API-Request-Identity", required = false) String requestIdentity) {
+            @RequestHeader(value = "X-Broker-API-Request-Identity", required = false) String requestIdentity,
+            @RequestHeader(value = "X-Broker-API-Version", required = false) String serviceBrokerVersion) {
 
-        Context userContext = deleteServiceInstanceRequest.getOriginatingIdentity();
-		logger.info("DeleteServiceInstanceResponse: User identity {} ",
-				deleteServiceInstanceRequest.getOriginatingIdentity());
+        String userGuid = serviceBrokerHelper.parseIdentity(originatingIdentityString);
+        String userName = cfClient.getUserName(userGuid);
+        logger.info("User Guid: {} User Name: {} ", userGuid, userName);
+        util.isValidEmail(userName);
+        try {
+            boolean status = axwayServiceBroker.deleteOrgAppAndUser(userName, serviceInstanceId);
+            if (!status) {
+                logger.error("API Manager Organization does not exist" );
+                return new ResponseEntity<>("{}",HttpStatus.OK);
 
-		if (userContext == null) {
-			logger.error("OriginatingIdentity is not present");
-			throw new ServiceBrokerException("Invalid Request");
-		}
-
-		String userGuid = (String) userContext.getProperty("user_id");
-		String userName = cfClient.getUserName(userGuid);
-		logger.info("User Guid: {} User Name: {} ", userGuid, userName);
-		Util.isValidEmail(userName);
-
-
-		try {
-			boolean status = axwayServiceBroker.deleteOrgAppAndUser(userName, serviceInstanceId);
-			if (!status) {
-				throw new ServiceBrokerException( "Service instance does not exist: id=" + serviceInstanceId);
-			}
-
-		} catch (AxwayException e) {
-			throw new ServiceBrokerException(e.getMessage());
-		}
-        return new ResponseEntity<>(HttpStatus.OK);
+            }
+        } catch (AxwayException e) {
+            throw new ServiceBrokerException(e.getMessage());
+        }
+        return new ResponseEntity<>("{}",HttpStatus.OK);
     }
 }

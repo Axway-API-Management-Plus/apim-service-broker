@@ -37,7 +37,7 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
     @Override
     public void importAPI(Map<String, Object> parameters, String appRouteURL, String bindingId,
                           String serviceInstanceId, String email)
-            throws AxwayException {
+            throws ServiceBrokerException {
         logger.debug("Creating API Proxy on API manager");
         logger.debug("Parameters {}", parameters);
 
@@ -190,17 +190,17 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
         return true;
     }
 
-    private APIUser getOrgId(String email, String serviceInstanceId) throws AxwayException {
+    private APIUser getOrgId(String email, String serviceInstanceId)  {
 
         APIUser apiUser = axwayUserClient.getUser(email);
         if (apiUser == null) {
-            throw new AxwayException("Access Denied : User is not exists on API Manager");
+            throw new ServiceBrokerException("Access Denied : User is not exists on API Manager");
         }
         String orgId = apiUser.getOrganizationId();
         logger.info("Org id :{}", orgId);
         APIOrganization apiOrganization = axwayOrganzationClient.getOrganization(orgId);
         if (!serviceInstanceId.equals(apiOrganization.getService_instance_id())) {
-            throw new AxwayException("Internal Error : Service instance id mismatch");
+            throw new ServiceBrokerException("Internal Error : Service instance id mismatch");
         }
         return apiUser;
     }
