@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -83,6 +84,7 @@ public class ServiceInstanceBindingController {
             @RequestHeader(value = "X-Broker-API-Originating-Identity", required = false) String originatingIdentityString,
             @RequestHeader(value = "X-Broker-API-Request-Identity", required = false) String requestIdentity) {
 
+		Assert.notNull(originatingIdentityString, "X-Broker-API-Originating-Identity is empty or null");
 		logger.info("UnBind Request Binding id : {}", bindingId);
 		String userGuid = serviceBrokerHelper.parseIdentity(originatingIdentityString);
 		String userName = cfClient.getUserName(userGuid);
