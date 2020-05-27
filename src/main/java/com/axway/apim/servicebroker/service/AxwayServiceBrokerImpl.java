@@ -1,6 +1,7 @@
 package com.axway.apim.servicebroker.service;
 
 import com.axway.apim.servicebroker.exception.AxwayException;
+import com.axway.apim.servicebroker.exception.ServiceBrokerException;
 import com.axway.apim.servicebroker.model.*;
 import com.jayway.jsonpath.JsonPath;
 import org.slf4j.Logger;
@@ -41,8 +42,8 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
         logger.debug("Parameters {}", parameters);
 
         if (parameters == null) {
-            throw new AxwayException(
-                    "Custom parameters are required to add API on API Manager");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameters are required to add API on API Manager");
         }
 
         String type = (String) parameters.get("type");
@@ -55,14 +56,16 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
         logger.debug("Swagger URI {}", apiURI);
 
         if (type == null) {
-            throw new AxwayException("Custom parameter type is required");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameter type is required");
         }
         AtomicReference<Type> enumType = new AtomicReference<>();
 
         try {
             enumType.set(Type.valueOf(type.toUpperCase()));
         } catch (IllegalArgumentException e) {
-            throw new AxwayException("Custom parameter type value can only be swagger or wsdl");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameter type value can only be swagger or wsdl");
         }
 
         if (enumType.get().compareTo(Type.SWAGGER) == 0) {
@@ -72,7 +75,8 @@ public class AxwayServiceBrokerImpl implements AxwayServiceBroker, Constants {
         }
 
         if (apiURI == null) {
-            throw new AxwayException("Custom parameter uri is required");
+            throw new ServiceBrokerException(
+                    "Service broker parameters are invalid: Custom parameter uri is required");
         }
 
         if (!apiURI.startsWith("http")) {
