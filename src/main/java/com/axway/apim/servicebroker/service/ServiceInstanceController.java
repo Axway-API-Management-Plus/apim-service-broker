@@ -49,7 +49,7 @@ public class ServiceInstanceController implements Constants {
             @RequestHeader(value = "X-Broker-API-Request-Identity", required = false) String requestIdentity,
             @RequestHeader(value = "X-Broker-API-Version", required = false) String serviceBrokerVersion,
                     @RequestBody Map<String, Object> request) {
-
+        //util.log(request, logger);
         String userGuid = serviceBrokerHelper.parseIdentity(originatingIdentityString);
         String userName = cfClient.getUserName(userGuid);
         logger.info("User Guid: {} User Name: {} ", userGuid, userName);
@@ -59,11 +59,9 @@ public class ServiceInstanceController implements Constants {
             logger.error("Cloud Foundry Context is not present");
             throw new ServiceBrokerException("Invalid Request");
         }
-        String spaceGuid = (String) context.get("space_guid");
-        String orgGuid = (String) context.get("organization_guid");
-        logger.info("Space Guid: {} Organization Guid: {}", spaceGuid, orgGuid);
-        String spaceName = cfClient.getSpaceName(spaceGuid);
-        String cfOrgName = cfClient.getOrg(orgGuid);
+
+        String spaceName = (String) context.get("space_name");
+        String cfOrgName = (String) context.get("organization_name");
         logger.info(" Space Name: {} Organization name : {}", spaceName, cfOrgName);
         String orgName = orgNamePrefix + DOT + cfOrgName + DOT + spaceName + DOT + serviceInstanceId;
         try {

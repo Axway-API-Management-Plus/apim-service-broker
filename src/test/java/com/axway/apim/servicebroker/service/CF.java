@@ -1,5 +1,6 @@
 package com.axway.apim.servicebroker.service;
 
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 /*import org.cloudfoundry.client.v2.organizations.ListOrganizationsRequest;
 import org.cloudfoundry.operations.CloudFoundryOperations;
@@ -15,6 +16,7 @@ import org.cloudfoundry.uaa.users.User;
 import org.junit.Test;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
 
@@ -23,6 +25,9 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
 public class CF extends BaseClass {
+
+	@MockBean
+	private CloudFoundryClient cloudFoundryClient;
 
 	// @Autowired
 	// ReactorCloudFoundryClient cloudFoundryClient;

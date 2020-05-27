@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.axway.apim.servicebroker.service.AxwayServiceBroker;
@@ -20,6 +22,9 @@ public class AxwayClientIntgTest {
 
 	@Autowired
 	AxwayServiceBroker axwayServiceBroker;
+
+	@MockBean
+	private CloudFoundryClient cloudFoundryClient;
 
 
 	private String email = "anna@axway.com";

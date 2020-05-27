@@ -2,10 +2,12 @@ package com.axway.apim.servicebroker.service;
 
 import com.axway.apim.servicebroker.exception.AxwayException;
 import com.axway.apim.servicebroker.exception.ServiceBrokerException;
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,6 +30,9 @@ public class AxwayServiceBrokerImplTest {
 
     @Autowired
     private AxwayServiceBroker axwayServiceBroker;
+
+    @MockBean
+    private CloudFoundryClient cloudFoundryClient;
 
     @Test
     public void shouldImportAPI() {
