@@ -1,15 +1,16 @@
 package com.axway.apim.servicebroker.util;
 
+import com.axway.apim.servicebroker.exception.AxwayException;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
+//import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 
 public class Util {
 
 
-    public void isValidEmail(String email) throws ServiceBrokerInvalidParametersException {
+    public void isValidEmail(String email) throws AxwayException {
 
         if (!EmailValidator.getInstance().isValid(email)) {
-            throw new ServiceBrokerInvalidParametersException("Username should be a valid email address");
+            throw new AxwayException("Username should be a valid email address");
         }
     }
 

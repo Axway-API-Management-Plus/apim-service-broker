@@ -6,7 +6,6 @@ import javax.net.ssl.SSLSession;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.servicebroker.model.BrokerApiVersion;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -19,7 +18,8 @@ import com.axway.apim.servicebroker.service.AxwayUserClient;
 import com.axway.apim.servicebroker.util.Util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//import com.axway.apim.servicebroker.exception.AxwayAPIGatewayErrorHandler;
+import java.time.Duration;
+
 
 @Configuration
 public class AxwayConfig {
@@ -52,19 +52,19 @@ public class AxwayConfig {
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 		//RestTemplate restClient = new RestTemplate();
 		RestTemplate restClient = restTemplateBuilder
-				.setConnectTimeout(connectTimeout)
-				.setReadTimeout(readTimeout)
-				.basicAuthorization(username, new String(password))
+				.setConnectTimeout(Duration.ofMillis(connectTimeout))
+				.setReadTimeout(Duration.ofMillis(readTimeout))
+				.basicAuthentication(username, new String(password))
 				.detectRequestFactory(false)
 				.build();
 		restClient.setErrorHandler(new AxwayAPIGatewayErrorHandler());
 		return restClient;
 	}
 
-	@Bean
-	public BrokerApiVersion brokerApiVersion() {
-		return new BrokerApiVersion();
-	}
+//	@Bean
+//	public BrokerApiVersion brokerApiVersion() {
+//		return new BrokerApiVersion();
+//	}
 
 	@Bean
 	public ObjectMapper objectMapper() {

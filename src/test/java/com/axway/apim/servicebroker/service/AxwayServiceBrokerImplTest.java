@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
+//import org.springframework.cloud.servicebroker.exception.ServiceBrokerInvalidParametersException;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -39,7 +39,11 @@ public class AxwayServiceBrokerImplTest {
         parameters.put("uri", "http://petstore.swagger.io/v2/swagger.json");
 
 
-        axwayServiceBroker.importAPI(parameters, null, "123", serviceInstanceId, email);
+        try {
+            axwayServiceBroker.importAPI(parameters, null, "123", serviceInstanceId, email);
+        } catch (AxwayException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -50,8 +54,8 @@ public class AxwayServiceBrokerImplTest {
         try {
             axwayServiceBroker.importAPI(null, null, "123", serviceInstanceId, email);
             fail("importAPIWithoutParamaters failed");
-        } catch (ServiceBrokerInvalidParametersException e) {
-            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameters are required to add API on API Manager");
+        } catch (AxwayException e) {
+            assertThat(e).isInstanceOf(AxwayException.class).hasMessage("Custom parameters are required to add API on API Manager");
         }
 
     }
@@ -68,8 +72,8 @@ public class AxwayServiceBrokerImplTest {
         try {
             axwayServiceBroker.importAPI(parameters, null, "123", serviceInstanceId, email);
             fail("importAPIWithoutType failed");
-        } catch (ServiceBrokerInvalidParametersException e) {
-            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameter type is required");
+        } catch (AxwayException e) {
+            assertThat(e).isInstanceOf(AxwayException.class).hasMessage("Custom parameter type is required");
         }
 
     }
@@ -105,8 +109,8 @@ public class AxwayServiceBrokerImplTest {
         try {
             axwayServiceBroker.importAPI(parameters, null, "123", serviceInstanceId, email);
             fail("importAPIWithoutSwaggerURL failed");
-        } catch (ServiceBrokerInvalidParametersException e) {
-            assertThat(e).isInstanceOf(ServiceBrokerInvalidParametersException.class).hasMessage("Custom parameter uri is required");
+        } catch (AxwayException e) {
+            assertThat(e).isInstanceOf(AxwayException.class).hasMessage("Custom parameter uri is required");
         }
 
     }

@@ -16,7 +16,7 @@ import org.junit.Test;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+
 
 import com.axway.apim.servicebroker.BaseClass;
 import com.jayway.jsonpath.DocumentContext;
@@ -30,9 +30,9 @@ public class CF extends BaseClass {
 	// @Autowired
 	// UaaClient uaaClient;
 	//
-	@Autowired
-	@Qualifier("cfOauthRestTemplate")
-	OAuth2RestTemplate cfOauthRestTemplate;
+//	@Autowired
+//	@Qualifier("cfOauthRestTemplate")
+//	OAuth2RestTemplate cfOauthRestTemplate;
 
 	/*
 	 * @Test public void testOrg() { CloudFoundryOperations
@@ -91,30 +91,30 @@ public class CF extends BaseClass {
 //
 //	}
 
-	@Test
-	public void getSpace() {
-
-		String spaceGuid = "dea89260-6f9f-40ad-a5ec-dffa48692c18";
-		System.out.println(cfOauthRestTemplate.getAccessToken().getValue());
-		ResponseEntity<String> response = cfOauthRestTemplate.getForEntity(
-				"https://api.sys.pie-25.cfplatformeng.com/v2/spaces/" + spaceGuid , String.class);
-		System.out.println(response.getBody());
-		DocumentContext documentContext = JsonPath.parse(response.getBody());
-		String spaceName = documentContext.read("$.entity.name", String.class);
-		System.out.println(spaceName);
-
-	}
-
-	@Test
-	public void getUser() {
-
-		System.out.println(cfOauthRestTemplate.getAccessToken().getValue());
-		ResponseEntity<String> response = cfOauthRestTemplate.getForEntity(
-				"https://api.sys.pie-25.cfplatformeng.com/v2/users/d466d8f8-c2ad-46c1-b195-d342d9159889",
-				String.class);
-		 DocumentContext documentContext = JsonPath.parse(response.getBody());
-		 String userName = documentContext.read("$.entity.username", String.class);
-		 System.out.println(userName);
-}
+//	@Test
+//	public void getSpace() {
+//
+//		String spaceGuid = "dea89260-6f9f-40ad-a5ec-dffa48692c18";
+//		System.out.println(cfOauthRestTemplate.getAccessToken().getValue());
+//		ResponseEntity<String> response = cfOauthRestTemplate.getForEntity(
+//				"https://api.sys.pie-25.cfplatformeng.com/v2/spaces/" + spaceGuid , String.class);
+//		System.out.println(response.getBody());
+//		DocumentContext documentContext = JsonPath.parse(response.getBody());
+//		String spaceName = documentContext.read("$.entity.name", String.class);
+//		System.out.println(spaceName);
+//
+//	}
+//
+//	@Test
+//	public void getUser() {
+//
+//		System.out.println(cfOauthRestTemplate.getAccessToken().getValue());
+//		ResponseEntity<String> response = cfOauthRestTemplate.getForEntity(
+//				"https://api.sys.pie-25.cfplatformeng.com/v2/users/d466d8f8-c2ad-46c1-b195-d342d9159889",
+//				String.class);
+//		 DocumentContext documentContext = JsonPath.parse(response.getBody());
+//		 String userName = documentContext.read("$.entity.username", String.class);
+//		 System.out.println(userName);
+//}
 
 }

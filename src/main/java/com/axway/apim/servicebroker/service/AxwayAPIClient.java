@@ -1,5 +1,6 @@
 package com.axway.apim.servicebroker.service;
 
+import com.axway.apim.servicebroker.exception.AxwayException;
 import com.axway.apim.servicebroker.model.APIOrganizationAccess;
 import com.axway.apim.servicebroker.model.APISecurity;
 import com.axway.apim.servicebroker.model.FrontendAPI;
@@ -11,7 +12,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+//import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -172,13 +173,13 @@ public class AxwayAPIClient implements Constants {
     // return id;
     // }
 
-    public String createFrontend(String backendAPIId, String orgId, String userId) {
+    public String createFrontend(String backendAPIId, String orgId, String userId) throws AxwayException {
         String json = "{\"apiId\":\"" + backendAPIId + "\",\"organizationId\":\"" + orgId + "\"}";
         JsonNode jsonNode;
         try {
             jsonNode = mapper.readTree(json);
         } catch (IOException e) {
-            throw new ServiceBrokerException("Internal Error");
+            throw new AxwayException("Internal Error");
         }
         URI uri = UriComponentsBuilder.fromUriString(url + "/api/portal/v1.3/proxies/").build().toUri();
         RequestEntity<JsonNode> jsonEntity = new RequestEntity<>(jsonNode, HttpMethod.POST, uri);
@@ -187,14 +188,14 @@ public class AxwayAPIClient implements Constants {
     }
 
     public void applySecurity(String frontEndAPIResponse, String bindingId, String vhost, String userId)
-            throws ServiceBrokerException {
+            throws AxwayException {
         JsonNode jsonNode;
         try {
             jsonNode = mapper.readTree(frontEndAPIResponse);
         } catch (JsonProcessingException e) {
-            throw new ServiceBrokerException("Internal Error");
+            throw new AxwayException("Internal Error");
         } catch (IOException e) {
-            throw new ServiceBrokerException("Internal Error");
+            throw new AxwayException("Internal Error");
         }
         ArrayNode devices = (ArrayNode) (jsonNode.findPath("securityProfiles")).get(0).get("devices");
         String virtualAPIId = jsonNode.findPath("id").asText();

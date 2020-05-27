@@ -1,50 +1,40 @@
 package com.axway.apim.servicebroker.config;
 
+import org.cloudfoundry.client.CloudFoundryClient;
+import org.cloudfoundry.reactor.ConnectionContext;
+import org.cloudfoundry.reactor.DefaultConnectionContext;
+import org.cloudfoundry.reactor.TokenProvider;
+import org.cloudfoundry.reactor.client.ReactorCloudFoundryClient;
+import org.cloudfoundry.reactor.tokenprovider.PasswordGrantTokenProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
-import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
-
-import com.axway.apim.servicebroker.exception.AxwayAPIGatewayErrorHandler;
 
 @Configuration
 public class CloudFoundryConfig {
 
-	private String TOKEN_URI = "/oauth/token";
-
-	private OAuth2ClientContext oauth2ClientContext = new DefaultOAuth2ClientContext();
-
-	@Value("${cf_admin_username:admin}")
-	private String username;
-
-	@Value("${cf_admin_password:changeme}")
-	private char[] password;
-
-	@Value("${login_host:https://login.sys.pie-25.cfplatformeng.com}")
-	private String accessTokenURI;
-
 	@Bean
-	public OAuth2ProtectedResourceDetails cf() {
-		ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
-		details.setUsername(username);
-		details.setPassword(new String(password));
-		details.setGrantType("password");
-		accessTokenURI = accessTokenURI + TOKEN_URI;
-		details.setAccessTokenUri(accessTokenURI);
-		return details;
+	DefaultConnectionContext connectionContext(@Value("${api_host:api.cloudfoundry.com}") String apiHost) {
+		return DefaultConnectionContext.builder()
+				.apiHost(apiHost)
+				.build();
 	}
 
 	@Bean
-	OAuth2RestTemplate cfOauthRestTemplate(){
+	PasswordGrantTokenProvider tokenProvider(@Value("${cf_admin_username:admin}") String username,
+											 @Value("${cf_admin_password:changeme}") String password) {
+		return PasswordGrantTokenProvider.builder()
+				.password(password)
+				.username(username)
+				.build();
+	}
 
-		OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(cf(),oauth2ClientContext);
-		oAuth2RestTemplate.setAccessTokenProvider(new CFResourceOwnerPasswordAccessTokenProvider());
-		oAuth2RestTemplate.setErrorHandler(new AxwayAPIGatewayErrorHandler());
-		return oAuth2RestTemplate;
+	@Bean
+	CloudFoundryClient cloudFoundryClient(ConnectionContext connectionContext, TokenProvider tokenProvider) {
+		return ReactorCloudFoundryClient.builder()
+				.connectionContext(connectionContext)
+				.tokenProvider(tokenProvider)
+				.build();
 	}
 
 }

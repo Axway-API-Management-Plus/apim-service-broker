@@ -5,11 +5,9 @@ import java.io.IOException;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.io.IOUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
+//import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -31,9 +29,9 @@ public class AxwayAPIGatewayErrorHandler implements ResponseErrorHandler {
 		if(contentType.includes(MediaType.APPLICATION_JSON)){
 			DocumentContext documentContext = JsonPath.parse(responseBody);
 			String errorDesc = documentContext.read("$.errors[0].message", String.class);
-			throw new ServiceBrokerException("API Manager - "+ errorDesc);
+			throw new AxwayException("API Manager - "+ errorDesc);
 		}else{
-			throw new ServiceBrokerException("Unknown Error From API Manager");
+			throw new AxwayException("Unknown Error From API Manager");
 		}
 	}
 

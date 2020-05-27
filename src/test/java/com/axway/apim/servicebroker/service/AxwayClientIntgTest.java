@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.axway.apim.servicebroker.exception.AxwayException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,13 @@ public class AxwayClientIntgTest {
 		parameters.put("URI","http://petstore.swagger.io/v2/swagger.json");
 		
 		//String routeURL = 
-		
-		axwayServiceBroker.importAPI(parameters,null,"123", serviceInstanceId, email);
-		
+
+		try {
+			axwayServiceBroker.importAPI(parameters,null,"123", serviceInstanceId, email);
+		} catch (AxwayException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	
