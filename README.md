@@ -6,7 +6,7 @@
 ## API Management Version Compatibility
 This artifact successfully tested with following versions:
 - Axway AMPLIFY API Management 7.6.2 SP3 and v7.7.20200330
-- cf 2.8.1
+- Pivtoal Platform - 2.6, 2.7, 2.8 and 2.9 
 
 
 ## Prerequisites
