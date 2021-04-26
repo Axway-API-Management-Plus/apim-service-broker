@@ -21,7 +21,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<service-broker.version>1.0.3.RELEASE</service-broker.version>
-		<commons-io.version>2.5</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<springframework.cloud>2.2.2.RELEASE</springframework.cloud>
 		<cloudfoundry.certificate.truster>1.0.1.RELEASE</cloudfoundry.certificate.truster>
 		<commons.validator>1.6</commons.validator>
